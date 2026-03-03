@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[SYS::REPTALICA_ARCHIVES]</title>
+    <meta name="description" content="Reptalica — Blog and Technical Archives">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="[SYS::REPTALICA_ARCHIVES]">
+    <meta property="og:description" content="Reptalica — Blog and Technical Archives">
+    <meta property="og:image" content="https://reptalica.netlify.app/assets/optimized/toilet-and-msgs.png">
+    <meta property="og:url" content="https://reptalica.netlify.app/blog.html">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="[SYS::REPTALICA_ARCHIVES]">
+    <meta name="twitter:description" content="Reptalica — Blog and Technical Archives">
+    <meta name="twitter:image" content="https://reptalica.netlify.app/assets/optimized/toilet-and-msgs.png">
+
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .blog-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .blog-item {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 2rem;
+            background: var(--surface);
+            border: 2px solid var(--border);
+            clip-path: var(--clip-corner);
+            transition: all var(--speed-med) var(--ease-snap);
+            text-decoration: none;
+            overflow: hidden;
+        }
+
+        .blog-item:hover {
+            border-color: var(--accent);
+            transform: translateX(10px);
+            background: var(--surface-elevated);
+        }
+
+        .blog-item__image {
+            height: 100%;
+            min-height: 250px;
+            overflow: hidden;
+            border-right: 2px solid var(--border);
+        }
+
+        .blog-item__image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s var(--ease-snap);
+        }
+
+        .blog-item:hover .blog-item__image img {
+            transform: scale(1.05);
+        }
+
+        .blog-item__content {
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .blog-item__date {
+            margin-bottom: 0.8rem;
+        }
+
+        .blog-item__title {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 0.03em;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .blog-item__excerpt {
+            color: var(--text-dim);
+            font-family: var(--font-mono);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 900px) {
+            .blog-item {
+                grid-template-columns: 1fr;
+            }
+
+            .blog-item__image {
+                height: 200px;
+                border-right: none;
+                border-bottom: 2px solid var(--border);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Noise grain overlay -->
+    <div class="noise-overlay" aria-hidden="true"></div>
+
+    <section class="section blog" style="padding-top: 4rem; min-height: 100vh; display: flex; flex-direction: column;">
+        <div class="section__header" style="margin-bottom: 4rem;">
+            <a href="index.html" class="btn btn--primary" style="margin-bottom: 2rem; display: inline-flex;">
+                <i class="fas fa-arrow-left"></i> RETURN TO MAIN
+            </a>
+            <span class="label-mono section__tag">ARCHIVE::VOL_01</span>
+            <h2 class="section__title">TECHNICAL BLOG</h2>
+            <div class="section__line" aria-hidden="true"></div>
+        </div>
+
+        <div class="blog-list">
+            <!-- Blog Post 2 -->
+            <a href="blog/toilet-and-msgs.html" class="blog-item">
+                <div class="blog-item__image">
+                    <img src="assets/optimized/toilet-and-msgs.png" alt="Toilet and MSGs" loading="lazy">
+                </div>
+                <div class="blog-item__content">
+                    <div class="blog-item__date">
+                        <span class="label-mono">[ LOG::TIMESTAMP // 2026.03.03 ]</span>
+                    </div>
+                    <h3 class="blog-item__title">Toilet and MSGs</h3>
+                    <p class="blog-item__excerpt">
+                        The secret to the world's most advanced artificial intelligence isn't locked away in a
+                        top-secret Silicon Valley lab. It's sitting right in your kitchen pantry.
+                    </p>
+                    <div class="blog-item__footer">
+                        <span class="btn">READ ENTRY</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Blog Post 1 -->
+            <a href="blog/cyber-cricket-fighting.html" class="blog-item">
+                <div class="blog-item__image">
+                    <img src="assets/optimized/cyber-cricket.png" alt="Cyber Cricket Fighting" loading="lazy">
+                </div>
+                <div class="blog-item__content">
+                    <div class="blog-item__date">
+                        <span class="label-mono">[ LOG::TIMESTAMP // 2026.03.02 ]</span>
+                    </div>
+                    <h3 class="blog-item__title">Cyber Cricket Fighting</h3>
+                    <p class="blog-item__excerpt">
+                        In the Chinese tech community, there’s a slang term for smartphone performance comparisons:
+                        "Cyber Cricket Fighting."
+                    </p>
+                    <div class="blog-item__footer">
+                        <span class="btn">READ ENTRY</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer__inner">
+            <span class="label-mono">[ REPTALICA // ARCHIVES ]</span>
+            <span class="footer__sep" aria-hidden="true">—</span>
+            <span class="footer__disclaimer">Classified technical documentation. Internal use only.</span>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

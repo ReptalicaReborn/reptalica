@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[SYS::REPTALICA]</title>
+    <meta name="description" content="Reptalica — annotated dieshots and silicon photography">
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="REPTALICA">
+    <meta property="og:description" content="Annotated dieshots and silicon photography">
+    <meta property="og:image"
+        content="https://upload.wikimedia.org/wikipedia/commons/d/d5/Starr_020803-0094_Centella_asiatica.jpg">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="REPTALICA">
+    <meta name="twitter:description" content="Annotated dieshots and silicon photography">
+</head>
+
+<body>
+    <!-- Noise grain overlay -->
+    <div class="noise-overlay" aria-hidden="true"></div>
+
+    <!-- ═══════════════════════════════════════ HERO SECTION ═══════════════════════════════════════ -->
+    <section class="hero" id="hero">
+        <!-- Orbital decoration -->
+        <div class="orbital-ring orbital-ring--1" aria-hidden="true"></div>
+        <div class="orbital-ring orbital-ring--2" aria-hidden="true"></div>
+        <div class="orbital-dot" aria-hidden="true"></div>
+
+        <div class="hero__content">
+            <span class="label-mono hero__tag">[SYS.ACTIVE]</span>
+            <h1 class="hero__title">REPTALICA</h1>
+            <p class="hero__subtitle">
+                <span class="label-mono">STATUS :</span> annotated dieshots & silicon photography
+            </p>
+        </div>
+
+        <nav class="hero__nav">
+            <a href="#about" class="nav-link" data-section="about">
+                <span class="nav-link__index">01</span>
+                <span class="nav-link__text">ABOUT</span>
+            </a>
+            <span class="nav-divider">/</span>
+            <a href="#gallery" class="nav-link" data-section="gallery">
+                <span class="nav-link__index">02</span>
+                <span class="nav-link__text">DIESHOTS</span>
+            </a>
+            <span class="nav-divider">/</span>
+            <a href="blog.html" class="nav-link">
+                <span class="nav-link__index">03</span>
+                <span class="nav-link__text">BLOG</span>
+            </a>
+        </nav>
+
+        <div class="hero__scroll-hint" aria-hidden="true">
+            <span class="label-mono">SCROLL</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════ ABOUT SECTION ═══════════════════════════════════════ -->
+    <section class="section about" id="about">
+        <div class="section__header">
+            <span class="label-mono section__tag">SECTION::01</span>
+            <h2 class="section__title">ABOUT</h2>
+            <div class="section__line" aria-hidden="true"></div>
+        </div>
+
+        <div class="about__grid">
+            <div class="about__contact">
+                <h3 class="about__heading">CONTACT</h3>
+                <div class="contact-item">
+                    <span class="label-mono contact-item__label">DISCORD</span>
+                    <span class="contact-item__value">rep.ta.li.ca</span>
+                </div>
+                <div class="contact-item">
+                    <span class="label-mono contact-item__label">EMAIL</span>
+                    <button class="contact-item__value contact-item__copy" id="email-btn">
+                        reptalica@shitposting.expert
+                        <i class="fas fa-copy"></i>
+                    </button>
+                </div>
+            </div>
+
+
+            <div class="about__social">
+                <h3 class="about__heading">LINKS</h3>
+                <div class="social-row">
+                    <a href="https://www.youtube.com/@Reptalica" class="social-btn" target="_blank"
+                        rel="noopener noreferrer" aria-label="YouTube">
+                        <i class="fab fa-youtube"></i>
+                        <span class="label-mono">YouTube</span>
+                    </a>
+                    <a href="https://x.com/Reptalicant" class="social-btn" target="_blank" rel="noopener noreferrer"
+                        aria-label="Twitter/X">
+                        <i class="fab fa-twitter"></i>
+                        <span class="label-mono">Twitter</span>
+                    </a>
+                    <a href="https://reptdoc.netlify.app/" class="social-btn" target="_blank" rel="noopener noreferrer"
+                        aria-label="ReptDoc">
+                        <i class="fas fa-book"></i>
+                        <span class="label-mono">ReptDoc</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════ GALLERY SECTION ═══════════════════════════════════════ -->
+    <section class="section gallery" id="gallery">
+        <div class="section__header">
+            <span class="label-mono section__tag">SECTION::02</span>
+            <h2 class="section__title">ANNOTATED DIESHOTS</h2>
+            <div class="section__line" aria-hidden="true"></div>
+        </div>
+
+        <!-- Controls -->
+        <div class="gallery__controls">
+            <div class="control-group">
+                <label class="label-mono" for="gallery-filter">FILTER</label>
+                <div class="select-wrapper">
+                    <select id="gallery-filter" class="control-select">
+                        <option value="all">All Brands</option>
+                        <option value="mediatek">Mediatek</option>
+                        <option value="exynos">Exynos</option>
+                        <option value="nvidia">Nvidia</option>
+                        <option value="tensor">Google</option>
+                        <option value="qualcomm">Qualcomm</option>
+                        <option value="xiaomi">Xiaomi</option>
+                        <option value="huawei">Huawei</option>
+                        <option value="unisoc">Unisoc</option>
+                        <option value="intel">Intel</option>
+                        <option value="amd">AMD</option>
+                        <option value="allwinner">Allwinner</option>
+                        <option value="apple">Apple</option>
+                    </select>
+                    <i class="fas fa-chevron-down select-arrow"></i>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="label-mono" for="gallery-search">SEARCH</label>
+                <div class="input-wrapper">
+                    <input type="text" id="gallery-search" class="control-input" placeholder="Search dieshots...">
+                    <i class="fas fa-search input-icon"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gallery Grid -->
+        <div class="gallery__grid">
+            <!-- Mediatek -->
+            <article class="card" data-category="mediatek">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Dimensity_7300.webp" alt="Dimensity 7300" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">MEDIATEK</span>
+                    <h4 class="card__title">Dimensity 7300</h4>
+                    <p class="card__desc">Midranger AP released in 2022, manufactured with TSMC N4 process.</p>
+                </div>
+            </article>
+            <article class="card" data-category="mediatek">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Dimensity_8000.webp" alt="Dimensity 8000" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">MEDIATEK</span>
+                    <h4 class="card__title">Dimensity 8000</h4>
+                    <p class="card__desc">AP released in 2022, TSMC N5. Binned down version of Dimensity 8100.</p>
+                </div>
+            </article>
+            <article class="card" data-category="mediatek">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Dimensity_8100.webp" alt="Dimensity 8100" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">MEDIATEK</span>
+                    <h4 class="card__title">Dimensity 8100</h4>
+                    <p class="card__desc">AP released in 2022, TSMC N5. Used in sub-flagship phones.</p>
+                </div>
+            </article>
+            <article class="card" data-category="mediatek">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Dimensity_8200.webp" alt="Dimensity 8200" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">MEDIATEK</span>
+                    <h4 class="card__title">Dimensity 8200</h4>
+                    <p class="card__desc">AP released in 2022, TSMC N4. D8100 ported to N4 with clock speed bump.</p>
+                </div>
+            </article>
+
+            <!-- Exynos -->
+            <article class="card" data-category="exynos">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Exynos_1480.webp" alt="Exynos 1480" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">SAMSUNG</span>
+                    <h4 class="card__title">Exynos 1480</h4>
+                    <p class="card__desc">AP released in 2024, Samsung SF4. Used in higher end A/M/F series phones.</p>
+                </div>
+            </article>
+            <article class="card" data-category="exynos">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Exynos_1580.webp" alt="Exynos 1580" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">SAMSUNG</span>
+                    <h4 class="card__title">Exynos 1580</h4>
+                    <p class="card__desc">AP released in 2025, Samsung SF4P. Used in higher end A/M/F series phones.</p>
+                </div>
+            </article>
+            <article class="card" data-category="exynos">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Exynos_2300.webp" alt="Exynos 2300" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">SAMSUNG</span>
+                    <h4 class="card__title">Exynos 2300</h4>
+                    <p class="card__desc">Unreleased AP, Samsung SF4P. Planned for S23 series, scrapped due to yield
+                        issues.</p>
+                </div>
+            </article>
+            <article class="card" data-category="exynos">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Exynos_990.webp" alt="Exynos 990" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">SAMSUNG</span>
+                    <h4 class="card__title">Exynos 990</h4>
+                    <p class="card__desc">AP released in 2020, Samsung 8nm. Used in Galaxy S20 series.</p>
+                </div>
+            </article>
+
+            <!-- Nvidia -->
+            <article class="card" data-category="nvidia">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Nvidia_Drive_AGX_Thor.webp" alt="Nvidia Drive AGX Thor" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">NVIDIA</span>
+                    <h4 class="card__title">Drive AGX Thor</h4>
+                    <p class="card__desc">Automotive SoC released in 2025, TSMC 4N. Used in Xiaomi YU7 series.</p>
+                </div>
+            </article>
+            <article class="card" data-category="nvidia">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Nvidia_GB202.webp" alt="Nvidia GB202" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">NVIDIA</span>
+                    <h4 class="card__title">GB202</h4>
+                    <p class="card__desc">GPU released in 2024, TSMC 4N. Used in RTX 5090, RTX PRO 6000, RTX PRO 5000...
+                    </p>
+                </div>
+            </article>
+
+            <!-- Tensor / Google -->
+            <article class="card" data-category="tensor">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Tensor_G3.webp" alt="Tensor G3" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">GOOGLE</span>
+                    <h4 class="card__title">Tensor G3</h4>
+                    <p class="card__desc">SoC released in 2023, Samsung SF4P. Used in Pixel 8 series.</p>
+                </div>
+            </article>
+            <article class="card" data-category="tensor">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Tensor_G5.webp" alt="Tensor G5" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">GOOGLE</span>
+                    <h4 class="card__title">Tensor G5</h4>
+                    <p class="card__desc">SoC released in 2025, TSMC N3P. Used in Pixel 10, Pixel 10 Pro, Pixel 10 Pro
+                        XL, Pixel 10 Pro Fold.</p>
+                </div>
+            </article>
+
+            <!-- Qualcomm -->
+            <article class="card" data-category="qualcomm">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Qualcomm_Snapdragon_855.webp" alt="Snapdragon 855" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">QUALCOMM</span>
+                    <h4 class="card__title">Snapdragon 855</h4>
+                    <p class="card__desc">Flagship AP released in 2018, TSMC N7.</p>
+                </div>
+            </article>
+            <article class="card" data-category="qualcomm">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Qualcomm_Snapdragon_X_Elite.webp" alt="Snapdragon X Elite"
+                        loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">QUALCOMM</span>
+                    <h4 class="card__title">Snapdragon X Elite</h4>
+                    <p class="card__desc">High-performance ARM PC processor, 2024, TSMC N4. Oryon custom cores for
+                        Windows on ARM laptops.</p>
+                </div>
+            </article>
+
+            <!-- Intel -->
+            <article class="card" data-category="intel">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Intel_Lakefield_Compute_Tile.webp" alt="Intel Lakefield Compute Tile"
+                        loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">INTEL</span>
+                    <h4 class="card__title">Lakefield Compute Tile</h4>
+                    <p class="card__desc">Hybrid CPU tech, 2020, Intel 10nm + 22nm base die. Featured in Surface Neo and
+                        Galaxy Book S.</p>
+                </div>
+            </article>
+            <article class="card" data-category="intel">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Intel_i7-7660U.webp" alt="Intel i7-7660U" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">INTEL</span>
+                    <h4 class="card__title">i7-7660U</h4>
+                    <p class="card__desc">"Waiter, can I have more GPU?" Kaby Lake mobile, 2017, Intel 14nm+. Iris Plus
+                        640 with 64MB eDRAM.</p>
+                </div>
+            </article>
+            <article class="card" data-category="intel">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Intel_Coffee_Lake_Octa-core.webp" alt="Intel Coffee Lake Octa-core"
+                        loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">INTEL</span>
+                    <h4 class="card__title">Coffee Lake Octa-core</h4>
+                    <p class="card__desc">Released 2018, Intel 14nm++. 8-core die featured in i7/i9 8th Gen.</p>
+                </div>
+            </article>
+
+            <!-- Allwinner -->
+            <article class="card" data-category="allwinner">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Allwinner_A527.webp" alt="Allwinner A527" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">ALLWINNER</span>
+                    <h4 class="card__title">Allwinner A527</h4>
+                    <p class="card__desc">Just manufactured e-waste (jk).</p>
+                </div>
+            </article>
+
+            <!-- Xiaomi -->
+            <article class="card" data-category="xiaomi">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Xiaomi_XRing_O1.webp" alt="XRing O1" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">XIAOMI</span>
+                    <h4 class="card__title">XRing O1</h4>
+                    <p class="card__desc">SoC released in 2025, TSMC N3E. Used in Xiaomi 15S Pro, Pad 7 Ultra, Pad 7S
+                        Pro.</p>
+                </div>
+            </article>
+            <article class="card" data-category="xiaomi">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Xiaomi_Pinecone_Surge_S1.webp" alt="Xiaomi Pinecone Surge S1"
+                        loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">XIAOMI</span>
+                    <h4 class="card__title">Pinecone Surge S1</h4>
+                    <p class="card__desc">Mid-range SoC, 2017, TSMC 28nm HPC+. Xiaomi's first in-house chipset, featured
+                        in Mi 5c.</p>
+                </div>
+            </article>
+
+            <!-- Huawei -->
+            <article class="card" data-category="huawei">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Huawei_HiSilicon_Kirin_980.webp" alt="Kirin 980" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">HUAWEI</span>
+                    <h4 class="card__title">Kirin 980</h4>
+                    <p class="card__desc">Flagship AP, 2018, TSMC N7. Used in Mate 20 series, P30 series, Honor 20
+                        series...</p>
+                </div>
+            </article>
+            <article class="card" data-category="huawei">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Huawei_HiSilicon_Kirin_9000.webp" alt="Kirin 9000" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">HUAWEI</span>
+                    <h4 class="card__title">Kirin 9000</h4>
+                    <p class="card__desc">Flagship AP, 2020, TSMC N5. Used in Mate 40 Pro. Last Kirin on advanced TSMC
+                        nodes before sanctions.</p>
+                </div>
+            </article>
+            <article class="card" data-category="huawei">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Huawei_HiSilicon_Kirin_9000_ES_CortexX1.webp"
+                        alt="Kirin 9000 ES (Cortex-X1)" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">HUAWEI</span>
+                    <h4 class="card__title">Kirin 9000 ES (Cortex-X1)</h4>
+                    <p class="card__desc">What could have been. A55 + A78 + X1 on TSMC N5, truly
+                        an ideal SD888, but sanctions prevented completion.</p>
+                </div>
+            </article>
+
+            <!-- Unisoc -->
+            <article class="card" data-category="unisoc">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Tsinghua_Unigroup_Unisoc_T820_T9100.webp" alt="Unisoc T820 / T9100"
+                        loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">UNISOC</span>
+                    <h4 class="card__title">Unisoc T820 / T9100</h4>
+                    <p class="card__desc">Mid-range 5G SoC, 2022, TSMC N6. Featured in ZTE shitters and some handheld
+                        android consoles.</p>
+                </div>
+            </article>
+
+            <!-- AMD -->
+            <article class="card" data-category="amd">
+                <div class="card__image">
+                    <img src="assets/thumbnails/AMD_Ryzen_5_7520U.webp" alt="AMD Ryzen 5 7250U" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">AMD</span>
+                    <h4 class="card__title">Ryzen 5 7250U</h4>
+                    <p class="card__desc">Mendocino mobile APU, TSMC N6. Features 4 Zen 2 cores and RDNA 2 graphics.</p>
+                </div>
+            </article>
+            <article class="card" data-category="amd">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Sony_PlayStation_5_APU_AMD_4700S.webp"
+                        alt="Sony PlayStation 5 APU / AMD 4700S" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">AMD</span>
+                    <h4 class="card__title">PS5 APU / AMD 4700S "Oberon"</h4>
+                    <p class="card__desc">Semi-custom SoC, 2020, TSMC N7. 8 Zen 2 cores + RDNA 2. Defective dies sold as
+                        AMD 4700S Desktop Kit.</p>
+                </div>
+            </article>
+            <article class="card" data-category="amd">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Sony_PlayStation_4_AMD_APU.webp"
+                        alt="Sony PlayStation 4 APU / AMD Liverpool" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">AMD</span>
+                    <h4 class="card__title">PS4 APU / AMD "Liverpool"</h4>
+                    <p class="card__desc">Semi-custom SoC, 2013, TSMC 28nm. 8 Jaguar cores + GCN graphics.</p>
+                </div>
+            </article>
+
+            <!-- Apple -->
+            <article class="card" data-category="apple">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Apple_A4.webp" alt="Apple A4" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">APPLE</span>
+                    <h4 class="card__title">Apple A4</h4>
+                    <p class="card__desc">Apple's first in-house SoC, 2010, Samsung 45nm. Single Cortex-A8 core, powered
+                        the original iPad and iPhone 4.</p>
+                </div>
+            </article>
+            <article class="card" data-category="apple">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Apple_A5_APL7498.webp" alt="Apple A5 (APL7498)" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">APPLE</span>
+                    <h4 class="card__title">Apple A5 (APL7498)</h4>
+                    <p class="card__desc">Special variant for Apple TV 3rd Gen. 32nm node, 1 CPU core and 2 GPU EUs
+                        removed vs original A5.</p>
+                </div>
+            </article>
+            <article class="card" data-category="apple">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Apple_A5.webp" alt="Apple A5" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">APPLE</span>
+                    <h4 class="card__title">Apple A5</h4>
+                    <p class="card__desc">Dual-core SoC released in 2011, Samsung 45nm. Powered iPhone 4S, iPad 2, and
+                        iPod touch 5th gen.</p>
+                </div>
+            </article>
+            <article class="card" data-category="apple">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Apple_A6.webp" alt="Apple A6" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">APPLE</span>
+                    <h4 class="card__title">Apple A6</h4>
+                    <p class="card__desc">Apple's first custom-designed CPU core (Swift). Released in 2012, Samsung
+                        32nm. Powered iPhone 5.</p>
+                </div>
+            </article>
+            <article class="card" data-category="apple">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Apple_A7.webp" alt="Apple A7" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">APPLE</span>
+                    <h4 class="card__title">Apple A7</h4>
+                    <p class="card__desc">First 64-bit mobile SoC, 2013, Samsung 28nm. Dual-core Cyclone CPU, powered
+                        iPhone 5s with Touch ID.</p>
+                </div>
+            </article>
+            <article class="card" data-category="apple">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Apple_A8.webp" alt="Apple A8" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">APPLE</span>
+                    <h4 class="card__title">Apple A8</h4>
+                    <p class="card__desc">SoC released in 2014, TSMC 20nm. Dual-core Typhoon CPU, powered iPhone 6 and
+                        iPad mini 4.</p>
+                </div>
+            </article>
+            <article class="card" data-category="apple">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Apple_A9_Samsung.webp" alt="Apple A9 (Samsung)" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">APPLE</span>
+                    <h4 class="card__title">Apple A9 (Samsung)</h4>
+                    <p class="card__desc">Samsung 14nm variant of the A9. Dual-sourced with TSMC for iPhone 6s, notable
+                        for "chipgate" battery life controversy.</p>
+                </div>
+            </article>
+            <article class="card" data-category="apple">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Apple_A9_TSMC.webp" alt="Apple A9 (TSMC)" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">APPLE</span>
+                    <h4 class="card__title">Apple A9 (TSMC)</h4>
+                    <p class="card__desc">TSMC 16nm variant of the A9. Dual-sourced with Samsung for iPhone 6s, slightly
+                        better battery life in "chipgate" tests.</p>
+                </div>
+            </article>
+            <article class="card" data-category="apple">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Apple_A10.webp" alt="Apple A10 Fusion" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">APPLE</span>
+                    <h4 class="card__title">Apple A10 Fusion</h4>
+                    <p class="card__desc">First quad-core Apple SoC famous for being a big or LITTLE SoC, 2016, TSMC
+                        16nm.
+                        Powered iPhone 7 and iPad 6th/7th gen.</p>
+                </div>
+            </article>
+            <article class="card" data-category="apple">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Apple_A11.webp" alt="Apple A11 Bionic" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">APPLE</span>
+                    <h4 class="card__title">Apple A11 Bionic</h4>
+                    <p class="card__desc">Apple's first SoC with a Neural Engine, released in 2017, TSMC 10nm. Powered
+                        iPhone 8 and the iconic iPhone X.</p>
+                </div>
+            </article>
+            <article class="card" data-category="apple">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Apple_A12.webp" alt="Apple A12 Bionic" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">APPLE</span>
+                    <h4 class="card__title">Apple A12 Bionic</h4>
+                    <p class="card__desc">The industry's first mass-market 7nm SoC, 2018, TSMC N7. Powered iPhone XS,
+                        XR, and iPad Air 3rd Gen.</p>
+                </div>
+            </article>
+            <article class="card" data-category="apple">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Apple_A13.webp" alt="Apple A13 Bionic" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">APPLE</span>
+                    <h4 class="card__title">Apple A13 Bionic</h4>
+                    <p class="card__desc">Flagship SoC released in 2019, TSMC N7P. Powered iPhone 11 series and the 2nd
+                        generation iPhone SE.</p>
+                </div>
+            </article>
+            <article class="card" data-category="apple">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Apple_A14.webp" alt="Apple A14 Bionic" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">APPLE</span>
+                    <h4 class="card__title">Apple A14 Bionic</h4>
+                    <p class="card__desc">The first commercially available 5nm chip, 2020, TSMC N5. Powered the iPhone
+                        12 series and iPad Air 4th Gen.</p>
+                </div>
+            </article>
+            <article class="card" data-category="apple">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Apple_A15.webp" alt="Apple A15 Bionic" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">APPLE</span>
+                    <h4 class="card__title">Apple A15 Bionic</h4>
+                    <p class="card__desc">Released in 2021, TSMC N5P. Featured in iPhone 13/14 series and iPad mini 6th
+                        Gen with specialized GPU variants.</p>
+                </div>
+            </article>
+            <article class="card" data-category="apple">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Apple_A16.webp" alt="Apple A16 Bionic" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">APPLE</span>
+                    <h4 class="card__title">Apple A16 Bionic</h4>
+                    <p class="card__desc">Flagship SoC released in 2022, TSMC N4P. Powering the iPhone 14 Pro and iPhone
+                        15 series.</p>
+                </div>
+            </article>
+            <article class="card" data-category="apple">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Apple_A19_Pro.webp" alt="Apple A19 Pro" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">APPLE</span>
+                    <h4 class="card__title">Apple A19 Pro</h4>
+                    <p class="card__desc">Flagship SoC released in 2025, TSMC N3P. The best. Undisputed (just ignore the
+                        GPU pls).</p>
+                </div>
+            </article>
+            <article class="card" data-category="apple">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Apple_S9.webp" alt="Apple S9" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">APPLE</span>
+                    <h4 class="card__title">Apple S9</h4>
+                    <p class="card__desc">SiP released in 2023, TSMC N4. Powers Apple Watch Series 9 and Ultra 2 with
+                        4-core Neural Engine.</p>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════ FOOTER ═══════════════════════════════════════ -->
+    <footer class="footer">
+        <div class="footer__inner">
+            <span class="label-mono">[ REPTALICA // 2026 ]</span>
+            <span class="footer__sep" aria-hidden="true">—</span>
+            <span class="footer__disclaimer">Information provided as-is without warranty. Subject to change without
+                notice.</span>
+        </div>
+    </footer>
+
+    <!-- ═══════════════════════════════════════ MODAL ═══════════════════════════════════════ -->
+    <div id="preview-modal" class="modal" role="dialog" aria-hidden="true">
+        <div class="modal__backdrop"></div>
+        <div class="modal__content">
+            <button class="modal__close" aria-label="Close modal">&times;</button>
+            <div class="modal__image-container">
+                <img id="modal-image" src="" alt="Preview">
+            </div>
+            <div class="modal__info">
+                <span class="label-mono modal__tag">[DIESHOT::DATA]</span>
+                <h3 id="modal-title" class="modal__title">Title</h3>
+                <p id="modal-desc" class="modal__desc">Description</p>
+                <a id="download-btn" href="#" download class="btn btn--primary">
+                    <i class="fas fa-download"></i>
+                    <span>DOWNLOAD ORIGINAL</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
