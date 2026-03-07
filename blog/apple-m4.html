@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[SYS::REPTALICA_LOG // MATURITY_OVER_EXPERIMENTATION]</title>
+    <meta name="description"
+        content="An analysis of how Apple escaped the manufacturing nightmare of the M3 to build the silicon monster that is the M4.">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Apple M4: Maturity Over Experimentation - Reptalica">
+    <meta property="og:description"
+        content="An analysis of how Apple escaped the manufacturing nightmare of the M3 to build the silicon monster that is the M4.">
+    <meta property="og:image" content="https://reptalica.netlify.app/blog/m4-hero.png">
+    <meta property="og:url" content="https://reptalica.netlify.app/blog/apple-m4.html">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Apple M4: Maturity Over Experimentation - Reptalica">
+    <meta name="twitter:description"
+        content="An analysis of how Apple escaped the manufacturing nightmare of the M3 to build the silicon monster that is the M4.">
+    <meta name="twitter:image" content="https://reptalica.netlify.app/blog/m4-hero.png">
+
+    <link rel="icon" type="image/png" href="../assets/favicon.png">
+
+    <!-- Fonts (non-render-blocking) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style"
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        rel="stylesheet" media="print" onload="this.media='all'">
+
+    <link rel="stylesheet" href="../style.css">
+
+    <style>
+        .post {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--surface);
+            border: 2px solid var(--border);
+            clip-path: var(--clip-corner);
+            padding: 4rem;
+            position: relative;
+        }
+
+        .post::before {
+            content: '[CLASSIFIED // ARCHIVE]';
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--accent);
+            opacity: 0.4;
+        }
+
+        .post__header {
+            margin-bottom: 3rem;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 2rem;
+        }
+
+        .post__title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 6vw, 3.5rem);
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 0.03em;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        .post__meta {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .post__image {
+            width: 100%;
+            height: 400px;
+            margin-bottom: 3rem;
+            clip-path: var(--clip-corner-sm);
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .post__image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .post__content {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text);
+        }
+
+        .post__content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .post__content h3 {
+            font-family: var(--font-mono);
+            color: var(--accent);
+            font-size: 1.3rem;
+            margin: 2.5rem 0 1rem 0;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .post__content blockquote {
+            border-left: 3px solid var(--accent);
+            padding: 1rem 2rem;
+            background: var(--accent-dim);
+            font-style: italic;
+            margin: 2rem 0;
+            clip-path: var(--clip-corner-sm);
+        }
+
+        .post__content ul {
+            margin: 1rem 0 1.5rem 1.5rem;
+            list-style: none;
+        }
+
+        .post__content ul li {
+            margin-bottom: 1rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        .post__content ul li::before {
+            content: '>';
+            position: absolute;
+            left: -0.5rem;
+            color: var(--accent);
+            font-family: var(--font-mono);
+            font-weight: 700;
+        }
+
+        .post__content .content-image {
+            width: 100%;
+            margin: 2rem 0;
+            border: 1px solid var(--border);
+            clip-path: var(--clip-corner-sm);
+            overflow: hidden;
+        }
+
+        .post__content .content-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .post__content .content-image figcaption {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            padding: 0.8rem 1rem;
+            background: var(--surface-elevated);
+            border-top: 1px solid var(--border);
+        }
+
+        .post__content strong {
+            color: var(--accent);
+        }
+
+        .post__content code {
+            font-family: var(--font-mono);
+            font-size: 0.95em;
+            background: var(--surface-elevated);
+            padding: 0.15em 0.4em;
+            border: 1px solid var(--border);
+            color: var(--accent);
+        }
+
+        .post__content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            border: 1px solid var(--border);
+        }
+
+        .post__content table th {
+            background: var(--surface-elevated);
+            color: var(--accent);
+            text-align: left;
+            padding: 0.8rem 1rem;
+            border-bottom: 2px solid var(--border);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .post__content table td {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .post__content table tr:last-child td {
+            border-bottom: none;
+            background: var(--accent-dim);
+        }
+
+        .post__content table tr:last-child td strong {
+            color: var(--accent);
+        }
+
+        .post__footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 2px solid var(--border);
+        }
+
+        @media (max-width: 768px) {
+            .post {
+                padding: 2rem 1.2rem;
+                clip-path: none;
+                border-left: none;
+                border-right: none;
+            }
+
+            .post__title {
+                font-size: clamp(1.6rem, 5vw, 2.5rem);
+                word-break: break-word;
+                overflow-wrap: break-word;
+            }
+
+            .post__image {
+                height: 250px;
+            }
+
+            .post__content table {
+                display: block;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                white-space: nowrap;
+                font-size: 0.75rem;
+            }
+
+            .post__content table th,
+            .post__content table td {
+                padding: 0.6rem 0.7rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Noise grain overlay -->
+    <div class="noise-overlay" aria-hidden="true"></div>
+
+    <section class="section" style="padding-top: 4rem; min-height: 100vh;">
+        <div class="section__header" style="max-width: 800px; margin: 0 auto 4rem auto;">
+            <a href="../blog.html" class="btn btn--primary" style="margin-bottom: 2rem; display: inline-flex;">
+                <svg width="14" height="14" viewBox="0 0 448 512" fill="currentColor" style="vertical-align:middle">
+                    <path
+                        d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z" />
+                </svg> RETURN TO ARCHIVES
+            </a>
+            <span class="label-mono section__tag">LOG::ENTRY // 006</span>
+        </div>
+
+        <article class="post">
+            <header class="post__header">
+                <h1 class="post__title">Apple M4: Maturity Over Experimentation</h1>
+                <div class="post__meta">
+                    <div class="meta-item">
+                        <span class="label-mono">TIMESTAMP :</span>
+                        <span class="label-mono" style="color: var(--text);">2026.03.07</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="label-mono">AUTHOR :</span>
+                        <span class="label-mono" style="color: var(--text);">REPTALICA</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="post__image" id="post-hero-image">
+                <img src="m4-hero.png" alt="Tim Cook holding an Apple M4 logo" loading="lazy">
+            </div>
+
+            <div class="post__content">
+                <p>When we look back at the generational shift from the Apple M3 to the M4, the tech world expected a
+                    standard iterative update. Instead, if you look at the raw architectural data, we are looking at a
+                    strategic, multibillion-dollar reset. The M3 was an experimental gamble on the first generation of
+                    3-nanometer technology. The M4 is the maturation of that vision, marking a definitive pivot from
+                    bleeding-edge instability to a high-yield, massive architectural paradigm.</p>
+
+                <p>This is an analysis of how Apple escaped the manufacturing nightmare of the M3 to build the silicon
+                    monster that is the M4.</p>
+
+                <h3>The Node Pivot: Trading Density for Sanity</h3>
+
+                <p>The real story of this transition starts at the TSMC foundry. The M3 was built on TSMC's N3B process,
+                    which proved to be a critical bottleneck. It used aggressive design rules like double patterning
+                    lithography to push transistor density to the absolute limit. The cost of this density was severe.
+                    Yields were reportedly stuck around a disastrous 55 percent, and the silicon itself suffered from
+                    notoriously high current leakage. This fundamental physical flaw meant the M3 drew significantly
+                    more power at idle, crippling its low power efficiency.</p>
+
+                <p>We saw the direct fallout of this in the M3 Pro, where Apple was forced to panic and pull back. They
+                    drastically trimmed core counts and dropped memory bandwidth to 150 GB/s just to keep the die area
+                    small enough to be economically viable.</p>
+
+                <p>With the M4, Apple abandoned N3B and pivoted to N3E. While it is still a 3-nanometer node, it serves
+                    as a simplified and highly stable evolution of the process. By relaxing specific design rules like
+                    the contact poly pitch, Apple achieved yields closer to 70 or 80 percent while simultaneously
+                    resolving the crippling leakage issues. This gave their engineering team the actual transistor
+                    budget they wanted in the first place. The base M4 expanded from 25 billion to 28 billion
+                    transistors, allowing for a much more complex microarchitecture without the manufacturing anxiety
+                    that plagued the prior generation.</p>
+
+                <p>Architecturally, this budget allowed Apple to scale the P-cores into distinct clusters. While the
+                    base M4 features a single cluster of 4 P-cores, the M4 Pro and Max variants scale this to two
+                    clusters of up to 6 cores each. A critical evolution in the M4's power management is the
+                    introduction of a true "down" state. Unlike previous generations where cores merely idled, M4 cores
+                    can report 100% "down residency," meaning the entire core and its associated cluster can be
+                    completely shut down by macOS to eliminate power draw entirely when not required.</p>
+
+                <h3>Accepting The Massive Die: M1 to M4 Area Scaling</h3>
+
+                <p>To fit all this new technology, Apple had to abandon the pursuit of ever-shrinking chips. In fact,
+                    they moved in the exact opposite direction. The M4 is a physically massive piece of silicon.</p>
+
+                <figure class="content-image">
+                    <img src="m1-m4-diesize.png" alt="M1 to M4 semiconductor die size comparison chart" loading="lazy">
+                    <figcaption>[ FIG::REF ] Apple M1 to M4 semiconductor die size scaling. The M4 breaks the trend,
+                        becoming the largest base M-series chip ever designed to accommodate the expanded transistor
+                        budget. Source: <a href="https://www.bilibili.com/video/BV1CRPHzfEWK" target="_blank"
+                            rel="noopener noreferrer" style="color: var(--accent);">Kurnal</a>.
+                    </figcaption>
+                </figure>
+
+                <p>When you chart the raw die size across the generations, a clear trend emerges. The M1 started
+                    relatively small at ~120 mm&sup2;. The M2 ballooned, but the M3 actually shrank slightly as Apple
+                    attempted to leverage the dense (but problematic) N3B node. With the shift to N3E for the M4, the
+                    physical footprint of the chip exploded to over 160 mm&sup2;, making it the largest base die in
+                    Apple Silicon history. Apple essentially chose to throw physical area at the problem rather than
+                    fighting against TSMC's density limits.</p>
+
+                <ul>
+                    <li><strong>Transistor Count:</strong> 25 Billion vs 28 Billion (+12% Budget)</li>
+                    <li><strong>Performance Core Area:</strong> 2.62 mm&sup2; vs 3.09 mm&sup2;</li>
+                    <li><strong>Memory Bandwidth:</strong> 100 GB/s vs 120 GB/s (Transitioning to LPDDR5X)</li>
+                </ul>
+
+                <h3>Brute-Forcing a 10-Wide Architecture</h3>
+
+                <p>For years, Apple sat comfortably at an 8-wide decoder width. The M3 made a subtle nudge toward
+                    9-wide, but the M4 performance core finally makes the jump to a massive 10-wide architecture. This
+                    is the widest execution engine currently available in a consumer SoC.</p>
+
+                <figure class="content-image">
+                    <img src="m3-m4-block-diagram.png" alt="M3 vs M4 architectural block diagram comparison"
+                        loading="lazy">
+                    <figcaption>[ FIG::REF ] Apple M3 vs M4 performance core block diagram comparison detailing the
+                        transition from a 9-wide to a 10-wide decode architecture. Source: <a
+                            href="https://youtu.be/EbDPvcbilCs" target="_blank" rel="noopener noreferrer"
+                            style="color: var(--accent);">Geekerwan</a>.
+                    </figcaption>
+                </figure>
+
+                <p>To feed a 10-wide front end, you cannot just widen the pipes. You have to deepen the resource pool.
+                    The Re-Order Buffer and dispatch buffers are significantly larger, allowing the chip to hunt for
+                    instruction level parallelism much deeper within the codebase. Independent testing indicates average
+                    IPC gains of 7.3 percent for integer operations and 8.6 percent for floating point workloads over
+                    the M3. When you combine that with a massive clock speed jump from 4.05 GHz to 4.51 GHz, you end up
+                    with a single-core performance uplift of nearly 28 percent in synthetic benchmarks.</p>
+
+                <p>But the invisible trick making it all work involves <a
+                        href="https://eclecticlight.co/2024/11/11/inside-m4-chips-p-cores/" target="_blank"
+                        rel="noopener noreferrer" style="color: var(--accent);">thread mobility</a>. In the M1 and M3
+                    eras, macOS
+                    tended to park a thread on a core for seconds at a time. On the M4, the operating system rapidly
+                    moves threads every 0.3 seconds between cores and every 1.3 seconds between clusters. It is an
+                    incredibly clever scheduling trick to spread the thermal load across that expanded 3.09 square
+                    millimeter core area before the silicon hits a thermal wall.</p>
+
+                <h3>Humiliating the x86 Flagship: SPEC 2017</h3>
+
+                <p>The true testament to this 10-wide monster is its performance in SPEC 2017, the industry-standard
+                    benchmark for rigorous, sustained CPU execution. When placed head-to-head against Intel’s 6.0 GHz
+                    Core i9-14900K, the scale of Apple's architectural victory is staggering.</p>
+
+                <figure class="content-image">
+                    <img src="m4-spec-int-fp.png" alt="M4 vs M3 vs i9-14900K SPEC 2017 benchmark comparison"
+                        loading="lazy">
+                    <figcaption>[ FIG::REF ] SPEC 2017 integer and floating point comparison between the M4, M3, and
+                        i9-14900K. Source: <a href="https://youtu.be/EbDPvcbilCs" target="_blank"
+                            rel="noopener noreferrer" style="color: var(--accent);">Geekerwan</a>.
+                    </figcaption>
+                </figure>
+
+                <p>Despite running at a mere 4.47 GHz compared to the 14900K's extreme 6.00 GHz, the M4's performance
+                    core comprehensively dismantles the x86 flagship. In Integer operations, the M4 pushes a score of
+                    11.72 against the 14900K’s 9.93, while drawing a minuscule 7.21W. Even more humiliating is the
+                    Floating Point outcome, where the M4 reaches 17.96 against the i9's 14.20, leveraging only 8.95W
+                    while Intel's power bar graphically rockets off the chart entirely. In fact, even the
+                    previous-generation 3.86 GHz M3 cleanly edges out the 6 GHz 14900K in FP (14.32 vs 14.20). This
+                    isn't just an architectural victory; it represents an absolute wall for traditional x86 power
+                    scaling.</p>
+
+                <h3>The AI Hardware: SME2 and the Neural Engine Reality</h3>
+
+                <p>This theme of maturity over proprietary experimentation extends directly into the M4's dual-pronged
+                    approach to machine learning. First, on the CPU side, Apple finally moved away from its closed-off
+                    hardware approach. In the M1 through M3 generations, Apple relied on a proprietary hardware unit
+                    known as AMX for machine learning math. With the M4, they adopted the ARMv9.2-A instruction set, and
+                    replacing their proprietary AMX blocks with standardized SME2 (Scalable Matrix Extension
+                    2) units.</p>
+
+                <p>But make no mistake. Apple did not just pull an industry standard off the shelf. They essentially
+                    authored it. SME2 is widely understood to be the direct evolution of Apple's own AMX architecture,
+                    standardized and pushed upstream into the ARM instruction set. This matrix accelerator lives
+                    directly within each core cluster. It can sustain 2 TFLOPS of FP32 matrix math, completely opening
+                    up high performance AI computation to standard compilers like LLVM without forcing developers to ask
+                    permission through proprietary CoreML APIs.</p>
+
+                <p>However, the real focal point for heavy AI workloads is the 16-core Apple Neural Engine. Apple
+                    heavily markets the M4 Neural Engine at a staggering 38 TOPS in INT8 precision, which ostensibly
+                    doubles the 18 TOPS of the M3. But reverse engineering the hardware (source: <a
+                        href="https://maderix.substack.com/p/inside-the-m4-apple-neural-engine-615" target="_blank"
+                        rel="noopener noreferrer" style="color: var(--accent);">Maderix</a>) reveals a brilliant
+                    marketing
+                    illusion.</p>
+
+                <p>By bypassing CoreML to directly interface with the hardware pipeline, recent benchmarks show that the
+                    Neural Engine does not actually execute INT8 operations twice as fast. Instead, the hardware
+                    dequantizes INT8 weights to FP16 before the compute phase. The true peak performance remains 19
+                    TFLOPS in FP16 regardless of the quantization format. The 38 TOPS figure is merely an industry
+                    marketing convention applied to paper specs.</p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Configuration</th>
+                            <th style="text-align: right;">FP16 TOPS</th>
+                            <th style="text-align: right;">INT8 TOPS</th>
+                            <th style="text-align: right;">Ratio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Conv 1024 (single)</td>
+                            <td style="text-align: right;">6.27</td>
+                            <td style="text-align: right;">6.27</td>
+                            <td style="text-align: right;">1.00&times;</td>
+                        </tr>
+                        <tr>
+                            <td>Conv 2048 (single)</td>
+                            <td style="text-align: right;">7.16</td>
+                            <td style="text-align: right;">8.54</td>
+                            <td style="text-align: right;">1.19&times;</td>
+                        </tr>
+                        <tr>
+                            <td>8-chain conv 1024</td>
+                            <td style="text-align: right;">12.54</td>
+                            <td style="text-align: right;">13.31</td>
+                            <td style="text-align: right;">1.06&times;</td>
+                        </tr>
+                        <tr>
+                            <td>32-layer deep conv</td>
+                            <td style="text-align: right;">18.50</td>
+                            <td style="text-align: right;">18.83</td>
+                            <td style="text-align: right;">1.02&times;</td>
+                        </tr>
+                        <tr>
+                            <td><strong>64-layer deep conv</strong></td>
+                            <td style="text-align: right;">&mdash;</td>
+                            <td style="text-align: right;"><strong>19.00</strong></td>
+                            <td style="text-align: right;">&mdash;</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+                <p>While the raw throughput numbers are manipulated, the physical efficiency of the hardware is
+                    spectacular. The Neural Engine utilizes hard power gating that
+                    drops power consumption to exactly 0 milliwatts when idle. Under peak load, it delivers an
+                    astonishing 6.6 TFLOPS per watt, making it roughly 80 times more efficient per FLOP than an Nvidia
+                    A100. Furthermore, hardware probing (documented by <a
+                        href="https://maderix.substack.com/p/inside-the-m4-apple-neural-engine-615" target="_blank"
+                        rel="noopener noreferrer" style="color: var(--accent);">Maderix</a>) indicates the silicon is
+                    fundamentally a convolution engine.
+                    Standard matrix multiplications run three times faster when mathematically reshaped into 1x1
+                    convolutions.</p>
+
+                <p>This reveals the optimal strategy for on-device AI. The ultimate LLM inference pipeline on the M4 is
+                    hybrid. Developers should map large batch prefill operations to the highly efficient Neural Engine,
+                    while routing latency sensitive single token decode operations to the CPU's new standard SME2 units.
+                </p>
+
+                <p>The graphics and vector processing capabilities of the M4 have also seen a massive power budget
+                    allocation. While standard intensive floating point operations peak at approximately 1,400 mW per
+                    P-core, running NEON vector instructions can drive that power consumption up to over 3,230 mW. This
+                    highlights the architectural shift towards providing a thermal envelope that can sustain extreme
+                    bursts of throughput for modern code.</p>
+
+                <h3>The Graphics Engine Polish</h3>
+
+                <p>While the M3 introduced the heavy lifting for the GPU with hardware ray tracing, mesh shading, and
+                    Dynamic Caching, the M4 GPU operates as a meticulous refinement. We see a clock speed bump from 1.34
+                    GHz to 1.47 GHz. Thanks to the transition to LPDDR5X-7500 memory, the GPU is supplied with 20
+                    percent more bandwidth to work with.</p>
+
+                <h3>Sustaining Performance: The Thermal Reality</h3>
+
+                <p>In the fanless iPad Pro, Apple had to implement highly creative thermal management solutions to
+                    prevent the M4 from immediately throttling. Engineers integrated a copper alloy heat spreader
+                    directly into the Apple logo on the rear casing. They essentially transformed their own corporate
+                    branding into a functional radiator. This innovation, paired with extensive graphite sheeting,
+                    improved overall thermal performance by 20 percent compared to the previous generation. In actively
+                    cooled systems like the Mac mini and MacBook Pro, the M4 is finally allowed to stretch its legs,
+                    peaking at a TDP of 22W for the base chip and scaling substantially higher for the Pro and Max
+                    variants.</p>
+
+                <figure class="content-image">
+                    <img src="m4-teardown.png"
+                        alt="iPad Pro M4 internal teardown showing the central motherboard and M4 chip" loading="lazy">
+                    <figcaption>[ FIG::REF ] Internal teardown of the M4 iPad Pro, highlighting the central placement of
+                        the motherboard and the M4 chip. Source: <a href="https://www.youtube.com/watch?v=RMtvWPizE5Q"
+                            target="_blank" rel="noopener noreferrer" style="color: var(--accent);">Wekihome</a>.
+                    </figcaption>
+                </figure>
+
+                <h3>Conclusion: Maturity Over Experimentation</h3>
+
+                <p>Ultimately, the transition from the M3 to the M4 signals that Apple has successfully mastered the
+                    3-nanometer node. They moved away from a crippled, manufacturing constrained design to an
+                    architecture of massive scale. By expanding the performance cores to a 10-wide configuration and
+                    upstreaming their proprietary AMX work into the ARM-standard SME2, Apple has discarded the strictly
+                    proprietary AI hardware of previous generations. In its place stands a mature, deeply efficient, and
+                    standardized platform fully equipped for the next decade of on-device AI.</p>
+            </div>
+
+            <footer class="post__footer">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span class="label-mono">[ END_OF_LOG ]</span>
+                    <div class="social-row" style="gap: 0.5rem;">
+                        <span class="label-mono" style="align-self: center;">SHARE :</span>
+                        <a href="#" id="share-twitter" class="social-btn"
+                            style="padding: 0.5rem; font-size: 0.9rem;"><svg width="14" height="14"
+                                viewBox="0 0 512 512" fill="currentColor">
+                                <path
+                                    d="M459.4 151.7c.3 4.5 .3 9.1 .3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53 51.7 63.7 129.3 105.3 216.4 109.8-1.6-7.8-2.6-15.9-2.6-24 0-57.8 46.8-104.9 104.9-104.9 30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3z" />
+                            </svg></a>
+                        <a href="#" id="share-link" class="social-btn" style="padding: 0.5rem; font-size: 0.9rem;"><svg
+                                width="14" height="14" viewBox="0 0 640 512" fill="currentColor">
+                                <path
+                                    d="M579.8 267.7c56.5-56.5 56.5-148 0-204.5c-50-50-128.8-56.5-186.3-15.4l-1.6 1.1c-14.4 10.3-17.7 30.3-7.4 44.6s30.3 17.7 44.6 7.4l1.6-1.1c32.1-22.9 76-19.3 103.8 8.6c31.5 31.5 31.5 82.5 0 114L422.3 334.8c-31.5 31.5-82.5 31.5-114 0c-27.9-27.9-31.5-71.8-8.6-103.8l1.1-1.6c10.3-14.4 6.9-34.4-7.4-44.6s-34.4-6.9-44.6 7.4l-1.1 1.6C206.5 251.2 213 330 263 380c56.5 56.5 148 56.5 204.5 0L579.8 267.7zM60.2 244.3c-56.5 56.5-56.5 148 0 204.5c50 50 128.8 56.5 186.3 15.4l1.6-1.1c14.4-10.3 17.7-30.3 7.4-44.6s-30.3-17.7-44.6-7.4l-1.6 1.1c-32.1 22.9-76 19.3-103.8-8.6C74 372.1 74 321.1 105.5 289.5L217.7 177.2c31.5-31.5 82.5-31.5 114 0c27.9 27.9 31.5 71.8 8.6 103.9l-1.1 1.6c-10.3 14.4-6.9 34.4 7.4 44.6s34.4 6.9 44.6-7.4l1.1 1.6C433.5 260.8 427 182 377 132c-56.5-56.5-148-56.5-204.5 0L60.2 244.3z" />
+                            </svg></a>
+                    </div>
+                </div>
+            </footer>
+        </article>
+    </section>
+
+    <footer class="footer">
+        <div class="footer__inner">
+            <span class="label-mono">[ REPTALICA // LOG_SYSTEM ]</span>
+            <span class="footer__sep" aria-hidden="true">&mdash;</span>
+            <span class="footer__disclaimer">Information provided as-is. All rights reserved.</span>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+</body>
+
+</html>
