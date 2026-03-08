@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[SYS::REPTALICA_LOG // THE_THERMAL_WALL]</title>
+    <meta name="description"
+        content="Some talks about why Qualcomm decided to use Heat Pass Block in their next flagship chipset">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="The Benchmark War and the Consequences - Reptalica">
+    <meta property="og:description"
+        content="Some talks about why Qualcomm decided to use Heat Pass Block in their next flagship chipset">
+    <meta property="og:image" content="https://reptalica.netlify.app/blog/sm8975-thermal-stack.png">
+    <meta property="og:url" content="https://reptalica.netlify.app/blog/snapdragon-8-elite-gen6.html">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="The Benchmark War and the Consequences - Reptalica">
+    <meta name="twitter:description"
+        content="Some talks about why Qualcomm decided to use Heat Pass Block in their next flagship chipset">
+    <meta name="twitter:image" content="https://reptalica.netlify.app/blog/sm8975-thermal-stack.png">
+
+    <link rel="icon" type="image/png" href="../assets/favicon.png">
+
+    <!-- Fonts (non-render-blocking) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style"
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        rel="stylesheet" media="print" onload="this.media='all'">
+
+    <link rel="stylesheet" href="../style.css">
+
+    <style>
+        .post {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--surface);
+            border: 2px solid var(--border);
+            clip-path: var(--clip-corner);
+            padding: 4rem;
+            position: relative;
+        }
+
+        .post::before {
+            content: '[CLASSIFIED // ARCHIVE]';
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--accent);
+            opacity: 0.4;
+        }
+
+        .post__header {
+            margin-bottom: 3rem;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 2rem;
+        }
+
+        .post__title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 6vw, 3.5rem);
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 0.03em;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        .post__meta {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .post__image {
+            width: 100%;
+            height: 400px;
+            margin-bottom: 3rem;
+            clip-path: var(--clip-corner-sm);
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .post__image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .post__content {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text);
+        }
+
+        .post__content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .post__content h3 {
+            font-family: var(--font-mono);
+            color: var(--accent);
+            font-size: 1.3rem;
+            margin: 2.5rem 0 1rem 0;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .post__content blockquote {
+            border-left: 3px solid var(--accent);
+            padding: 1rem 2rem;
+            background: var(--accent-dim);
+            font-style: italic;
+            margin: 2rem 0;
+            clip-path: var(--clip-corner-sm);
+        }
+
+        .post__content ul {
+            margin: 1rem 0 1.5rem 1.5rem;
+            list-style: none;
+        }
+
+        .post__content ul li {
+            margin-bottom: 1rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        .post__content ul li::before {
+            content: '>';
+            position: absolute;
+            left: -0.5rem;
+            color: var(--accent);
+            font-family: var(--font-mono);
+            font-weight: 700;
+        }
+
+        .post__content .content-image {
+            width: 100%;
+            margin: 2rem 0;
+            border: 1px solid var(--border);
+            clip-path: var(--clip-corner-sm);
+            overflow: hidden;
+        }
+
+        .post__content .content-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .post__content .content-image figcaption {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            padding: 0.8rem 1rem;
+            background: var(--surface-elevated);
+            border-top: 1px solid var(--border);
+        }
+
+        .post__content strong {
+            color: var(--accent);
+        }
+
+        .post__content code {
+            font-family: var(--font-mono);
+            font-size: 0.95em;
+            background: var(--surface-elevated);
+            padding: 0.15em 0.4em;
+            border: 1px solid var(--border);
+            color: var(--accent);
+        }
+
+        .post__content .spec-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+        }
+
+        .post__content .spec-table th,
+        .post__content .spec-table td {
+            padding: 0.8rem 1rem;
+            border: 1px solid var(--border);
+            text-align: left;
+        }
+
+        .post__content .spec-table th {
+            background: var(--accent-dim);
+            color: var(--accent);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+        }
+
+        .post__content .spec-table td {
+            background: var(--surface-elevated);
+        }
+
+        .post__content .spec-table tr:hover td {
+            background: var(--accent-dim);
+        }
+
+        .post__footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 2px solid var(--border);
+        }
+
+        @media (max-width: 768px) {
+            .post {
+                padding: 2rem;
+                clip-path: none;
+                border-left: none;
+                border-right: none;
+            }
+
+            .post__image {
+                height: 250px;
+            }
+
+            .post__content .spec-table {
+                display: block;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Noise grain overlay -->
+    <div class="noise-overlay" aria-hidden="true"></div>
+
+    <section class="section" style="padding-top: 4rem; min-height: 100vh;">
+        <div class="section__header" style="max-width: 800px; margin: 0 auto 4rem auto;">
+            <a href="../blog.html" class="btn btn--primary" style="margin-bottom: 2rem; display: inline-flex;">
+                <svg width="14" height="14" viewBox="0 0 448 512" fill="currentColor" style="vertical-align:middle">
+                    <path
+                        d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z" />
+                </svg> RETURN TO ARCHIVES
+            </a>
+            <span class="label-mono section__tag">LOG::ENTRY // 007</span>
+        </div>
+
+        <article class="post">
+            <header class="post__header">
+                <h1 class="post__title">The Benchmark War and the Consequences </h1>
+                <div class="post__meta">
+                    <div class="meta-item">
+                        <span class="label-mono">TIMESTAMP :</span>
+                        <span class="label-mono" style="color: var(--text);">2026.03.09</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="label-mono">AUTHOR :</span>
+                        <span class="label-mono" style="color: var(--text);">REPTALICA</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="post__image" id="post-hero-image">
+                <img src="sm8975-thermal-stack.png"
+                    alt="SM8975 thermal stack cross-section showing copper block, vapor chamber, and offset DRAM layout"
+                    loading="lazy">
+            </div>
+
+            <div class="post__content">
+                <p>The upcoming Snapdragon 8 Elite Gen 6 series represents a pivotal moment for mobile silicon. As
+                    manufacturers transition to 2nm fabrication, the industry is encountering a physical phenomenon
+                    known as the <strong>"Thermal Wall."</strong> The architecture of the Oryon Gen 3 core indicates
+                    that chipmakers are now prioritizing peak benchmark scores over sustainable power envelopes.</p>
+
+                <h3>The Oryon Gen 3 Power Crisis</h3>
+
+                <p>The fundamental issue lies in the efficiency curve of the Oryon Gen 3. To maintain competitive
+                    year-over-year performance gains, Qualcomm is pushing voltages to a breaking point. Data from
+                    current high-frequency trends, such as those analyzed by <a
+                        href="https://www.youtube.com/@Geekerwan" target="_blank" rel="noopener"
+                        style="color: var(--accent);">Geekerwan</a>, reveal a terrifying power trajectory for
+                    single-core tasks.</p>
+
+                <p>At a clock frequency of <strong>4.6 GHz</strong>, a single core consumes a massive
+                    <strong>22W</strong>. Even dropping to 4.26 GHz only brings the draw down to 10.5W. To put this in
+                    perspective: 22W is more power than an entire fanless MacBook Air consumes under a full multi-core
+                    load. Because smartphones lack active cooling to dissipate this concentrated heat flux, traditional
+                    chips encounter an immediate thermal "choke." Peak performance is often lost within seconds as the
+                    hardware attempts to prevent permanent damage.
+                </p>
+
+                <figure class="content-image">
+                    <img src="geekerwan-power-curve.png"
+                        alt="Geekerwan power curve showing the exponential wattage spike between 4.26GHz and 4.61GHz"
+                        loading="lazy">
+                    <figcaption>[ FIG::REF ] Geekerwan 503.bwaves power analysis showing the exponential wattage spike
+                        between 4.26 GHz and 4.61 GHz. Even the ~350 MHz clock increase results in a near-doubling of
+                        peak
+                        power draw. Source: <a href="https://www.youtube.com/@Geekerwan" target="_blank" rel="noopener"
+                            style="color: var(--accent);">Geekerwan</a></figcaption>
+                </figure>
+
+                <h3>The Dual Choice: SM8950 vs. SM8975</h3>
+
+                <p>Qualcomm has responded to these thermodynamic realities by bifurcating the Gen 6 lineup. This creates
+                    a clear choice for OEMs between standard efficiency and "brute force" peak performance.</p>
+
+                <h3>The SM8950 (Standard Edition)</h3>
+
+                <p>The standard SM8950 retains the traditional <strong>Stacked PoP (Package-on-Package)</strong> layout.
+                    This configuration keeps the DRAM module directly on top of the CPU to save motherboard space. With
+                    a footprint of <code>14.0 mm x 15.95 mm</code>, it is designed for the 5W continuous power range.
+                    However, because the RAM acts as a thermal blanket, it cannot handle high wattage without thottling.
+                </p>
+                <h3>The SM8975 (Pro/Ultra Edition)</h3>
+
+                <p>The SM8975 Pro is a radical physical redesign. It utilizes an <strong>Offset PoP</strong> layout, as
+                    seen on Exynos 2600,
+                    which "moves the furniture" by sliding the RAM to the side of the CPU die. This change exposes the
+                    top of the silicon, allowing for the integration of <strong>Heat Pass Block (HPB)</strong>
+                    technology. HPB is a direct-to-die copper heat slug that creates a metallic highway for heat to
+                    escape, reducing thermal resistance by <strong>20%</strong>. The cost of this cooling is physical
+                    size: the SM8975 is a "Long-Boy" package measuring <code>21.2 mm</code> in length.</p>
+
+                <figure class="content-image">
+                    <img src="sm8975-datasheet.png"
+                        alt="SM8975 datasheet showing the 21.2mm MPSP2138B package dimensions compared to the standard 14.0mm footprint"
+                        loading="lazy">
+                    <figcaption>[ FIG::REF ] SM8975 package drawings from the Qualcomm datasheet (MPSP2138B) showing the
+                        elongated 21.2 mm x ~15 mm Offset PoP footprint. Note the "Heat Slug Sheet 2" callout on the top
+                        view and the separated RAM/CPU BGA pads on the bottom view.</figcaption>
+                </figure>
+
+
+
+                <h3>Alternatives?</h3>
+
+                <p>While the SM8975 uses a copper sledgehammer to chase peak wattage, other designs suggest a more
+                    balanced philosophy. The <strong>Kirin 9030 Pro</strong> handles thermal density without destroying
+                    the internal real estate of the motherboard. Instead of the massive Offset PoP layout, the Kirin
+                    approach utilizes <strong>Peripheral Heat Pass Blocks</strong>. These side-mounted copper slugs
+                    bridge heat away to the phone frame while keeping the RAM on top of the CPU. This allows the chip to
+                    maintain a standard square footprint, preserving space for larger batteries or camera sensors.</p>
+
+                <figure class="content-image">
+                    <img src="kirin-9030-pro-package.jpg"
+                        alt="Kirin 9030 Pro package showing the metallic slugs on the left and right sides"
+                        loading="lazy">
+                    <figcaption>[ FIG::REF ] Kirin 9030 Pro package underside showing four peripheral Heat Pass Block
+                        copper slugs (silver-colored bumps, two per side) mounted along the left and right edges of the
+                        BGA substrate.</figcaption>
+                </figure>
+
+                <h3>The Death of the Small SoC</h3>
+
+                <p>The Snapdragon 8 Elite Gen 6 series marks the end of the small, unified SoC era. By forcing a choice
+                    between the space-efficient SM8950 and the thermally-armored SM8975, Qualcomm is admitting that
+                    transistors alone cannot solve the 22W heat problem.</p>
+
+                <p>We have reached a point of diminishing returns. When a mobile chip requires a <code>21.2 mm</code>
+                    footprint and a dedicated copper slug just to sustain a little bit longer in a benchmark run, the
+                    industry has
+                    traded practical engineering for a marketing parlor trick. The question for the next generation of
+                    flagships is no longer how fast they are. Instead, it is a question of how much motherboard space a
+                    manufacturer is willing to sacrifice to keep the silicon from melting.</p>
+            </div>
+
+            <footer class="post__footer">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span class="label-mono">[ END_OF_LOG ]</span>
+                    <div class="social-row" style="gap: 0.5rem;">
+                        <span class="label-mono" style="align-self: center;">SHARE :</span>
+                        <a href="#" id="share-twitter" class="social-btn"
+                            style="padding: 0.5rem; font-size: 0.9rem;"><svg width="14" height="14"
+                                viewBox="0 0 512 512" fill="currentColor">
+                                <path
+                                    d="M459.4 151.7c.3 4.5 .3 9.1 .3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53 51.7 63.7 129.3 105.3 216.4 109.8-1.6-7.8-2.6-15.9-2.6-24 0-57.8 46.8-104.9 104.9-104.9 30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3z" />
+                            </svg></a>
+                        <a href="#" id="share-link" class="social-btn" style="padding: 0.5rem; font-size: 0.9rem;"><svg
+                                width="14" height="14" viewBox="0 0 640 512" fill="currentColor">
+                                <path
+                                    d="M579.8 267.7c56.5-56.5 56.5-148 0-204.5c-50-50-128.8-56.5-186.3-15.4l-1.6 1.1c-14.4 10.3-17.7 30.3-7.4 44.6s30.3 17.7 44.6 7.4l1.6-1.1c32.1-22.9 76-19.3 103.8 8.6c31.5 31.5 31.5 82.5 0 114L422.3 334.8c-31.5 31.5-82.5 31.5-114 0c-27.9-27.9-31.5-71.8-8.6-103.8l1.1-1.6c10.3-14.4 6.9-34.4-7.4-44.6s-34.4-6.9-44.6 7.4l-1.1 1.6C206.5 251.2 213 330 263 380c56.5 56.5 148 56.5 204.5 0L579.8 267.7zM60.2 244.3c-56.5 56.5-56.5 148 0 204.5c50 50 128.8 56.5 186.3 15.4l1.6-1.1c14.4-10.3 17.7-30.3 7.4-44.6s-30.3-17.7-44.6-7.4l-1.6 1.1c-32.1 22.9-76 19.3-103.8-8.6C74 372.1 74 321.1 105.5 289.5L217.7 177.2c31.5-31.5 82.5-31.5 114 0c27.9 27.9 31.5 71.8 8.6 103.9l-1.1 1.6c-10.3 14.4-6.9 34.4 7.4 44.6s34.4 6.9 44.6-7.4l1.1 1.6C433.5 260.8 427 182 377 132c-56.5-56.5-148-56.5-204.5 0L60.2 244.3z" />
+                            </svg></a>
+                    </div>
+                </div>
+            </footer>
+        </article>
+    </section>
+
+    <footer class="footer">
+        <div class="footer__inner">
+            <span class="label-mono">[ REPTALICA // LOG_SYSTEM ]</span>
+            <span class="footer__sep" aria-hidden="true">&mdash;</span>
+            <span class="footer__disclaimer">Information provided as-is. All rights reserved.</span>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+</body>
+
+</html>
