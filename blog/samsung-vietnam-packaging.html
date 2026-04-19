@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[SYS::REPTALICA_LOG // THE_PACKAGE_IS_THE_PRODUCT]</title>
+    <meta name="description"
+        content="Two rumors pointing at the same province at the same time, both aimed at AI hardware. What Samsung's rumored $4 billion chip packaging plant in Vietnam actually means for the industry.">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="The Package is the Product - Reptalica">
+    <meta property="og:description"
+        content="Two rumors pointing at the same province at the same time, both aimed at AI hardware. What Samsung's rumored $4 billion chip packaging plant in Vietnam actually means for the industry.">
+    <!-- Image to be added by user later -->
+    <meta property="og:image" content="https://reptalica.netlify.app/blog/samsung-vietnam-hero.png">
+    <meta property="og:url" content="https://reptalica.netlify.app/blog/samsung-vietnam-packaging.html">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="The Package is the Product - Reptalica">
+    <meta name="twitter:description"
+        content="Two rumors pointing at the same province at the same time, both aimed at AI hardware. What Samsung's rumored $4 billion chip packaging plant in Vietnam actually means for the industry.">
+    <meta name="twitter:image" content="https://reptalica.netlify.app/blog/samsung-vietnam-hero.png">
+
+    <link rel="icon" type="image/png" href="../assets/favicon.png">
+
+    <!-- Fonts (non-render-blocking) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style"
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        rel="stylesheet" media="print" onload="this.media='all'">
+
+    <link rel="stylesheet" href="../style.css">
+
+    <style>
+        .post {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--surface);
+            border: 2px solid var(--border);
+            clip-path: var(--clip-corner);
+            padding: 4rem;
+            position: relative;
+        }
+
+        .post::before {
+            content: '[CLASSIFIED // ARCHIVE]';
+            position: absolute;
+            top: 0.8rem;
+            right: 1.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--accent);
+            opacity: 0.4;
+        }
+
+        .post__header {
+            margin-bottom: 3rem;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 2rem;
+        }
+
+        .post__title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 6vw, 3.5rem);
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 0.03em;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        .post__meta {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .post__image {
+            width: 100%;
+            height: 400px;
+            margin-bottom: 3rem;
+            clip-path: var(--clip-corner-sm);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--surface-elevated);
+        }
+
+        .post__image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .post__content {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: var(--text);
+        }
+
+        .post__content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .post__content h3 {
+            font-family: var(--font-mono);
+            color: var(--accent);
+            font-size: 1.3rem;
+            margin: 2.5rem 0 1rem 0;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .post__content blockquote {
+            border-left: 3px solid var(--accent);
+            padding: 1rem 2rem;
+            background: var(--accent-dim);
+            font-style: italic;
+            margin: 2rem 0;
+            clip-path: var(--clip-corner-sm);
+        }
+
+        .post__content ul {
+            margin: 1rem 0 1.5rem 1.5rem;
+            list-style: none;
+        }
+
+        .post__content ul li {
+            margin-bottom: 1rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        .post__content ul li::before {
+            content: '>';
+            position: absolute;
+            left: -0.5rem;
+            color: var(--accent);
+            font-family: var(--font-mono);
+            font-weight: 700;
+        }
+
+        .post__content .content-image {
+            width: 100%;
+            margin: 2rem 0;
+            border: 1px solid var(--border);
+            clip-path: var(--clip-corner-sm);
+            overflow: hidden;
+            background: var(--surface-elevated);
+        }
+
+        .post__content .content-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .post__content .content-image figcaption {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            padding: 0.8rem 1rem;
+            background: var(--surface-elevated);
+            border-top: 1px solid var(--border);
+        }
+
+        .post__content strong {
+            color: var(--accent);
+        }
+
+        .post__content code {
+            font-family: var(--font-mono);
+            font-size: 0.95em;
+            background: var(--surface-elevated);
+            padding: 0.15em 0.4em;
+            border: 1px solid var(--border);
+            color: var(--accent);
+        }
+
+        .post__footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 2px solid var(--border);
+        }
+
+        @media (max-width: 768px) {
+            .post {
+                padding: 2rem 1.2rem;
+                clip-path: none;
+                border-left: none;
+                border-right: none;
+            }
+
+            .post__title {
+                font-size: clamp(1.6rem, 5vw, 2.5rem);
+                word-break: break-word;
+                overflow-wrap: break-word;
+            }
+
+            .post__image {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Noise grain overlay -->
+    <div class="noise-overlay" aria-hidden="true"></div>
+
+    <section class="section" style="padding-top: 4rem; min-height: 100vh;">
+        <div class="section__header" style="max-width: 800px; margin: 0 auto 4rem auto;">
+            <a href="../blog.html" class="btn btn--primary" style="margin-bottom: 2rem; display: inline-flex;">
+                <svg width="14" height="14" viewBox="0 0 448 512" fill="currentColor" style="vertical-align:middle">
+                    <path
+                        d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z" />
+                </svg> RETURN TO ARCHIVES
+            </a>
+            <span class="label-mono section__tag">LOG::ENTRY // 008</span>
+        </div>
+
+        <article class="post">
+            <header class="post__header">
+                <h1 class="post__title">The Package is the Product</h1>
+                <div class="post__meta">
+                    <div class="meta-item">
+                        <span class="label-mono">TIMESTAMP :</span>
+                        <span class="label-mono" style="color: var(--text);">2026.04.19</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="label-mono">AUTHOR :</span>
+                        <span class="label-mono" style="color: var(--text);">REPTALICA</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="post__image" id="post-hero-image">
+                <img src="epic-if-link.png"
+                    alt="Abstract rendering of EPYC substrate layout tracing Infinity Fabric connections"
+                    loading="lazy">
+            </div>
+
+            <div class="post__content">
+                <p>Two things leaked in the same week that I think are worth reading together.</p>
+
+                <p>Sources familiar with the matter say Samsung Electronics is planning a $4 billion chip packaging
+                    plant in Thái Nguyên, Vietnam, with a $2 billion first phase. Separately, industry sources in Korea
+                    report that Samsung Electro-Mechanics, the components subsidiary, is building a new production line
+                    there for something called an MLCC embedded substrate, with investment expected to run into the
+                    hundreds of billions of Korean won over two years. Vietnam's finance ministry confirmed it is
+                    working on a memorandum of understanding with Samsung on a semiconductor project, without giving
+                    details.</p>
+
+                <p>Neither has been officially confirmed by Samsung. But two rumors pointing at the same province at the
+                    same time, both aimed at AI hardware, is worth paying attention to, especially if you live here,
+                    which I do.</p>
+
+                <p>So let's walk through what this actually means.</p>
+
+                <h3>Packaging &mdash; And No, Not the Retail Box</h3>
+
+                <p>If you asked a random person what "chip packaging" means, they would probably picture the retail box.
+                    The cardboard. The plastic tray. The "Intel Inside" sticker. Completely reasonable interpretation of
+                    the word, and also not what anyone in the semiconductor industry means when they say it.</p>
+
+                <p>In chip engineering, packaging refers to the physical process of taking a bare silicon die, which
+                    fresh out of the fab is basically a fragile, unusable sliver of silicon with microscopic pads on it,
+                    and turning it into something you can actually put in a device. You encase it in a protective
+                    housing, connect those microscopic pads to larger external contacts, and mount the whole thing onto
+                    a substrate so it can interface with a circuit board.</p>
+
+                <figure class="content-image">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--border);">
+                        <img src="9995wx-bare-die.png"
+                            alt="AMD Ryzen Threadripper PRO 9995WX bare dies, showing CCDs and IO die" loading="lazy"
+                            style="width: 100%; height: 100%; object-fit: cover;">
+                        <img src="9995wx-delid.png" alt="AMD Ryzen Threadripper PRO 9995WX delidded packaged chip"
+                            loading="lazy" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <figcaption>[ FIG::REF ] A side-by-side of bare silicon dies (left) versus a finished packaged chip
+                        (right), using the Threadripper PRO 9995WX as an example. Shows exactly what "before and after"
+                        packaging looks like. Images via 万扯淡 (Bilibili).</figcaption>
+                </figure>
+
+                <p>That is the basic version. In 1995 this was genuinely just logistics. You made the chip, you wrapped
+                    it up, you shipped it.</p>
+
+                <p>The reason packaging became interesting, expensive, and strategically critical is that modern chips
+                    are no longer single dies that just need to be wrapped. They are multi-die assemblies where the way
+                    the dies are connected to each other and to their memory is one of the primary engineering levers
+                    for performance. How close is the memory to the compute? How wide is the data path between chiplets?
+                    How stable is the power delivery underneath all of it? These are packaging questions now, and the
+                    answers directly determine how fast and how efficiently the chip runs.</p>
+
+                <p>So when Samsung is rumored to be building a $4 billion chip packaging plant, they are not building a
+                    bigger box factory. They are building a facility to physically assemble next-generation multi-die AI
+                    hardware, the kind where the package itself is doing serious engineering work.</p>
+
+                <p>The name is terrible. The thing it describes is not boring at all.</p>
+
+                <h3>Wait, What Are Chiplets</h3>
+
+                <p>For most of semiconductor history, a processor was a single monolithic die. One piece of silicon with
+                    everything on it, CPU cores, cache, memory controller, IO, all of it. You made it as big as you
+                    needed it to be.</p>
+
+                <p>The problem is that bigger dies are exponentially harder to make. A larger die means more area
+                    exposed to defects on the wafer, which tanks your yield. At a certain size, most of what you are
+                    paying for ends up in the bin. And as designs got more complex, more cores, more cache, more
+                    specialized blocks for AI and graphics, the monolithic die approach started hitting a wall.</p>
+
+                <p>The industry's answer was to stop trying to put everything on one piece of silicon and instead split
+                    the design into smaller, specialized tiles called chiplets, then stitch them together in the
+                    package. Each chiplet is small enough to manufacture with good yield. Each can be made on whatever
+                    process node makes the most sense for it. Your CPU cores on the latest bleeding edge node, your IO
+                    on an older cheaper node where it runs perfectly fine. Then you assemble them together and connect
+                    them with high-density interconnects so they behave like a single chip to the software running on
+                    top.</p>
+
+                <figure class="content-image">
+                    <img src="epic-if-link.png"
+                        alt="AMD EPYC processor substrate layout showing four CCD chiplets and Infinity Fabric interconnect routing"
+                        loading="lazy" style="width: 100%; display: block;">
+                    <figcaption>[ FIG::REF ] A substrate-level layout of a chiplet-based AMD processor. The blue modules
+                        are the individual compute chiplets, while the pink and cyan traces map out the high-density
+                        Infinity Fabric interconnects stitching the entire assembly together.</figcaption>
+                </figure>
+
+                <p>This is now how most serious processors are built. And packaging is what makes it possible.</p>
+
+                <h3>What Good Packaging Actually Looks Like in the Real World</h3>
+
+                <p><strong>AMD Ryzen and EPYC, the chiplet pioneer</strong></p>
+                <p>AMD was the company that really made chiplets mainstream in consumer and server processors. Their
+                    Ryzen and EPYC chips split the design into CPU core chiplets called CCDs and a separate IO die that
+                    handles memory controllers, PCIe lanes, and interconnects. The CCDs get made on TSMC's latest node
+                    where compute density matters. The IO die gets made on an older node where it is cheaper and the
+                    analog circuits actually prefer it.</p>
+
+                <p>The result is that AMD can build a 96-core server chip without trying to manufacture a single die the
+                    size of a postage stamp. They build smaller tiles, test each one, discard the bad ones, and assemble
+                    the good ones into a package. Yield goes up. Cost per core goes down. The packaging is doing the
+                    work that would have been physically impossible on a monolithic die.</p>
+
+                <p>The interconnect between chiplets called Infinity Fabric runs fast enough that from the software's
+                    perspective, it mostly just looks like one chip. The seams are nearly invisible.</p>
+
+                <p><strong>Apple M-series, packaging as product design</strong></p>
+                <p>When Apple launched the M1 Ultra, they took two M1 Max dies and connected them with a high-bandwidth
+                    die-to-die interconnect called UltraFusion, then marketed the result as a single chip. The software
+                    sees one processor. The hardware is two dies talking to each other across a bridge in the package at
+                    speeds fast enough that the latency is negligible for most workloads.</p>
+
+                <p>This is also why the M-series memory story is interesting. The CPU, GPU, and Neural Engine all share
+                    the same physical pool of memory on the same package, connected by an extremely wide internal bus.
+                    On the M4 Pro and M5 Pro, that memory runs on tightly integrated LPDDR5X with bandwidth numbers that
+                    discrete desktop GPUs struggle to match despite having more raw VRAM. There is no discrete GPU
+                    shouting across a PCIe slot to reach its memory. Everything is on the same package, talking at close
+                    range.</p>
+
+                <figure class="content-image">
+                    <img src="Apple-M1-Ultra-chipset-220308_big.jpg.large_2x.jpg"
+                        alt="Apple M1 Ultra die shot highlighting the UltraFusion interconnect joining two M1 Max dies"
+                        loading="lazy" style="width: 100%; display: block;">
+                    <figcaption>[ FIG::REF ] Apple's official M1 Ultra die shot showing the two M1 Max dies joined at
+                        the center via the UltraFusion interconnect. Apple has published this image publicly and it is
+                        one of the clearest visual explanations of die-to-die packaging that exists for a consumer
+                        audience.</figcaption>
+                </figure>
+
+                <p>The result is a machine that runs sustained creative workloads, video export, 3D rendering, local AI
+                    inference, with thermals that would embarrass a traditional laptop. That is packaging doing real
+                    engineering work, not just marketing.</p>
+
+                <p><strong>AMD and HBM, an expensive lesson that became a data center play</strong></p>
+                <p>AMD tried HBM on consumer and professional Radeon GPUs for a few generations. The Fury series in
+                    2015, later the Vega-based Radeon Pro and Radeon VII cards. The bandwidth numbers were genuinely
+                    impressive. The cost was not. HBM is expensive to manufacture and even more expensive to package
+                    correctly, and for a consumer GPU where GDDR6 is fast enough for most workloads, the price premium
+                    was difficult to justify. AMD eventually dropped HBM from their Radeon lineup entirely. The current
+                    RX 7000 series runs on GDDR6 like everything else in the consumer space.</p>
+
+                <p>Where HBM survived on the AMD side is the Instinct MI series, their data center compute accelerators.
+                    The MI300X, which competes directly with Nvidia's H100 and B100, uses HBM3 stacked directly on the
+                    package. At that scale, the bandwidth is not a premium feature, it is a hard requirement. The
+                    workloads running on MI300X class hardware are so memory-hungry that GDDR6 simply cannot feed them
+                    fast enough regardless of price. HBM is the only answer that works, which is exactly why it remains
+                    the standard for AI accelerators even as it disappeared from everything else.</p>
+
+                <p>The Radeon story is actually a useful illustration of the cost dynamic. HBM packaging is hard enough
+                    and expensive enough that even a company with AMD's engineering capability decided it was not worth
+                    it for the consumer market. The fact that it is still the default for data center AI hardware tells
+                    you something about how uncompromising those workloads are about memory bandwidth.</p>
+
+                <figure class="content-image">
+                    <img src="r9-fury-hbm.png"
+                        alt="A delidded AMD Radeon R9 Fury GPU showing the central die and 4 surrounding HBM stacks"
+                        loading="lazy" style="width: 100%; display: block;">
+                    <figcaption>[ FIG::REF ] An early implementation of advanced packaging on a consumer graphics card:
+                        the AMD Radeon R9 Fury series. Surrounding the large central silicon die are four stacks of High
+                        Bandwidth Memory (HBM). Image via 万扯淡 (Bilibili).</figcaption>
+                </figure>
+
+                <p><strong>Nvidia Blackwell, when the package becomes the product</strong></p>
+                <p>Nvidia's Blackwell architecture pushed this further still. The flagship B100 connects two compute
+                    dies to each other using a high-density interconnect, then surrounds them with HBM stacks, all
+                    inside one package. The individual dies are too large to manufacture as a single piece with
+                    acceptable yield, so Nvidia cuts the design in half and stitches the halves back together in the
+                    package. The fab makes the pieces. The packaging makes the chip.</p>
+
+                <figure class="content-image">
+                    <img src="nvidia-blackwell-ultra.png"
+                        alt="Nvidia Blackwell Ultra GPU layout diagram showing dual graphics processor clusters connected by NV-HBI"
+                        loading="lazy" style="width: 100%; display: block;">
+                    <figcaption>[ FIG::REF ] Nvidia's official Blackwell Ultra GPU diagram showing the two-die layout
+                        seamlessly connected via a 10TB/s NV-HBI die-to-die interface. It perfectly illustrates how two
+                        massive dies are stitched together in the package.</figcaption>
+                </figure>
+
+                <p>The packaging for Blackwell is handled by TSMC using their CoWoS technology, which stands for Chip on
+                    Wafer on Substrate. It is one of the most advanced packaging processes in the world and it is also
+                    one of the most constrained. TSMC has been running CoWoS at near full capacity since AI demand
+                    exploded, and customers have been routinely supply-limited not because TSMC cannot make the dies,
+                    but because TSMC does not have enough CoWoS packaging capacity to assemble them fast enough. Nvidia
+                    has publicly acknowledged this. The fab is not always the bottleneck anymore. Sometimes the
+                    packaging line is.</p>
+
+                <p>This is the direction everything is heading. The package is increasingly where the product gets
+                    defined, not just where the chip gets wrapped.</p>
+
+                <h3>The Substrate Sitting Under All of This</h3>
+
+                <p>Underneath everything, the compute chiplets, the HBM stacks, the die-to-die interconnects, there is a
+                    layer called the substrate. It is the foundation the whole assembly sits on. It routes power to
+                    every die, manages signal integrity, and handles a lot of passive electrical work keeping the
+                    operating environment stable. Not glamorous. Also increasingly the thing that determines whether a
+                    package design actually hits its performance targets.</p>
+
+                <p>Samsung Electro-Mechanics has been developing a substrate with MLCCs built directly inside it. An
+                    MLCC, a Multi-Layer Ceramic Capacitor, is a tiny passive component that smooths out the voltage
+                    feeding a chip so it stays stable under load. Smaller than a grain of rice, which is why the
+                    industry calls them "the rice of electronics." Funny if you are Vietnamese. Just a metaphor
+                    otherwise.</p>
+
+                <p>Normally these sit on the surface of a board as discrete components you can spot in a teardown.
+                    Embedding them inside the substrate puts them physically closer to the chip. That shorter distance
+                    reduces parasitic inductance, unwanted electrical resistance that degrades power delivery at high
+                    frequencies. For a multi-chiplet package this matters even more than it does for a monolithic die.
+                    You have multiple dies all drawing power simultaneously, and any instability in that shared power
+                    delivery environment hits every chiplet at once.</p>
+
+                <figure class="content-image">
+                    <img src="mlcc-embedded.png"
+                        alt="Cross section diagram of an MLCC embedded inside a substrate, showing Blind Vias and Inner Vias surrounding the capacitor"
+                        loading="lazy" style="width: 100%; display: block;">
+                    <figcaption>[ FIG::REF ] Cross-section diagram showing an MLCC (Multi-Layer Ceramic Capacitor)
+                        embedded directly into the substrate alongside vias and solder balls. Placing the capacitor
+                        inside the board rather than on the surface reduces parasitic inductance and improves
+                        high-frequency power stability.</figcaption>
+                </figure>
+
+                <p>It also shows up in consumer devices. Your phone's SoC is doing a scaled-down version of the same
+                    thing, moving data between compute and memory as fast as possible while keeping heat and power low
+                    enough to survive inside a 8mm chassis. Substrate quality directly affects how stable that power
+                    delivery is, which affects performance under sustained load, thermals, and battery life. The
+                    difference between a phone that stays fast through a gaming session and one that gets warm and
+                    throttles is partly the chip, partly the cooling, and partly the electrical environment underneath
+                    it.</p>
+
+                <p>Samsung Electro-Mechanics has been supplying these embedded substrates in small quantities to select
+                    customers. The Vietnam line is about scaling that up. The fact that AI chip companies and
+                    hyperscalers were reportedly approaching them about supply before the line was even rumored publicly
+                    is a decent sign the product is working.</p>
+
+                <h3>What Thái Nguyên Might Look Like Soon</h3>
+
+                <p>Samsung has been in Thái Nguyên since 2013, initially for smartphone manufacturing. Samsung
+                    Electro-Mechanics already has a factory there with over $2.3 billion invested. If both rumors hold,
+                    you add a scaled-up MLCC embedded substrate line and a chip packaging facility on top of that
+                    existing base.</p>
+
+                <p>The industrial logic is not complicated. The substrate goes into the package. Having both in the same
+                    province shortens the supply chain and keeps more of the value-add inside Samsung's ecosystem.
+                    Samsung has spent 18 years in Vietnam building the manufacturing base and government relationships
+                    that make this kind of concentration feasible. These rumored investments are not a pivot. They are
+                    an upgrade of something already deeply established.</p>
+
+                <p>Vietnam also makes sense geopolitically. The country sits outside the US-China semiconductor export
+                    control blast radius. Stable trade relationships, a government actively courting high-value
+                    manufacturing, and a track record of holding up under external pressure. Last year's export numbers
+                    were strong despite a chaotic global trade environment. Samsung has invested over $23 billion here
+                    and created 90,000 jobs. Vietnam is not a peripheral node for them. It is load-bearing
+                    infrastructure.</p>
+
+                <h3>Where This Leaves Things</h3>
+
+                <p>To understand why the Samsung rumors matter beyond just Samsung, it helps to look at who currently
+                    owns advanced packaging and what their constraints are.</p>
+
+                <p>TSMC is the dominant player. Their CoWoS platform handles the packaging for most of the AI
+                    accelerators that matter right now, including Nvidia's entire Blackwell lineup. The problem is that
+                    CoWoS capacity is genuinely scarce. Building advanced packaging infrastructure requires specialized
+                    equipment, long lead times, and an enormous amount of process engineering. TSMC has been expanding,
+                    but demand has consistently outpaced their buildout. Customers with confirmed die orders have had to
+                    wait on packaging slots. For an industry where AI infrastructure spending is measured in the tens of
+                    billions per quarter, that is a real and painful constraint.</p>
+
+                <p>Intel is in a stranger position. They have their own advanced packaging technologies called Foveros,
+                    which stacks dies vertically with high-density connections, and EMIB, which connects dies side by
+                    side on a bridge embedded in the package. These are genuinely impressive technologies and Intel has
+                    been pitching them aggressively to external customers through their Intel Foundry Services division.
+                    The pitch is essentially: we have world-class packaging capability, come use it even if you are not
+                    fabbing your chips with us.</p>
+
+                <p>The problem is that Intel's foundry business has been losing money at a scale that is difficult to
+                    overstate, and the company has been restructuring aggressively. Customers considering Intel for
+                    packaging have to weigh the technology against the question of whether the business will be stable
+                    enough to support a multi-year supply relationship. That is not a comfortable calculation for anyone
+                    designing hardware that will ship in volume two or three years from now. Intel's packaging
+                    technology is real. Intel's packaging business is uncertain.</p>
+
+                <p>Samsung has its own advanced packaging platforms called X-Cube for vertical stacking and I-Cube for
+                    side-by-side multi-chip integration. They are technically capable. The gap versus TSMC's CoWoS has
+                    historically been in yield and process maturity rather than fundamental capability. The Vietnam
+                    investment, if the rumors hold, is partly about building the manufacturing scale to close that gap
+                    on the production side, not just in the lab.</p>
+
+                <p>What the industry actually needs is more than one credible advanced packaging supplier running at
+                    scale. Right now the answer to "who do you call when you need CoWoS-class packaging for a major AI
+                    chip program" is basically TSMC and then a significant drop-off. If Samsung can convert the Thai
+                    Nguyen buildout into a credible second option at scale, that changes the supply dynamic for every
+                    fabless chip company trying to plan production two years out.</p>
+
+                <p>And the market they are building for is not just hyperscalers buying AI accelerators. It is every
+                    device running chiplet architecture, which at this point is most serious processors. Advanced
+                    packaging is
+                    now the shared infrastructure underneath all modern high-performance hardware. The Ryzen CPUs, the
+                    Apple M5 Pro / Max , the MI300X, the Blackwell modules all depend on someone getting the substrate
+                    and the
+                    package right.</p>
+
+                <p>That someone is increasingly doing it in a province an hour north of Hanoi.</p>
+            </div>
+
+            <footer class="post__footer">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span class="label-mono">[ END_OF_LOG ]</span>
+                    <div class="social-row" style="gap: 0.5rem;">
+                        <span class="label-mono" style="align-self: center;">SHARE :</span>
+                        <a href="#" id="share-twitter" class="social-btn"
+                            style="padding: 0.5rem; font-size: 0.9rem;"><svg width="14" height="14"
+                                viewBox="0 0 512 512" fill="currentColor">
+                                <path
+                                    d="M459.4 151.7c.3 4.5 .3 9.1 .3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53 51.7 63.7 129.3 105.3 216.4 109.8-1.6-7.8-2.6-15.9-2.6-24 0-57.8 46.8-104.9 104.9-104.9 30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3z" />
+                            </svg></a>
+                        <a href="#" id="share-link" class="social-btn" style="padding: 0.5rem; font-size: 0.9rem;"><svg
+                                width="14" height="14" viewBox="0 0 640 512" fill="currentColor">
+                                <path
+                                    d="M579.8 267.7c56.5-56.5 56.5-148 0-204.5c-50-50-128.8-56.5-186.3-15.4l-1.6 1.1c-14.4 10.3-17.7 30.3-7.4 44.6s30.3 17.7 44.6 7.4l1.6-1.1c32.1-22.9 76-19.3 103.8 8.6c31.5 31.5 31.5 82.5 0 114L422.3 334.8c-31.5 31.5-82.5 31.5-114 0c-27.9-27.9-31.5-71.8-8.6-103.8l1.1-1.6c10.3-14.4 6.9-34.4-7.4-44.6s-34.4-6.9-44.6 7.4l-1.1 1.6C206.5 251.2 213 330 263 380c56.5 56.5 148 56.5 204.5 0L579.8 267.7zM60.2 244.3c-56.5 56.5-56.5 148 0 204.5c50 50 128.8 56.5 186.3 15.4l1.6-1.1c14.4-10.3 17.7-30.3 7.4-44.6s-30.3-17.7-44.6-7.4l-1.6 1.1c-32.1 22.9-76 19.3-103.8-8.6C74 372.1 74 321.1 105.5 289.5L217.7 177.2c31.5-31.5 82.5-31.5 114 0c27.9 27.9 31.5 71.8 8.6 103.9l-1.1 1.6c-10.3 14.4-6.9 34.4 7.4 44.6s34.4 6.9 44.6-7.4l1.1 1.6C433.5 260.8 427 182 377 132c-56.5-56.5-148-56.5-204.5 0L60.2 244.3z" />
+                            </svg></a>
+                    </div>
+                </div>
+            </footer>
+        </article>
+    </section>
+
+    <footer class="footer">
+        <div class="footer__inner">
+            <span class="label-mono">[ REPTALICA // LOG_SYSTEM ]</span>
+            <span class="footer__sep" aria-hidden="true">&mdash;</span>
+            <span class="footer__disclaimer">Information provided as-is. All rights reserved.</span>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+</body>
+
+</html>
