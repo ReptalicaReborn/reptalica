@@ -1,0 +1,1695 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[SYS::REPTALICA_LOG // PHONE_SUPPLY_CHAIN]</title>
+    <meta name="description"
+        content="The company on the box and the companies that built what's inside are rarely the same. A deep-dive into the hidden supply chain behind every smartphone.">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="You've Never Heard of the Company That Made Your Phone - Reptalica">
+    <meta property="og:description"
+        content="Samsung makes your screen. Sony makes your camera sensor. But they also sell those same parts to each other's competitors. The supply chain behind your smartphone is stranger than you think.">
+    <meta property="og:image" content="https://reptalica.netlify.app/assets/original/FindX9Pro_Internal.png">
+    <meta property="og:url" content="https://reptalica.netlify.app/blog/phone-supply-chain.html">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="You've Never Heard of the Company That Made Your Phone - Reptalica">
+    <meta name="twitter:description"
+        content="Samsung makes your screen. Sony makes your camera sensor. But they also sell those same parts to each other's competitors. The supply chain behind your smartphone is stranger than you think.">
+    <meta name="twitter:image" content="https://reptalica.netlify.app/assets/original/FindX9Pro_Internal.png">
+
+    <link rel="icon" type="image/png" href="../assets/favicon.png">
+
+    <!-- Fonts (non-render-blocking) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style"
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        rel="stylesheet" media="print" onload="this.media='all'">
+
+    <link rel="stylesheet" href="../style.css">
+
+    <style>
+        .post {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--surface);
+            border: 2px solid var(--border);
+            clip-path: var(--clip-corner);
+            padding: 4rem;
+            position: relative;
+        }
+
+        .post::before {
+            content: '[CLASSIFIED // ARCHIVE]';
+            position: absolute;
+            top: 0.8rem;
+            right: 1.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--accent);
+            opacity: 0.4;
+        }
+
+        .post__header {
+            margin-bottom: 3rem;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 2rem;
+        }
+
+        .post__title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 6vw, 3.5rem);
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 0.03em;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        .post__meta {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .post__image {
+            width: 100%;
+            height: 400px;
+            margin-bottom: 3rem;
+            clip-path: var(--clip-corner-sm);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--surface-elevated);
+        }
+
+        .post__image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .post__content {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: var(--text);
+        }
+
+        .post__content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .post__content h3 {
+            font-family: var(--font-mono);
+            color: var(--accent);
+            font-size: 1.3rem;
+            margin: 2.5rem 0 1rem 0;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .post__content blockquote {
+            border-left: 3px solid var(--accent);
+            padding: 1rem 2rem;
+            background: var(--accent-dim);
+            font-style: italic;
+            margin: 2rem 0;
+            clip-path: var(--clip-corner-sm);
+        }
+
+        .post__content ul {
+            margin: 1rem 0 1.5rem 1.5rem;
+            list-style: none;
+        }
+
+        .post__content ul li {
+            margin-bottom: 1rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        .post__content ul li::before {
+            content: '>';
+            position: absolute;
+            left: -0.5rem;
+            color: var(--accent);
+            font-family: var(--font-mono);
+            font-weight: 700;
+        }
+
+        .post__content .content-image {
+            width: 100%;
+            margin: 2rem 0;
+            border: 1px solid var(--border);
+            clip-path: var(--clip-corner-sm);
+            overflow: hidden;
+            background: var(--surface-elevated);
+        }
+
+        .post__content .content-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .post__content .content-image figcaption {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            padding: 0.8rem 1rem;
+            background: var(--surface-elevated);
+            border-top: 1px solid var(--border);
+        }
+
+        .post__footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 2px solid var(--border);
+        }
+
+        @media (max-width: 768px) {
+            .post {
+                padding: 2rem 1.2rem;
+                clip-path: none;
+                border-left: none;
+                border-right: none;
+            }
+
+            .post__title {
+                font-size: clamp(1.6rem, 5vw, 2.5rem);
+                word-break: break-word;
+                overflow-wrap: break-word;
+            }
+
+            .post__image {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Noise grain overlay -->
+    <div class="noise-overlay" aria-hidden="true"></div>
+
+    <section class="section" style="padding-top: 4rem; min-height: 100vh;">
+        <div class="section__header" style="max-width: 800px; margin: 0 auto 4rem auto;">
+            <a href="../blog.html" class="btn btn--primary" style="margin-bottom: 2rem; display: inline-flex;">
+                <svg width="14" height="14" viewBox="0 0 448 512" fill="currentColor" style="vertical-align:middle">
+                    <path
+                        d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z" />
+                </svg> RETURN TO ARCHIVES
+            </a>
+            <span class="label-mono section__tag">LOG::ENTRY // 009</span>
+        </div>
+
+        <article class="post">
+            <header class="post__header">
+                <h1 class="post__title">You've Never Heard of the Company That Made Your Phone</h1>
+                <div class="post__meta">
+                    <div class="meta-item">
+                        <span class="label-mono">TIMESTAMP :</span>
+                        <span class="label-mono" style="color: var(--text);">2026.04.20</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="label-mono">AUTHOR :</span>
+                        <span class="label-mono" style="color: var(--text);">REPTALICA</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="post__image" id="post-hero-image">
+                <img src="FindX9Pro_Internal.webp"
+                    alt="A disassembled high-end Android laid flat on a white surface, components spread out like a dissection"
+                    loading="lazy">
+            </div>
+
+            <div class="post__content">
+                <p>
+                    Ask someone what's inside their Android phone and they'll probably say Samsung. Or Sony. Maybe
+                    Qualcomm if they're a little nerdy about it. And they're not wrong, but they're also not nearly as
+                    right as they think they are. Because Samsung makes phones, yes. Sony makes phones. But Samsung also
+                    makes the screen inside your Pixel. Sony makes the camera sensor inside your Vivo. The company that
+                    built your phone and the company that supplied the parts are often, bizarrely, the same company,
+                    just wearing a different hat on a different day.
+                </p>
+                <p>
+                    This happens because the modern smartphone is too complex for any one company to master every single
+                    component. To do so would be a financial suicide mission. Instead, the industry relies on
+                    hyper-specialization. A brand like Xiaomi or OnePlus focuses on software, industrial design, and
+                    marketing, while outsourcing the hard physics of hardware to companies that do nothing else. It is a
+                    matter of efficiency and survival: why spend ten billion dollars building a display factory when you
+                    can simply buy the best panels from someone who already did?
+                </p>
+                <p>
+                    And that's before we get to the companies you've genuinely never heard of. The ones with no Super
+                    Bowl ads, no flagship stores, no brand identity whatsoever. The ones that are, in a very real sense,
+                    also your phone.
+                </p>
+
+                <h3>Your Screen Probably Came From a Company You've Never Googled</h3>
+                <figure class="content-image">
+                    <img src="Galaxy-S23-Ultra-subpixel.webp"
+                        alt="Extreme macro shot of an OLED panel at the pixel level with RGB subpixel grid visible"
+                        loading="lazy">
+                    <figcaption>[ FIG::REF ] The RGB subpixel layout of a modern OLED panel.</figcaption>
+                </figure>
+                <p>
+                    Pull up any mid-range Android, a Galaxy A-series, a Redmi, a Moto G something, flip it over, and
+                    somewhere in the fine print it'll say the display is AMOLED or LCD. What it won't say is who
+                    actually made it.
+                </p>
+                <p>
+                    The answer, more often than not, is BOE. They are a Chinese panel manufacturer that has quietly
+                    become one of the largest display producers on the planet, and outside of the industry, essentially
+                    nobody knows their name. They make OLED panels now. Good ones. Good enough that Vivo and Huawei both
+                    chose them over Samsung Display for their flagship lines, not as a cost-cutting measure, but because
+                    the quality got there.
+                </p>
+                <figure class="content-image">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--border);">
+                        <img src="contrast-supplier.webp"
+                            alt="The brutalist industrial exterior of a BOE technology group factory" loading="lazy"
+                            style="width: 100%; height: 250px; object-fit: cover;">
+                        <img src="contrast-product.webp"
+                            alt="Two high-end flagship smartphones (Mate 80 Pro Max and iPhone 17 Pro) side by side showing glowing displays"
+                            loading="lazy" style="width: 100%; height: 250px; object-fit: cover;">
+                    </div>
+                    <figcaption>[ FIG::REF ] The contrast of the supply chain: a clinical BOE production facility (left)
+                        versus the glamorous flagship hardware it powers (right).</figcaption>
+                </figure>
+                <p>
+                    Samsung Display and LG Display are the prestige names. Their panels still command a premium and show
+                    up in flagships from Google, OPPO, and others. But the gravitational center of the Android market
+                    has shifted toward Chinese domestic suppliers, and it has done so fast enough that brands aren't
+                    just buying from them, they're locking in. Xiaomi went exclusive with TCL CSOT across their flagship
+                    and upper mid-range lineup. OPPO bought an entire Tianma production line outright, drawn by Tianma's
+                    ability to hit bezels approaching 1mm. These aren't supplier relationships anymore. They're vertical
+                    integration by a different name.
+                </p>
+                <p>
+                    The reason is straightforward: a company like BOE produces panels for dozens of clients at a scale
+                    that drives the cost of a high-end OLED down to a fraction of what any single phone brand could
+                    manage alone. The screen you're staring at right now has a longer, stranger biography than you'd
+                    expect, raw materials, glass substrates, thin-film transistors deposited in a cleanroom, cutting,
+                    laminating, testing, shipping across borders, and the brand on the box had very little to do with
+                    any of it.
+                </p>
+
+
+                <h3>The Chip in Your Phone Was Designed by One Company, Built by Another, and Packaged by a Third</h3>
+                <figure class="content-image">
+                    <img src="snapdragon-8-elite-dieshot.webp"
+                        alt="High-resolution silicon dieshot of the Qualcomm Snapdragon 8 Elite SoC showing compute clusters and system-level cache"
+                        loading="lazy">
+                    <figcaption>[ FIG::REF ] A high-resolution silicon dieshot of the Qualcomm Snapdragon 8 Elite
+                        (SM8750). The intricate patterns are billions of transistors forming the CPU cores, GPU, and AI
+                        accelerators.</figcaption>
+                </figure>
+                <p>
+                    This one catches people off guard.
+                </p>
+                <p>
+                    When Qualcomm announces the Snapdragon 8 Elite Gen 5, or MediaTek announces the Dimensity 9500, they
+                    are announcing a chip they designed. The actual physical object, the silicon, gets made somewhere
+                    else entirely. Usually TSMC in Taiwan. Sometimes Samsung Foundry in South Korea. Occasionally both,
+                    depending on production splits, or if one foundry suddenly fails on expectations.
+                </p>
+                <p>
+                    This is called fabless manufacturing, and it's how almost the entire semiconductor industry works.
+                    Qualcomm has no fabs. MediaTek has no fabs. They are, at their core, enormous teams of engineers who
+                    design chips on computers and then hand the blueprints to someone else to physically manufacture.
+                    And even the designs aren't fully theirs: the instruction set architecture that Qualcomm and
+                    MediaTek build on top of is licensed from ARM, a British company owned by SoftBank. So the chip in
+                    your phone was architected in Cambridge, designed in San Diego or Taipei, fabricated in Taiwan, and
+                    packaged in South Korea before it ever touched a production line. TSMC takes those blueprints,
+                    exposes them onto silicon wafers using machines so precise they operate at wavelengths of light
+                    measured in nanometers, and ships the finished chips to wherever the phone is being assembled.
+                </p>
+                <figure class="content-image"
+                    style="background: var(--surface-elevated); padding: 3rem 2rem; position: relative; overflow: hidden; min-height: 350px;">
+                    <!-- Background passport watermark -->
+                    <div
+                        style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.03; background-image: repeating-linear-gradient(45deg, var(--accent) 0, var(--accent) 1px, transparent 0, transparent 20px); background-size: 28px 28px; pointer-events: none;">
+                    </div>
+                    <div
+                        style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.05; font-size: clamp(6rem, 15vw, 12rem); font-family: var(--font-display); font-weight: 700; pointer-events: none; color: var(--accent); letter-spacing: 0.1em; user-select: none;">
+                        VISAS</div>
+
+                    <div
+                        style="position: relative; height: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 3rem; align-items: center; justify-items: center;">
+
+                        <!-- Cambridge (ARM) -->
+                        <div
+                            style="transform: rotate(-8deg); border: 3px solid #ff4757; color: #ff4757; width: 160px; height: 160px; border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center; font-family: var(--font-mono); text-align: center; opacity: 0.8; position: relative;">
+                            <div
+                                style="position: absolute; inset: 4px; border: 1px dashed #ff4757; border-radius: 50%;">
+                            </div>
+                            <span style="font-size: 0.7rem; font-weight: 700; letter-spacing: 2px;">ARCHITECTED</span>
+                            <span
+                                style="font-size: 1.5rem; font-weight: 700; font-family: var(--font-display); border-top: 1px solid #ff4757; border-bottom: 1px solid #ff4757; margin: 4px 0; padding: 2px 0;">ARM</span>
+                            <span style="font-size: 0.75rem;">CAMBRIDGE, UK</span>
+                            <span style="font-size: 0.65rem; margin-top: 4px;">2023.02.14</span>
+                        </div>
+
+                        <!-- San Diego (Qualcomm) -->
+                        <div
+                            style="transform: rotate(12deg); margin-top: 40px; border: 3px double #1e90ff; color: #1e90ff; padding: 15px 20px; font-family: var(--font-mono); text-align: center; opacity: 0.85; position: relative;">
+                            <span
+                                style="font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; display: block; margin-bottom: 4px;">DESIGNED</span>
+                            <span
+                                style="font-size: 1.4rem; font-weight: 700; font-family: var(--font-display); display: block;">QUALCOMM</span>
+                            <span style="font-size: 0.8rem; display: block; margin-top: 4px;">SAN DIEGO, CA</span>
+                            <span
+                                style="font-size: 0.7rem; display: block; margin-top: 2px; opacity: 0.8;">2023.08.30</span>
+                        </div>
+
+                        <!-- Taipei (TSMC) -->
+                        <div
+                            style="transform: rotate(-4deg); margin-top: -20px; border: 4px solid #2ed573; color: #2ed573; border-radius: 8px; padding: 15px 25px; font-family: var(--font-mono); text-align: center; opacity: 0.8;">
+                            <span
+                                style="font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; display: block;">FABRICATED</span>
+                            <span
+                                style="font-size: 2rem; font-weight: 700; font-family: var(--font-display); letter-spacing: -1px; display: block; margin: -2px 0;">TSMC</span>
+                            <span style="font-size: 0.8rem; display: block;">TAIPEI, TW</span>
+                            <span
+                                style="font-size: 0.7rem; border-top: 1px dashed #2ed573; padding-top: 4px; display: block; margin-top: 4px;">2024.04.12</span>
+                        </div>
+
+                        <!-- Incheon (Amkor) -->
+                        <div
+                            style="transform: rotate(15deg); margin-top: 30px; border: 3px solid #a4b0be; color: #a4b0be; padding: 12px 20px; border-radius: 12px; font-family: var(--font-mono); text-align: center; opacity: 0.75;">
+                            <span
+                                style="font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; border-bottom: 2px solid #a4b0be; padding-bottom: 2px; display: inline-block;">PACKAGED</span>
+                            <span
+                                style="font-size: 1.3rem; font-weight: 700; font-family: var(--font-display); display: block; margin: 8px 0;">AMKOR</span>
+                            <span style="font-size: 0.8rem; display: block;">INCHEON, KR</span>
+                            <span style="font-size: 0.7rem; display: block; margin-top: 2px;">2024.06.28</span>
+                        </div>
+                    </div>
+                    <figcaption style="margin-top: 2rem; position: relative; z-index: 2;">[ FIG::REF ] The semiconductor
+                        passport. The intellectual property and physical silicon of a single smartphone SoC crosses
+                        through at least four major borders before it even reaches an assembly line.</figcaption>
+                </figure>
+                <p>
+                    The reason for this split is pure economics. A single gigafab capable of producing 3-nanometer chips
+                    costs upwards of $20 billion to build and requires billions more every year to maintain. If Qualcomm
+                    built its own factories, a single bad year could bankrupt the company. By using TSMC, they share
+                    that massive capital risk with Apple, Nvidia, and AMD.
+                </p>
+                <p>
+                    But even after TSMC finishes the wafer, the chip isn't done. The raw silicon die has to be packaged:
+                    encased in a protective housing, wired up, and tested before it's usable. That step often goes to
+                    Amkor Technology, a South Korean packaging specialist whose name appears on almost no consumer
+                    products and almost every high-end chip. The Snapdragon in a flagship Android was likely packaged by
+                    Amkor before it ever saw the inside of a phone.
+                </p>
+                <p>
+                    And even after the chip is designed, fabbed, and packaged, Qualcomm still isn't done collecting.
+                    They hold a portfolio of fundamental wireless patents covering CDMA, LTE, and 5G that is so broad
+                    and so deeply embedded in the standards themselves that every phone manufacturer owes them a
+                    licensing fee, regardless of whose chip is inside. Buy a phone with a MediaTek processor
+                    specifically to cut Qualcomm out of the picture, and Qualcomm still gets a cut of the sale price.
+                    Not the chip price. The phone price. This has been the subject of antitrust battles across the US,
+                    EU, South Korea, and China for the better part of a decade, and Qualcomm has won most of them.
+                    Ericsson and Nokia run the same playbook with their own 4G and 5G standard-essential patents. The
+                    royalty line on a phone manufacturer's balance sheet is longer and stranger than any spec sheet
+                    would suggest.
+                </p>
+                <figure class="content-image">
+                    <img src="smartphone-chipset-market-share-Q3-2025.webp"
+                        alt="Pie chart showing global smartphone chipset market share in Q3 2025 dominated by MediaTek, Qualcomm, and Apple"
+                        loading="lazy">
+                    <figcaption>[ FIG::REF ] Global Smartphone SoC Market Share Q3 2025. The pie is fiercely divided
+                        among fabless giants, with companies like Unisoc fighting for the budget slivers.</figcaption>
+                </figure>
+                <p>
+                    If you're on a budget Android, think the phones sold across Southeast Asia, Africa, and India, the
+                    SoC might be from Unisoc instead, a Chinese chipmaker that is genuinely excellent at making capable
+                    chips cheap. Unisoc isn't alone down there. Allwinner Technology is another Chinese SoC maker that
+                    shows up in the places spec sheets don't: cheap tablets, knockoff devices, the Android box someone's
+                    uncle bought off AliExpress. Allwinner chips power a surprising amount of the world's low-cost
+                    computing. They're not trying to compete with Snapdragon. They're serving a market Snapdragon
+                    doesn't particularly want.
+                </p>
+
+
+                <h3>The Brands That Decided to Do It Themselves</h3>
+                <figure class="content-image"
+                    style="background: var(--surface-elevated); padding: 2.5rem 1.5rem 2rem; position: relative; overflow: hidden;">
+                    <!-- Title -->
+                    <div style="position: relative; text-align: center; margin-bottom: 2rem;">
+                        <span
+                            style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--accent); letter-spacing: 3px; text-transform: uppercase;">From
+                            Outlier to Industry Standard</span>
+                        <div
+                            style="font-family: var(--font-display); font-size: 1.1rem; color: var(--text); margin-top: 0.3rem; font-weight: 600;">
+                            The In-House Silicon Timeline</div>
+                    </div>
+
+                    <!-- Timeline container -->
+                    <div style="position: relative; width: 100%; overflow-x: auto; padding-bottom: 1rem;">
+                        <div
+                            style="min-width: 600px; display: grid; grid-template-columns: repeat(5, 1fr); text-align: center;">
+
+                            <!-- 2009 — Samsung / Exynos -->
+                            <div style="display: flex; flex-direction: column; align-items: center;">
+                                <div
+                                    style="min-height: 80px; display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 15px; gap: 4px;">
+                                    <div
+                                        style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-dim); letter-spacing: 1px; opacity: 0.8;">
+                                        THE FIRST MOVER</div>
+                                    <div
+                                        style="font-family: var(--font-display); font-size: 0.95rem; font-weight: 700; color: #3b82f6;">
+                                        SAMSUNG</div>
+                                    <div
+                                        style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-dim);">
+                                        Exynos</div>
+                                </div>
+                                <div style="width: 100%; height: 16px; position: relative;">
+                                    <div
+                                        style="position: absolute; top: 50%; left: 50%; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), transparent); opacity: 0.3; transform: translateY(-50%);">
+                                    </div>
+                                    <div
+                                        style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 14px; height: 14px; border-radius: 50%; background: #3b82f6; border: 2px solid var(--surface-elevated); box-shadow: 0 0 8px rgba(59, 130, 246, 0.4); z-index: 2;">
+                                    </div>
+                                </div>
+                                <div style="padding-top: 15px;">
+                                    <div
+                                        style="font-family: var(--font-mono); font-size: 1.1rem; font-weight: 700; color: #3b82f6;">
+                                        2009</div>
+                                </div>
+                            </div>
+
+                            <!-- 2010 — Apple / A-series -->
+                            <div style="display: flex; flex-direction: column; align-items: center;">
+                                <div
+                                    style="min-height: 80px; display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 15px; gap: 4px;">
+                                    <div
+                                        style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-dim); letter-spacing: 1px; opacity: 0.8;">
+                                        THE VALIDATOR</div>
+                                    <div
+                                        style="font-family: var(--font-display); font-size: 0.95rem; font-weight: 700; color: #a78bfa;">
+                                        APPLE</div>
+                                    <div
+                                        style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-dim);">
+                                        A-Series</div>
+                                </div>
+                                <div style="width: 100%; height: 16px; position: relative;">
+                                    <div
+                                        style="position: absolute; top: 50%; left: 0; right: 0; height: 2px; background: var(--accent); opacity: 0.3; transform: translateY(-50%);">
+                                    </div>
+                                    <div
+                                        style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 14px; height: 14px; border-radius: 50%; background: #a78bfa; border: 2px solid var(--surface-elevated); box-shadow: 0 0 8px rgba(167, 139, 250, 0.4); z-index: 2;">
+                                    </div>
+                                </div>
+                                <div style="padding-top: 15px;">
+                                    <div
+                                        style="font-family: var(--font-mono); font-size: 1.1rem; font-weight: 700; color: #a78bfa;">
+                                        2010</div>
+                                </div>
+                            </div>
+
+                            <!-- 2012 — Huawei / Kirin -->
+                            <div style="display: flex; flex-direction: column; align-items: center;">
+                                <div
+                                    style="min-height: 80px; display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 15px; gap: 4px;">
+                                    <div
+                                        style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-dim); letter-spacing: 1px; opacity: 0.8;">
+                                        THE DISRUPTOR</div>
+                                    <div
+                                        style="font-family: var(--font-display); font-size: 0.95rem; font-weight: 700; color: #ef4444;">
+                                        HUAWEI</div>
+                                    <div
+                                        style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-dim);">
+                                        Kirin</div>
+                                </div>
+                                <div style="width: 100%; height: 16px; position: relative;">
+                                    <div
+                                        style="position: absolute; top: 50%; left: 0; right: 0; height: 2px; background: var(--accent); opacity: 0.3; transform: translateY(-50%);">
+                                    </div>
+                                    <div
+                                        style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 14px; height: 14px; border-radius: 50%; background: #ef4444; border: 2px solid var(--surface-elevated); box-shadow: 0 0 8px rgba(239, 68, 68, 0.4); z-index: 2;">
+                                    </div>
+                                </div>
+                                <div style="padding-top: 15px;">
+                                    <div
+                                        style="font-family: var(--font-mono); font-size: 1.1rem; font-weight: 700; color: #ef4444;">
+                                        2012</div>
+                                </div>
+                            </div>
+
+                            <!-- 2021 — Google / Tensor -->
+                            <div style="display: flex; flex-direction: column; align-items: center;">
+                                <div
+                                    style="min-height: 80px; display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 15px; gap: 4px;">
+                                    <div
+                                        style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-dim); letter-spacing: 1px; opacity: 0.8;">
+                                        THE CONVERT</div>
+                                    <div
+                                        style="font-family: var(--font-display); font-size: 0.95rem; font-weight: 700; color: #22c55e;">
+                                        GOOGLE</div>
+                                    <div
+                                        style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-dim);">
+                                        Tensor</div>
+                                </div>
+                                <div style="width: 100%; height: 16px; position: relative;">
+                                    <div
+                                        style="position: absolute; top: 50%; left: 0; right: 0; height: 2px; background: var(--accent); opacity: 0.3; transform: translateY(-50%);">
+                                    </div>
+                                    <div
+                                        style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 14px; height: 14px; border-radius: 50%; background: #22c55e; border: 2px solid var(--surface-elevated); box-shadow: 0 0 8px rgba(34, 197, 94, 0.4); z-index: 2;">
+                                    </div>
+                                </div>
+                                <div style="padding-top: 15px;">
+                                    <div
+                                        style="font-family: var(--font-mono); font-size: 1.1rem; font-weight: 700; color: #22c55e;">
+                                        2021</div>
+                                </div>
+                            </div>
+
+                            <!-- 2025 — Xiaomi / XRing -->
+                            <div style="display: flex; flex-direction: column; align-items: center;">
+                                <div
+                                    style="min-height: 80px; display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 15px; gap: 4px;">
+                                    <div
+                                        style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-dim); letter-spacing: 1px; opacity: 0.8;">
+                                        THE LATEST</div>
+                                    <div
+                                        style="font-family: var(--font-display); font-size: 0.95rem; font-weight: 700; color: #f97316;">
+                                        XIAOMI</div>
+                                    <div
+                                        style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-dim);">
+                                        XRing</div>
+                                </div>
+                                <div style="width: 100%; height: 16px; position: relative;">
+                                    <div
+                                        style="position: absolute; top: 50%; left: 0; right: 50%; height: 2px; background: linear-gradient(270deg, var(--accent), transparent); opacity: 0.3; transform: translateY(-50%);">
+                                    </div>
+                                    <div
+                                        style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 14px; height: 14px; border-radius: 50%; background: #f97316; border: 2px solid var(--surface-elevated); box-shadow: 0 0 8px rgba(249, 115, 22, 0.4); z-index: 2;">
+                                    </div>
+                                </div>
+                                <div style="padding-top: 15px;">
+                                    <div
+                                        style="font-family: var(--font-mono); font-size: 1.1rem; font-weight: 700; color: #f97316;">
+                                        2025</div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Bottom annotation -->
+                    <div style="position: relative; text-align: center; margin-top: 1.5rem;">
+                        <span
+                            style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-dim); opacity: 0.6;">←
+                            OUTLIER&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TREND
+                            →</span>
+                    </div>
+
+                    <figcaption style="margin-top: 1.5rem; position: relative;">[ FIG::REF ] The in-house silicon
+                        timeline. What started as an eccentric vertical integration play by Samsung and Apple has become
+                        a strategic imperative across the industry.</figcaption>
+                </figure>
+                <p>
+                    And then there are the brands that said forget it and made their own.
+                </p>
+                <p>
+                    Huawei designed the Kirin series in-house through its semiconductor subsidiary HiSilicon, until US
+                    export controls cut off their access to TSMC's fabs and forced a painful reset. But Huawei didn't
+                    stop. They pivoted to SMIC, China's leading domestic foundry, and have been climbing back ever
+                    since. The latest Kirin 9030 Pro is manufactured on SMIC's N+3 process node, roughly equivalent to
+                    TSMC's N6, which is not cutting-edge by global standards, but far closer than most expected China to
+                    get this fast.
+                </p>
+                <p>
+                    Samsung does the same with Exynos, fabbing their own chips at Samsung Foundry and using them in
+                    select Galaxy devices depending on region, meaning two people can buy the same Galaxy model in
+                    different countries and have completely different processors inside.
+                </p>
+                <p>
+                    Google does it too with Tensor, designed in-house for the Pixel line. Early generations were
+                    manufactured by Samsung Foundry, but starting with the G5, Google moved production to TSMC, the same
+                    fab everyone else is fighting for capacity at. Xiaomi has entered the game too with the Xring 01,
+                    their first in-house SoC, debuted in the Xiaomi 15S Pro, going after raw performance rather than AI
+                    workloads. The instinct is the same across all of them: if the chip is central enough to your
+                    product vision, and you have the capital, you stop renting and start owning.
+                </p>
+                <figure class="content-image"
+                    style="background: var(--surface-elevated); padding: 2.5rem 1.5rem 2rem; border-radius: var(--radius-md); position: relative;">
+                    <div
+                        style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 0.5rem; text-align: left;">
+                        Moore's Law Battlefield</div>
+                    <div
+                        style="font-family: var(--font-display); font-size: 1.2rem; color: var(--text); font-weight: 700; margin-bottom: 2rem; text-align: left;">
+                        Process Node Density Comparison</div>
+
+                    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                        <!-- TSMC N3P -->
+                        <div style="position: relative;">
+                            <div
+                                style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.8rem; margin-bottom: 0.4rem; color: var(--text);">
+                                <span>TSMC N3P <span style="opacity: 0.6; font-size: 0.7rem;">(uHD)</span> <span
+                                        style="color: #2ed573; margin-left: 8px; opacity: 0.8;">// 8 Elite Gen 5 &
+                                        Dimensity 9500</span></span>
+                                <span>223.96 <span style="opacity: 0.5; font-size: 0.65rem;">MT/mm²</span></span>
+                            </div>
+                            <div
+                                style="width: 100%; height: 24px; background: rgba(255, 255, 255, 0.05); border-radius: 4px; overflow: hidden; border: 1px solid var(--border);">
+                                <div
+                                    style="width: 100%; height: 100%; background: linear-gradient(90deg, #2ed573, #218c74); border-radius: 3px;">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TSMC N3E -->
+                        <div style="position: relative;">
+                            <div
+                                style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.8rem; margin-bottom: 0.4rem; color: var(--text);">
+                                <span>TSMC N3E <span style="opacity: 0.6; font-size: 0.7rem;">(uHD)</span> <span
+                                        style="color: #2ed573; margin-left: 8px; opacity: 0.8;">// 8 Elite & Dimensity
+                                        9400 & Xring o1</span></span>
+                                <span>214.70 <span style="opacity: 0.5; font-size: 0.65rem;">MT/mm²</span></span>
+                            </div>
+                            <div
+                                style="width: 100%; height: 24px; background: rgba(255, 255, 255, 0.05); border-radius: 4px; overflow: hidden; border: 1px solid var(--border);">
+                                <div
+                                    style="width: 95.8%; height: 100%; background: linear-gradient(90deg, #2ed573, #218c74); opacity: 0.85; border-radius: 3px;">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Samsung SF2 -->
+                        <div style="position: relative;">
+                            <div
+                                style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.8rem; margin-bottom: 0.4rem; color: var(--text);">
+                                <span>SEC SF2 <span style="opacity: 0.6; font-size: 0.7rem;">(HD)</span> <span
+                                        style="color: #3b82f6; margin-left: 8px; opacity: 0.8;">// Exynos
+                                        2600</span></span>
+                                <span>182.75 <span style="opacity: 0.5; font-size: 0.65rem;">MT/mm²</span></span>
+                            </div>
+                            <div
+                                style="width: 100%; height: 24px; background: rgba(255, 255, 255, 0.05); border-radius: 4px; overflow: hidden; border: 1px solid var(--border);">
+                                <div
+                                    style="width: 81.6%; height: 100%; background: linear-gradient(90deg, #3b82f6, #1d4ed8); border-radius: 3px;">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SMIC N+3 -->
+                        <div style="position: relative;">
+                            <div
+                                style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.8rem; margin-bottom: 0.4rem; color: var(--text);">
+                                <span style="color: #ef4444;">SMIC N+3 <span
+                                        style="color: var(--text); opacity: 0.6; font-size: 0.7rem;">(HD)</span> <span
+                                        style="color: #ef4444; margin-left: 8px; opacity: 0.8;">// Kirin 9030
+                                        Pro</span></span>
+                                <span>113.40 <span style="opacity: 0.5; font-size: 0.65rem;">MT/mm²</span></span>
+                            </div>
+                            <div
+                                style="width: 100%; height: 24px; background: rgba(255, 255, 255, 0.05); border-radius: 4px; overflow: hidden; border: 1px solid var(--border);">
+                                <div
+                                    style="width: 50.6%; height: 100%; background: linear-gradient(90deg, #ef4444, #b91c1c); border-radius: 3px;">
+                                </div>
+                            </div>
+                            <!-- Gap indicator line to show the leap required -->
+                            <div
+                                style="position: absolute; left: 50.6%; right: 4%; top: 50%; transform: translateY(12px); border-bottom: 1px dashed rgba(239, 68, 68, 0.5);">
+                            </div>
+                            <div
+                                style="position: absolute; right: 0; bottom: -20px; font-family: var(--font-mono); font-size: 0.6rem; color: #ef4444; opacity: 0.8;">
+                                THE GAP</div>
+                        </div>
+                    </div>
+
+                    <figcaption style="margin-top: 3rem; border-top: 1px solid var(--border); padding-top: 1rem;">[
+                        FIG::REF ] The density spectrum. While TSMC and SEC fight over diminishing returns at the
+                        bleeding edge, SMIC's N+3 (powering Huawei's Kirin series) represents a remarkable, yet
+                        structurally disadvantaged, domestic effort.</figcaption>
+                </figure>
+
+                <h3>Your Camera Is a Collaboration Between Companies That Have Never Met</h3>
+                <figure class="content-image">
+                    <img src="camera_module.webp"
+                        alt="High-resolution, deconstructed view of a smartphone camera module, showing the individual lens elements, housing, and image sensor"
+                        loading="lazy">
+                    <figcaption>[ FIG::REF ] The optical stack. What looks like one camera is actually a fragile
+                        assembly of precision actuators, advanced optical glass processing, and cutting-edge sensor
+                        silicon from entirely different continents.</figcaption>
+                </figure>
+                <p>
+                    The camera system on a modern Android phone is not a single thing made by a single company. It's a
+                    stack, and each layer has its own supplier.
+                </p>
+                <p>
+                    Start with the lens. The precision glass elements inside your camera module, the ones that focus
+                    light onto the sensor, came from one of maybe three factories in the world. The cinematic lens your
+                    phone brand is marketing? That's industrial-scale optical glass from a supplier like Sunny Optical
+                    or Samsung Electro-Mechanics, ground and coated by engineers who will never know which phone it ends
+                    up in.
+                </p>
+                <p>
+                    The sensor underneath the lens is a different company entirely. Sony's IMX series, now rebranded as
+                    Lytia, is the longtime prestige choice, and Sony Semiconductor supplies sensors to Xiaomi, OPPO,
+                    Vivo, and others who are, in a different context, Sony's competitors in the phone market. Samsung
+                    ISOCELL has shifted toward a more specific lane: high-pixel-count telephoto sensors and cheaper
+                    fills like the JN5, rather than chasing the main camera crown across the board. OmniVision has been
+                    moving up the stack aggressively, with their OV50X going after Lytia territory directly.
+                </p>
+                <figure class="content-image"
+                    style="background: var(--surface-elevated); padding: 3rem 2rem; border-radius: var(--radius-md); position: relative; overflow: hidden;">
+                    <div
+                        style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 0.5rem; text-align: center;">
+                        Sensor Deployment Spectrum</div>
+                    <div
+                        style="font-family: var(--font-display); font-size: 1.2rem; color: var(--text); font-weight: 700; margin-bottom: 2rem; text-align: center;">
+                        The Optical Mobility Matrix</div>
+
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+
+                        <!-- TIER 01: ULTRA FLAGSHIP -->
+                        <div
+                            style="display: flex; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; flex-wrap: wrap; gap: 1.5rem;">
+                            <div
+                                style="width: 140px; border-right: 1px solid var(--border); display: flex; flex-direction: column; justify-content: center;">
+                                <span
+                                    style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--accent);">TIER
+                                    01</span>
+                                <span
+                                    style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 700;">ULTRA<br>FLAGSHIP</span>
+                            </div>
+                            <div style="flex: 1; display: flex; gap: 1rem; flex-wrap: wrap;">
+
+                                <!-- Sony Lytia -->
+                                <div
+                                    style="background: rgba(167, 139, 250, 0.05); border: 1px solid rgba(167, 139, 250, 0.3); padding: 1rem; border-radius: 6px; flex: 1; min-width: 200px;">
+                                    <div
+                                        style="color: #a78bfa; font-family: var(--font-mono); font-size: 0.8rem; font-weight: bold; margin-bottom: 0.2rem;">
+                                        SONY LYTIA</div>
+                                    <div
+                                        style="font-family: var(--font-mono); font-size: 1.2rem; font-weight: bold; margin-bottom: 0.5rem;">
+                                        LYT-901</div>
+                                    <div style="font-size: 0.8rem; color: var(--text-dim); line-height: 1.4;">Find X9
+                                        Ultra, Vivo X300 Ultra</div>
+                                </div>
+
+                                <!-- OmniVision -->
+                                <div
+                                    style="background: rgba(46, 213, 115, 0.05); border: 1px solid rgba(46, 213, 115, 0.4); padding: 1rem; border-radius: 6px; flex: 1; min-width: 200px; position: relative;">
+                                    <div
+                                        style="position: absolute; top: -10px; right: 10px; background: #2ed573; color: #111; font-family: var(--font-mono); font-weight: bold; font-size: 0.6rem; padding: 2px 6px; border-radius: 4px;">
+                                        CLIMBING ↑</div>
+                                    <div
+                                        style="color: #2ed573; font-family: var(--font-mono); font-size: 0.8rem; font-weight: bold; margin-bottom: 0.2rem;">
+                                        OMNIVISION</div>
+                                    <div
+                                        style="font-family: var(--font-mono); font-size: 1.2rem; font-weight: bold; margin-bottom: 0.5rem;">
+                                        OV50X</div>
+                                    <div style="font-size: 0.8rem; color: var(--text-dim); line-height: 1.4;">Xiaomi 17
+                                        Ultra</div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- TIER 02: PRO / UPPER MID -->
+                        <div
+                            style="display: flex; background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; flex-wrap: wrap; gap: 1.5rem;">
+                            <div
+                                style="width: 140px; border-right: 1px solid var(--border); display: flex; flex-direction: column; justify-content: center;">
+                                <span
+                                    style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--accent);">TIER
+                                    02</span>
+                                <span style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 700;">PRO
+                                    /<br>UPPER MID</span>
+                            </div>
+                            <div style="flex: 1; display: flex; gap: 1rem; flex-wrap: wrap;">
+
+                                <!-- SmartSens -->
+                                <div
+                                    style="background: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239, 68, 68, 0.4); padding: 1rem; border-radius: 6px; flex: 1; min-width: 200px; position: relative;">
+                                    <div
+                                        style="position: absolute; top: -10px; right: 10px; background: #ef4444; color: #111; font-family: var(--font-mono); font-weight: bold; font-size: 0.6rem; padding: 2px 6px; border-radius: 4px;">
+                                        DISPLACING ↑</div>
+                                    <div
+                                        style="color: #ef4444; font-family: var(--font-mono); font-size: 0.8rem; font-weight: bold; margin-bottom: 0.2rem;">
+                                        SMARTSENS</div>
+                                    <div
+                                        style="font-family: var(--font-mono); font-size: 1.2rem; font-weight: bold; margin-bottom: 0.5rem;">
+                                        SC590XS</div>
+                                    <div style="font-size: 0.8rem; color: var(--text-dim); line-height: 1.4;">Xiaomi 17
+                                        Pro / Pro Max</div>
+                                </div>
+
+                                <!-- Samsung ISOCELL -->
+                                <div
+                                    style="background: rgba(59, 130, 246, 0.05); border: 1px solid rgba(59, 130, 246, 0.3); padding: 1rem; border-radius: 6px; flex: 1; min-width: 200px;">
+                                    <div
+                                        style="color: #3b82f6; font-family: var(--font-mono); font-size: 0.8rem; font-weight: bold; margin-bottom: 0.2rem;">
+                                        SAMSUNG ISOCELL</div>
+                                    <div
+                                        style="font-family: var(--font-mono); font-size: 1.2rem; font-weight: bold; margin-bottom: 0.5rem;">
+                                        200MP HPE</div>
+                                    <div style="font-size: 0.8rem; color: var(--text-dim); line-height: 1.4;">Vivo X300
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- TIER 03: MID-RANGE -->
+                        <div
+                            style="display: flex; background: rgba(255, 255, 255, 0.01); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; flex-wrap: wrap; gap: 1.5rem;">
+                            <div
+                                style="width: 140px; border-right: 1px solid var(--border); display: flex; flex-direction: column; justify-content: center;">
+                                <span
+                                    style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--accent);">TIER
+                                    03</span>
+                                <span
+                                    style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 700;">MID-RANGE</span>
+                            </div>
+                            <div style="flex: 1; display: flex; gap: 1rem; flex-wrap: wrap;">
+
+                                <!-- Sony Lytia -->
+                                <div
+                                    style="background: rgba(167, 139, 250, 0.05); border: 1px solid rgba(167, 139, 250, 0.3); padding: 1rem; border-radius: 6px; flex: 1; min-width: 200px;">
+                                    <div
+                                        style="color: #a78bfa; font-family: var(--font-mono); font-size: 0.8rem; font-weight: bold; margin-bottom: 0.2rem;">
+                                        SONY LYTIA</div>
+                                    <div
+                                        style="font-family: var(--font-mono); font-size: 1.2rem; font-weight: bold; margin-bottom: 0.5rem;">
+                                        LYT-700</div>
+                                    <div style="font-size: 0.8rem; color: var(--text-dim); line-height: 1.4;">Mass
+                                        Market Midrange</div>
+                                </div>
+
+                                <!-- Samsung ISOCELL Base -->
+                                <div
+                                    style="background: rgba(59, 130, 246, 0.02); border: 1px dashed rgba(59, 130, 246, 0.3); padding: 1rem; border-radius: 6px; flex: 1; min-width: 200px;">
+                                    <div
+                                        style="color: #3b82f6; font-family: var(--font-mono); font-size: 0.8rem; font-weight: bold; margin-bottom: 0.2rem;">
+                                        SAMSUNG ISOCELL</div>
+                                    <div
+                                        style="font-family: var(--font-mono); font-size: 1.2rem; font-weight: bold; margin-bottom: 0.5rem;">
+                                        200MP HP3</div>
+                                    <div style="font-size: 0.8rem; color: var(--text-dim); line-height: 1.4;">Redmi Note
+                                        15 Pro+</div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- TIER 04: LOWER END -->
+                        <div
+                            style="display: flex; background: rgba(255, 255, 255, 0.01); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; flex-wrap: wrap; gap: 1.5rem;">
+                            <div
+                                style="width: 140px; border-right: 1px solid var(--border); display: flex; flex-direction: column; justify-content: center;">
+                                <span
+                                    style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--accent);">TIER
+                                    04</span>
+                                <span
+                                    style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 700;">LOWER
+                                    END</span>
+                            </div>
+                            <div style="flex: 1; display: flex; gap: 1rem; flex-wrap: wrap;">
+
+                                <!-- Sony Lytia -->
+                                <div
+                                    style="background: rgba(167, 139, 250, 0.02); border: 1px dashed rgba(167, 139, 250, 0.3); padding: 1rem; border-radius: 6px; flex: 1; min-width: 200px;">
+                                    <div
+                                        style="color: #a78bfa; font-family: var(--font-mono); font-size: 0.8rem; font-weight: bold; margin-bottom: 0.2rem;">
+                                        SONY LYTIA</div>
+                                    <div
+                                        style="font-family: var(--font-mono); font-size: 1.2rem; font-weight: bold; margin-bottom: 0.5rem;">
+                                        LYT-600</div>
+                                    <div style="font-size: 0.8rem; color: var(--text-dim); line-height: 1.4;">Value
+                                        Devices</div>
+                                </div>
+
+                                <!-- SmartSens -->
+                                <div
+                                    style="background: rgba(239, 68, 68, 0.02); border: 1px dashed rgba(239, 68, 68, 0.3); padding: 1rem; border-radius: 6px; flex: 1; min-width: 200px;">
+                                    <div
+                                        style="color: #ef4444; font-family: var(--font-mono); font-size: 0.8rem; font-weight: bold; margin-bottom: 0.2rem;">
+                                        SMARTSENS</div>
+                                    <div
+                                        style="font-family: var(--font-mono); font-size: 1.2rem; font-weight: bold; margin-bottom: 0.5rem;">
+                                        SC532HS</div>
+                                    <div style="font-size: 0.8rem; color: var(--text-dim); line-height: 1.4;">Poco X8
+                                        Pro Max, Reno 15F</div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- TIER 05: BUDGET -->
+                        <div
+                            style="display: flex; background: rgba(255, 255, 255, 0.01); border: 1px dashed var(--border); border-radius: 8px; padding: 1.5rem; flex-wrap: wrap; gap: 1.5rem; opacity: 0.8;">
+                            <div
+                                style="width: 140px; border-right: 1px solid var(--border); display: flex; flex-direction: column; justify-content: center;">
+                                <span
+                                    style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--accent);">TIER
+                                    05</span>
+                                <span
+                                    style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 700;">BUDGET</span>
+                            </div>
+                            <div style="flex: 1; display: flex; gap: 1rem; flex-wrap: wrap;">
+
+                                <!-- Samsung ISOCELL -->
+                                <div
+                                    style="background: rgba(59, 130, 246, 0.02); border: 1px dashed rgba(59, 130, 246, 0.3); padding: 1rem; border-radius: 6px; flex: 1; min-width: 200px;">
+                                    <div
+                                        style="color: #3b82f6; font-family: var(--font-mono); font-size: 0.8rem; font-weight: bold; margin-bottom: 0.2rem;">
+                                        SAMSUNG ISOCELL</div>
+                                    <div
+                                        style="font-family: var(--font-mono); font-size: 1.2rem; font-weight: bold; margin-bottom: 0.5rem;">
+                                        JN5</div>
+                                    <div style="font-size: 0.8rem; color: var(--text-dim); line-height: 1.4;">Entry
+                                        Level</div>
+                                </div>
+
+                                <!-- OmniVision -->
+                                <div
+                                    style="background: rgba(46, 213, 115, 0.02); border: 1px dashed rgba(46, 213, 115, 0.3); padding: 1rem; border-radius: 6px; flex: 1; min-width: 200px;">
+                                    <div
+                                        style="color: #2ed573; font-family: var(--font-mono); font-size: 0.8rem; font-weight: bold; margin-bottom: 0.2rem;">
+                                        OMNIVISION</div>
+                                    <div
+                                        style="font-family: var(--font-mono); font-size: 1.2rem; font-weight: bold; margin-bottom: 0.5rem;">
+                                        OV50D</div>
+                                    <div style="font-size: 0.8rem; color: var(--text-dim); line-height: 1.4;">
+                                        High-Volume Budget</div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <figcaption style="margin-top: 2rem; border-top: 1px solid var(--border); padding-top: 1rem;">[
+                        FIG::REF ] The sensor spectrum. Sony Lytia maintains the high ground while challengers like
+                        SmartSens and OmniVision climb rapidly upward, forcing Samsung to spread widely across the
+                        volume-driven mid-tiers.</figcaption>
+                </figure>
+                <p>
+                    SmartSens is the sharpest example of the challenger supplier. While they became Huawei's primary
+                    sensor supplier after US export controls, they weren't just filling a gap. Their flagship sensor
+                    landed as the main camera on the Xiaomi 17 Pro and Pro Max, competing on dynamic range through LOFIC
+                    technology, and sensors like the SC532HS are already displacing Lytia's mid-range offerings on
+                    devices like the Poco X8 Pro Max.
+                </p>
+                <p>
+                    Then there's the thing nobody thinks about: the actuator. The tiny electromagnetic coil-and-magnet
+                    assembly that physically moves the lens for optical image stabilization. A handful of Japanese
+                    precision manufacturers, companies like Alps Alpine and TDK, are the reason your night shots don't
+                    look like abstract paintings. Without them the sensor is just a very expensive way to capture blur.
+                </p>
+
+
+                <h3>The Memory and Storage You Never Chose</h3>
+                <figure class="content-image">
+                    <img src="dram.webp"
+                        alt="High-magnification dieshot of a mobile DRAM integrated circuit, revealing the microscopic lattice of memory cells"
+                        loading="lazy">
+                    <figcaption>[ FIG::REF ] LPDDR5X Dieshot. While the phone logo gets the spotlight, the microscopic
+                        memory structures holding your apps open are invariably provided by one of only three colossal
+                        manufacturers globally: SK Hynix, Samsung, or Micron, and sometime, CXMT.</figcaption>
+                </figure>
+                <p>
+                    Nobody buys a phone because of who made the RAM. But every app you have open right now is sitting in
+                    memory manufactured by one of maybe four companies on the planet. SK Hynix and Samsung Semiconductor
+                    dominate mobile DRAM and have for years. Micron is the third major player. Between them, those three
+                    control the overwhelming majority of the world's DRAM supply, and the LPDDR5X in your flagship
+                    Android almost certainly came from one of them. The phone brand had no say in the physics of that
+                    chip. They placed an order, specified a capacity, and got what was available on the production line
+                    that quarter. The Galaxy S26 Ultra is a perfect example: Samsung makes their own LPDDR5X through
+                    Samsung Semiconductor, but due to the ongoing RAM supply crunch they had to mix in Micron chips
+                    across production runs. Even the company that manufactures DRAM can't always source enough of it
+                    from themselves.
+                </p>
+                <figure class="content-image"
+                    style="background: var(--surface-elevated); padding: 3rem 2rem; border-radius: var(--radius-md); border: 1px solid var(--border); margin: 2rem 0; position: relative;">
+                    <!-- Title -->
+                    <div
+                        style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 0.5rem; text-align: center;">
+                        Market Distribution</div>
+                    <div
+                        style="font-family: var(--font-display); font-size: 1.4rem; color: var(--text); font-weight: 700; margin-bottom: 1rem; text-align: center;">
+                        Three Companies Dominate Memory Production</div>
+                    <p
+                        style="font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.5; color: var(--text-dim); margin: 0 auto 2.5rem auto; text-align: center; max-width: 600px;">
+                        South Korea's SK Hynix and Samsung, alongside U.S.-based Micron, account for almost all of the
+                        global market for DRAM, with China's CXMT in fourth place.</p>
+
+                    <!-- Chart Container -->
+                    <div
+                        style="display: flex; gap: 4rem; justify-content: center; align-items: center; flex-wrap: wrap;">
+                        <!-- Pie -->
+                        <div style="width: 280px; height: 280px; border-radius: 50%; border: 1px solid var(--border); background: conic-gradient(
+                            #a78bfa 0% 34%,
+                            #3b82f6 34% 67%,
+                            #10b981 67% 93%,
+                            #ef4444 93% 98%,
+                            rgba(255, 255, 255, 0.05) 98% 100%
+                        ); position: relative; box-shadow: 0 0 40px rgba(0,0,0,0.2);">
+
+                            <!-- Inner Cutout for Donut Chart -->
+                            <div
+                                style="position: absolute; width: 55%; height: 55%; background: var(--surface-elevated); border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; flex-direction: column; z-index: 2;">
+                                <div style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-dim);">
+                                    TOTAL</div>
+                                <div
+                                    style="font-family: var(--font-display); font-size: 1.4rem; font-weight: bold; color: var(--text);">
+                                    100%</div>
+                            </div>
+
+                            <!-- Lines separating segments - use surface color to cut through -->
+                            <div
+                                style="position: absolute; width: 3px; height: 50%; background: var(--surface-elevated); bottom: 50%; left: 50%; transform-origin: bottom left; transform: translateX(-1.5px) rotate(0deg); z-index: 1;">
+                            </div>
+                            <div
+                                style="position: absolute; width: 3px; height: 50%; background: var(--surface-elevated); bottom: 50%; left: 50%; transform-origin: bottom left; transform: translateX(-1.5px) rotate(122.4deg); z-index: 1;">
+                            </div>
+                            <div
+                                style="position: absolute; width: 3px; height: 50%; background: var(--surface-elevated); bottom: 50%; left: 50%; transform-origin: bottom left; transform: translateX(-1.5px) rotate(241.2deg); z-index: 1;">
+                            </div>
+                            <div
+                                style="position: absolute; width: 3px; height: 50%; background: var(--surface-elevated); bottom: 50%; left: 50%; transform-origin: bottom left; transform: translateX(-1.5px) rotate(334.8deg); z-index: 1;">
+                            </div>
+                            <div
+                                style="position: absolute; width: 3px; height: 50%; background: var(--surface-elevated); bottom: 50%; left: 50%; transform-origin: bottom left; transform: translateX(-1.5px) rotate(352.8deg); z-index: 1;">
+                            </div>
+                        </div>
+
+                        <!-- Legend Layout -->
+                        <div
+                            style="display: flex; flex-direction: column; gap: 1rem; font-family: var(--font-mono); font-size: 0.85rem; color: var(--text);">
+                            <!-- SK Hynix -->
+                            <div
+                                style="display: flex; align-items: center; gap: 1rem; background: rgba(255,255,255,0.02); padding: 0.5rem 1rem; border-radius: 6px; border: 1px solid var(--border);">
+                                <div style="width: 12px; height: 12px; border-radius: 3px; background: #a78bfa;"></div>
+                                <div style="width: 90px; color: var(--text-dim);">SK Hynix</div>
+                                <div style="font-weight: bold; font-size: 1rem; color: #a78bfa;">34%</div>
+                            </div>
+
+                            <!-- Samsung -->
+                            <div
+                                style="display: flex; align-items: center; gap: 1rem; background: rgba(255,255,255,0.02); padding: 0.5rem 1rem; border-radius: 6px; border: 1px solid var(--border);">
+                                <div style="width: 12px; height: 12px; border-radius: 3px; background: #3b82f6;"></div>
+                                <div style="width: 90px; color: var(--text-dim);">Samsung</div>
+                                <div style="font-weight: bold; font-size: 1rem; color: #3b82f6;">33%</div>
+                            </div>
+
+                            <!-- Micron -->
+                            <div
+                                style="display: flex; align-items: center; gap: 1rem; background: rgba(255,255,255,0.02); padding: 0.5rem 1rem; border-radius: 6px; border: 1px solid var(--border);">
+                                <div style="width: 12px; height: 12px; border-radius: 3px; background: #10b981;"></div>
+                                <div style="width: 90px; color: var(--text-dim);">Micron</div>
+                                <div style="font-weight: bold; font-size: 1rem; color: #10b981;">26%</div>
+                            </div>
+
+                            <!-- CXMT -->
+                            <div
+                                style="display: flex; align-items: center; gap: 1rem; background: rgba(255,255,255,0.02); padding: 0.5rem 1rem; border-radius: 6px; border: 1px solid var(--border);">
+                                <div style="width: 12px; height: 12px; border-radius: 3px; background: #ef4444;"></div>
+                                <div style="width: 90px; color: var(--text-dim);">CXMT</div>
+                                <div style="font-weight: bold; font-size: 1rem; color: #ef4444;">5%</div>
+                            </div>
+
+                            <!-- Other -->
+                            <div
+                                style="display: flex; align-items: center; gap: 1rem; background: rgba(255,255,255,0.02); padding: 0.5rem 1rem; border-radius: 6px; border: 1px solid var(--border);">
+                                <div
+                                    style="width: 12px; height: 12px; border-radius: 3px; background: rgba(255, 255, 255, 0.05);">
+                                </div>
+                                <div style="width: 90px; color: var(--text-dim);">Other</div>
+                                <div style="font-weight: bold; font-size: 1rem; color: var(--text-dim);">2%</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Footer Notes -->
+                    <div
+                        style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-dim); border-top: 1px solid var(--border); padding-top: 1rem; margin-top: 2.5rem; text-align: center; text-transform: uppercase; letter-spacing: 1px;">
+                        <span style="display: block; margin-bottom: 0.3rem;">[ REVENUE SHARE: DYNAMIC RANDOM-ACCESS
+                            MEMORY MARKET ]</span>
+                        <span style="opacity: 0.6;">SOURCE: COUNTERPOINT RESEARCH</span>
+                    </div>
+                </figure>
+                <p>
+                    CXMT, a Chinese DRAM manufacturer, is the newcomer that's already arrived. Their LPDDR5X chips are
+                    shipping in phones from Honor, Xiaomi, and others across mid-range and flagship tiers alike. CXMT
+                    exists because China looked at the DRAM oligopoly and decided strategic dependence on three foreign
+                    companies was not acceptable. Whether their product catches up to SK Hynix on performance is almost
+                    beside the point. The goal is supply security. CXMT, YMTC, SMIC, BOE: these companies all exist, at
+                    least in part, because the US-China chip war and its cascading export controls turned semiconductor
+                    self-sufficiency from an ambition into a national imperative.
+                </p>
+                <figure class="content-image"
+                    style="background: var(--surface-elevated); padding: 3rem 2rem; border-radius: var(--radius-md); border: 1px solid var(--border); margin: 2rem 0; position: relative;">
+                    <div
+                        style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 0.5rem; text-align: center;">
+                        Geopolitical Catalyst</div>
+                    <div
+                        style="font-family: var(--font-display); font-size: 1.4rem; color: var(--text); font-weight: 700; margin-bottom: 3rem; text-align: center;">
+                        The Ecosystem of Self-Sufficiency</div>
+
+                    <div style="position: relative; padding-left: 2rem;">
+                        <!-- Timeline vertical line -->
+                        <div
+                            style="position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--border) 0%, rgba(239, 68, 68, 0.5) 100%); opacity: 0.5;">
+                        </div>
+
+                        <div style="display: flex; flex-direction: column; gap: 2rem;">
+                            <!-- BOE -->
+                            <div style="position: relative;">
+                                <div
+                                    style="position: absolute; left: -2.35rem; top: 1.5rem; width: 12px; height: 12px; border-radius: 50%; background: var(--surface); border: 2px solid var(--text-dim);">
+                                </div>
+                                <div
+                                    style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem;">
+                                    <div
+                                        style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
+                                        <div>
+                                            <div
+                                                style="font-family: var(--font-display); font-weight: bold; font-size: 1.2rem; color: var(--text);">
+                                                BOE Technology</div>
+                                            <div
+                                                style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim);">
+                                                OLED / Displays</div>
+                                        </div>
+                                        <div style="text-align: right;">
+                                            <div
+                                                style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text); font-weight: bold; background: rgba(255, 255, 255, 0.1); padding: 0.2rem 0.5rem; border-radius: 4px;">
+                                                STRATEGIC INITIATIVE</div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        style="font-size: 0.9rem; line-height: 1.5; color: var(--text-dim); border-top: 1px dashed var(--border); padding-top: 1rem;">
+                                        Heavily state-backed through the 2010s specifically to break South Korea's
+                                        (Samsung/LG) monopoly over the smartphone display market. Now the crucial
+                                        secondary OLED supplier for Apple and domestic flagships.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- SMIC -->
+                            <div style="position: relative;">
+                                <div
+                                    style="position: absolute; left: -2.35rem; top: 1.5rem; width: 12px; height: 12px; border-radius: 50%; background: var(--surface); border: 2px solid #eab308;">
+                                </div>
+                                <div
+                                    style="background: rgba(234, 179, 8, 0.02); border: 1px solid rgba(234, 179, 8, 0.3); border-radius: 8px; padding: 1.5rem;">
+                                    <div
+                                        style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
+                                        <div>
+                                            <div
+                                                style="font-family: var(--font-display); font-weight: bold; font-size: 1.2rem; color: #eab308;">
+                                                SMIC</div>
+                                            <div
+                                                style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim);">
+                                                Silicon Fabrication</div>
+                                        </div>
+                                        <div style="text-align: right;">
+                                            <div
+                                                style="font-family: var(--font-mono); font-size: 0.7rem; color: #eab308; font-weight: bold; background: rgba(234, 179, 8, 0.1); padding: 0.2rem 0.5rem; border-radius: 4px;">
+                                                [ 2020 ] ENTITY LISTED</div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        style="font-size: 0.9rem; line-height: 1.5; color: var(--text-dim); border-top: 1px dashed rgba(234, 179, 8, 0.3); padding-top: 1rem;">
+                                        Blacklisted by the U.S. Commerce Department in 2020. Cut off from ASML EUV
+                                        lithography, forcing an aggressive, state-funded push to achieve 7nm logic
+                                        parity (N+2/N+3) using multi-patterning DUV equipment.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- YMTC -->
+                            <div style="position: relative;">
+                                <div
+                                    style="position: absolute; left: -2.35rem; top: 1.5rem; width: 12px; height: 12px; border-radius: 50%; background: var(--surface); border: 2px solid #ef4444;">
+                                </div>
+                                <div
+                                    style="background: rgba(239, 68, 68, 0.02); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 8px; padding: 1.5rem;">
+                                    <div
+                                        style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
+                                        <div>
+                                            <div
+                                                style="font-family: var(--font-display); font-weight: bold; font-size: 1.2rem; color: #ef4444;">
+                                                YMTC</div>
+                                            <div
+                                                style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim);">
+                                                3D NAND Storage</div>
+                                        </div>
+                                        <div style="text-align: right;">
+                                            <div
+                                                style="font-family: var(--font-mono); font-size: 0.7rem; color: #ef4444; font-weight: bold; background: rgba(239, 68, 68, 0.1); padding: 0.2rem 0.5rem; border-radius: 4px;">
+                                                [ 2022 ] ENTITY LISTED</div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        style="font-size: 0.9rem; line-height: 1.5; color: var(--text-dim); border-top: 1px dashed rgba(239, 68, 68, 0.3); padding-top: 1rem;">
+                                        Added to the Entity List shortly after validating 232-layer NAND chips that
+                                        rivaled Micron and Samsung. The restriction accelerated their shift to sourcing
+                                        exclusively domestic toolchains for next-gen flash memory.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- CXMT -->
+                            <div style="position: relative;">
+                                <div
+                                    style="position: absolute; left: -2.35rem; top: 1.5rem; width: 12px; height: 12px; border-radius: 50%; background: var(--surface); border: 2px solid #a78bfa;">
+                                </div>
+                                <div
+                                    style="background: rgba(167, 139, 250, 0.02); border: 1px solid rgba(167, 139, 250, 0.3); border-radius: 8px; padding: 1.5rem;">
+                                    <div
+                                        style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
+                                        <div>
+                                            <div
+                                                style="font-family: var(--font-display); font-weight: bold; font-size: 1.2rem; color: #a78bfa;">
+                                                CXMT</div>
+                                            <div
+                                                style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim);">
+                                                DRAM Memory</div>
+                                        </div>
+                                        <div style="text-align: right;">
+                                            <div
+                                                style="font-family: var(--font-mono); font-size: 0.7rem; color: #a78bfa; font-weight: bold; background: rgba(167, 139, 250, 0.1); padding: 0.2rem 0.5rem; border-radius: 4px;">
+                                                [ 2022 ] EXPORT CONTROLS</div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        style="font-size: 0.9rem; line-height: 1.5; color: var(--text-dim); border-top: 1px dashed rgba(167, 139, 250, 0.3); padding-top: 1rem;">
+                                        Targeted by sweeping October 2022 export controls restricting equipment capable
+                                        of producing DRAM at or below 18nm. This forced CXMT to aggressively double down
+                                        on older techniques, rapidly expanding domestic mobile DRAM supply regardless of
+                                        yield.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <figcaption style="margin-top: 2.5rem; border-top: 1px solid var(--border); padding-top: 1rem;">[
+                        FIG::REF ] The self-sufficiency timeline. Trade restrictions intended to freeze Chinese
+                        semiconductor advancement instead functioned as a catalyst, aggressively accelerating the
+                        funding and deployment of domestic supply chain alternatives.</figcaption>
+                </figure>
+                <p>
+                    Storage is a similar story with different names. When you install a 3GB game in eight seconds
+                    instead of forty, that speed comes from the flash chip and its controller, not anything the phone
+                    brand engineered. The NAND flash itself was probably made by Samsung, SK Hynix, Kioxia, or Western
+                    Digital. On the Chinese side, YMTC has been aggressively scaling their 3D NAND production and is
+                    already supplying UFS chips to domestic phone brands. The UFS 4.0 controller that talks to that
+                    flash? Often from Samsung or a specialist like UNIC Memory.
+                </p>
+
+                <h3>The Battery That Came From an EV Factory</h3>
+
+                <p>
+                    The single largest physical component in your phone, by volume and by weight, is the battery. And
+                    the company that made it is almost certainly not the company whose logo is on the phone.
+                </p>
+                <p>
+                    ATL, Amperex Technology Limited, is the dominant supplier for smartphone batteries and has been for
+                    years. They make cells for Apple, Huawei, Xiaomi, OPPO, Vivo, and essentially every other major
+                    brand. Samsung is one of the few that also makes their own cells through Samsung SDI, but even
+                    Samsung mixes in Chinese-made batteries across their lineup for cost reasons. Their parent company,
+                    CATL, is the world's largest EV battery manufacturer. The lithium-ion chemistry that powers your
+                    phone and the chemistry that powers a Tesla share R&D lineage: improvements developed for electric
+                    vehicles, where energy density is life or death, flow downstream into the cells that end up in
+                    phones.
+                </p>
+
+                <p>
+                    BYD also manufactures phone batteries through its electronics division, the same BYD that builds
+                    electric cars and assembles phones. Sunwoda is another major supplier, particularly for Chinese
+                    brands. The silicon-carbon anode batteries now appearing in flagships, the ones that promise higher
+                    energy density in the same physical space, are being pushed by ATL and Sunwoda, but CosMX is the one
+                    pushing the silicon-carbon barriers the hardest. They don't have the production capacity of ATL or
+                    Sunwoda, but their energy density numbers are ahead of the pack. If your phone now lasts two days on
+                    a charge instead of one, thank CosMX or ATL, not the brand that put its name on the back. When a
+                    phone brand advertises silicon-carbon battery technology, they are advertising their supplier's
+                    chemistry, not their own.
+                </p>
+                <figure class="content-image"
+                    style="background: var(--surface-elevated); padding: 3rem 1rem; border-radius: var(--radius-md); border: 1px solid var(--border); margin: 2rem 0;">
+                    <div
+                        style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 0.5rem; text-align: center;">
+                        Energy Density Breakthroughs</div>
+                    <div
+                        style="font-family: var(--font-display); font-size: 1.4rem; color: var(--text); font-weight: 700; margin-bottom: 3.5rem; text-align: center;">
+                        Silicon-Carbon vs Traditional Li-ion</div>
+
+                    <div
+                        style="display: flex; justify-content: space-around; align-items: flex-end; padding-top: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); max-width: 680px; margin: 0 auto;">
+
+                        <!-- Traditional Li-ion -->
+                        <div style="display: flex; flex-direction: column; align-items: center; width: 22%;">
+                            <div
+                                style="font-family: var(--font-mono); font-weight: bold; font-size: 0.9rem; color: var(--text-dim); margin-bottom: 0.5rem;">
+                                ~720 Wh/L</div>
+                            <div
+                                style="width: 100%; max-width: 80px; height: 180px; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border); border-bottom: none; border-radius: 4px 4px 0 0; position: relative; overflow: hidden;">
+                            </div>
+                            <div
+                                style="margin-top: 1rem; font-family: var(--font-display); font-size: 0.85rem; font-weight: bold; text-align: center; color: var(--text-dim);">
+                                Traditional</div>
+                            <div
+                                style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-dim); margin-top: 0.2rem;">
+                                Graphite Anode</div>
+                        </div>
+
+                        <!-- Sunwoda -->
+                        <div style="display: flex; flex-direction: column; align-items: center; width: 22%;">
+                            <div
+                                style="font-family: var(--font-mono); font-weight: bold; font-size: 0.9rem; color: #60a5fa; margin-bottom: 0.5rem;">
+                                904 Wh/L</div>
+                            <div
+                                style="width: 100%; max-width: 80px; height: 226px; background: rgba(96, 165, 250, 0.1); border: 1px solid rgba(96, 165, 250, 0.5); border-bottom: none; border-radius: 4px 4px 0 0;">
+                            </div>
+                            <div
+                                style="margin-top: 1rem; font-family: var(--font-display); font-size: 0.85rem; font-weight: bold; text-align: center; color: #60a5fa;">
+                                Sunwoda</div>
+                            <div
+                                style="font-family: var(--font-mono); font-size: 0.65rem; color: rgba(96, 165, 250, 0.7); margin-top: 0.2rem;">
+                                Silicon-Carbon</div>
+                        </div>
+
+                        <!-- ATL -->
+                        <div style="display: flex; flex-direction: column; align-items: center; width: 22%;">
+                            <div
+                                style="font-family: var(--font-mono); font-weight: bold; font-size: 0.9rem; color: #a78bfa; margin-bottom: 0.5rem;">
+                                916 Wh/L</div>
+                            <div
+                                style="width: 100%; max-width: 80px; height: 229px; background: rgba(167, 139, 250, 0.1); border: 1px solid rgba(167, 139, 250, 0.5); border-bottom: none; border-radius: 4px 4px 0 0;">
+                            </div>
+                            <div
+                                style="margin-top: 1rem; font-family: var(--font-display); font-size: 0.85rem; font-weight: bold; text-align: center; color: #a78bfa;">
+                                ATL</div>
+                            <div
+                                style="font-family: var(--font-mono); font-size: 0.65rem; color: rgba(167, 139, 250, 0.7); margin-top: 0.2rem;">
+                                Silicon-Carbon</div>
+                        </div>
+
+                        <!-- CosMX -->
+                        <div style="display: flex; flex-direction: column; align-items: center; width: 22%;">
+                            <div
+                                style="font-family: var(--font-mono); font-weight: bold; font-size: 1.1rem; color: var(--accent); margin-bottom: 0.5rem; text-shadow: 0 0 10px rgba(163, 230, 53, 0.3);">
+                                949 Wh/L</div>
+                            <div
+                                style="width: 100%; max-width: 80px; height: 237px; background: linear-gradient(to top, rgba(163, 230, 53, 0.05), rgba(163, 230, 53, 0.2)); border: 1px solid var(--accent); border-bottom: none; border-radius: 4px 4px 0 0; position: relative; box-shadow: 0 -4px 20px rgba(163, 230, 53, 0.1);">
+                                <div
+                                    style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--accent); color: #000; font-family: var(--font-mono); font-size: 0.55rem; font-weight: bold; padding: 3px 6px; border-radius: 4px; white-space: nowrap;">
+                                    LEADER</div>
+                            </div>
+                            <div
+                                style="margin-top: 1rem; font-family: var(--font-display); font-size: 0.85rem; font-weight: bold; text-align: center; color: var(--accent);">
+                                CosMX</div>
+                            <div
+                                style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--accent); margin-top: 0.2rem; opacity: 0.8;">
+                                Silicon-Carbon</div>
+                        </div>
+
+                    </div>
+
+                    <figcaption
+                        style="margin-top: 3.5rem; border-top: 1px solid var(--border); padding-top: 1rem; text-align: center;">
+                        [ FIG::REF ] The density race. By swapping graphite anodes for silicon-carbon composites,
+                        suppliers like CosMX and ATL have shattered traditional lithium-ion density limits natively,
+                        allowing for identical battery footprints to carry vastly more capacity.</figcaption>
+                </figure>
+
+                <h3>The Parts You'd Never Think to Ask About</h3>
+                <figure class="content-image">
+                    <img src="motherboard.webp"
+                        alt="High-resolution visual of a smartphone motherboard populated with hundreds of microscopic multilayer ceramic capacitors (MLCCs)"
+                        loading="lazy">
+                    <figcaption>[ FIG::REF ] The invisible utility. A modern smartphone logic board integrates thousands
+                        of MLCCs—the tiny, grain-of-sand-sized components scattered across the circuitry. This
+                        fundamental requirement is dominated almost entirely by specialized suppliers like Murata and
+                        Samsung Electro-Mechanics.</figcaption>
+                </figure>
+                <p>
+                    This is where it gets genuinely strange. Your phone contains thousands of MLCCs, multilayer ceramic
+                    capacitors: tiny rectangular components, smaller than a grain of rice, that regulate current and
+                    filter noise across the circuit board. Murata makes a huge proportion of them. Samsung
+                    Electro-Mechanics makes many of the rest. They are everywhere on the board, invisible, essential,
+                    and so commoditized that Murata has effectively become a utility.
+                </p>
+                <p>
+                    Why doesn't a phone brand make their own capacitors? Because Murata has spent decades perfecting the
+                    chemistry and manufacturing of these tiny blocks. For a phone brand to replicate that would be like
+                    a car company trying to manufacture its own screws and bolts. It is far more efficient to buy from
+                    the master of the craft.
+                </p>
+                <p>
+                    The same applies to haptics and sound. The vibration when your phone buzzes? That haptic motor was
+                    probably made by AAC Technologies or Goertek. The speaker you listen to music through? Also likely
+                    AAC or Goertek. Your microphone when you make a call? Could be them too. When you unlock your phone
+                    with your fingerprint, Goodix is probably the company reading it. They make under-display optical
+                    sensors and also happen to make display driver ICs and audio amplifiers. Goodix is the kind of
+                    company that exists entirely inside other companies' products, which is a strange and lucrative
+                    place to be.
+                </p>
+                <figure class="content-image">
+                    <img src="goodix.webp" alt="Close-up of an under-display fingerprint sensor module" loading="lazy">
+                    <figcaption>[ FIG::REF ] The ultrasonic unlock. While biometric authentication feels deeply
+                        integrated into a phone's custom OS, the actual optical sensors reading your fingerprint through
+                        the OLED panel are overwhelmingly designed and supplied by specialized entities like Goodix.
+                    </figcaption>
+                </figure>
+                <p>
+                    And then there's the hidden silicon that sits next to the main SoC but never makes the spec sheet.
+                    Every phone has a display driver IC, a DDIC, that translates the processor's instructions into the
+                    signals your screen actually understands. It has a PMIC, a power management IC, that decides how
+                    voltage and current flow to every component on the board. These are made by companies like Qualcomm,
+                    Texas Instruments, Dialog Semiconductor, and Novatek. Nobody markets them. They are invisible and
+                    absolutely load-bearing.
+                </p>
+                <p>
+                    More interesting is what happens when phone brands buy third-party chips and rename them. Vivo's
+                    V-series imaging chip, marketed as their custom ISP, is co-developed with external silicon partners.
+                    Pixelworks makes display upscaling and motion processing chips that multiple brands license,
+                    rebrand, and present as proprietary technology. When a phone brand announces their custom display
+                    chip or dedicated imaging processor, the honest version is usually: they specified the requirements,
+                    a specialist designed the silicon, and the brand put their name on it. It's the ODM model applied to
+                    individual chips instead of entire phones.
+                </p>
+                <figure class="content-image">
+                    <img src="pixelwork_iqooneo5.webp"
+                        alt="Close-up macro shot of the Pixelworks PX8578 chip on the logic board of an iQOO Neo5 smartphone"
+                        loading="lazy">
+                    <figcaption>[ FIG::REF ] Hidden Silicon. The Pixelworks PX8578, deployed as the 'independent display
+                        chip' inside the iQOO Neo5. While marketed heavily as a proprietary display processing unit
+                        handling advanced MEMC frame interpolation, the actual silicon is an off-the-shelf component
+                        engineered by specialized third-party partners.</figcaption>
+                </figure>
+
+                <h3>The Stuff You Actually Touch</h3>
+
+                <p>
+                    The physical experience of your phone, the feel of it in your hand, the tap of the glass, the
+                    solidity of the frame, that's its own supply chain.
+                </p>
+                <p>
+                    The glass on the front is almost certainly Corning Gorilla Glass. Corning is one of the few
+                    component suppliers that has successfully become a consumer brand, largely because phone makers let
+                    them put their name in ads. On cheaper devices it might be Schott glass instead, or Panda Glass, a
+                    Chinese-made alternative. Some brands have gone further and named their own glass. Xiaomi calls
+                    theirs Dragon Crystal Glass. Honor has Rhino Glass. Huawei has Kunlun Glass. The names are
+                    distinctive, but the underlying material in most cases comes from Chongqing Xinjing. The processing
+                    and coatings? Lens Technology. Sometimes Biel Crystal.
+                </p>
+
+                <p>
+                    The aluminum or titanium frame around the phone was probably machined by Everwin Precision. CNC
+                    machining at phone-component tolerances and volumes is its own industry. Everwin also makes board
+                    shielding and foldable hinges, the single most mechanically complex component in any consumer
+                    device.
+                </p>
+                <figure class="content-image">
+                    <img src="phone_cnc.webp"
+                        alt="High speed CNC milling machine drilling out an aluminum smartphone chassis" loading="lazy">
+                    <figcaption>[ FIG::REF ] The physical anchor. The complex internal architecture of modern phones
+                        requires titanium or aerospace-grade aluminum frames machined at extreme tolerances by
+                        specialists like Everwin Precision.</figcaption>
+                </figure>
+
+                <h3>Who Actually Puts It Together</h3>
+
+                <figure class="content-image">
+                    <img src="luxshare_nghe_an.webp" alt="Luxshare-ICT manufacturing complex in Nghe An, Vietnam"
+                        loading="lazy">
+                    <figcaption>[ FIG::REF ] The final forge. Massive industrial hubs like the Luxshare-ICT complex in
+                        Nghe An, Vietnam, serve as the convergence point for thousands of components, where contract
+                        manufacturers turn a bill of materials into a finished consumer product.</figcaption>
+                </figure>
+
+                <p>
+                    After all of that, someone has to assemble it. And this is where it gets more complicated than it
+                    looks.
+                </p>
+                <p>
+                    Some brands do it themselves. Samsung has its own factories, as does Xiaomi. For flagship products,
+                    keeping assembly in-house allows for tighter quality control. But manufacturing at volume across an
+                    entire lineup is a different problem. The mid-range and budget tier is where contract manufacturers
+                    come in: Foxconn, Luxshare, BYD, Pegatron, Wingtech, and Huaqin all handle significant volume for
+                    multiple brands simultaneously.
+                </p>
+                <p>
+                    And then there's the layer beneath that: ODMs, or original design manufacturers. They don't just
+                    assemble phones, they design them. A company like Wingtech builds a complete reference phone and
+                    sells that design to multiple brands, who slap their own logo on it, tweak the software, and ship
+                    it. That budget Nokia and that entry-level Motorola sitting next to each other on a shelf might be
+                    running on the same underlying design from the same factory.
+                </p>
+
+                <figure class="content-image">
+                    <div
+                        style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px; background: var(--border);">
+                        <img src="Infinix_Hot_60i.webp" alt="Infinix Hot 60i" loading="lazy"
+                            style="width: 100%; height: 300px; object-fit: cover;">
+                        <img src="Infinix_Smart_10_Plus.webp" alt="Infinix Smart 10 Plus" loading="lazy"
+                            style="width: 100%; height: 300px; object-fit: cover;">
+                        <img src="Lava_Blaze_Dragon_2.webp" alt="Lava Blaze Dragon 2" loading="lazy"
+                            style="width: 100%; height: 300px; object-fit: cover;">
+                    </div>
+                    <figcaption>[ FIG::REF ] The Illusion of Choice. Three different smartphones from different brands
+                        (Infinix and Lava) sharing nearly identical industrial design language, camera positioning, and
+                        internal architectures—all derived from the same ODM reference platform.</figcaption>
+                </figure>
+
+
+                <p>
+                    This is a system that works fine until someone decides to lie about it. In 2026, a brand called AI+,
+                    part of NxtQuantum Shift Technologies and led by Madhav Sheth, launched a phone in India under the
+                    banner of the government's Make in India initiative, claiming it was the product of Indian R&D. It
+                    was a ZTE Nubia Flip 2. Rebranded. Assembled by a contract manufacturer called Ismartu. Built from
+                    refurbished parts. The uniquely designed operating system was a reskin. Nobody at NxtQuantum
+                    designed the hardware, because there was no hardware to design. They bought a reference design, put
+                    their name on it, and called it national innovation.
+                </p>
+
+                <figure class="content-image">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--border);">
+                        <img src="Ai+_Nova_Flip.webp" alt="AI+ Nova Flip" loading="lazy"
+                            style="width: 100%; height: 350px; object-fit: cover;">
+                        <img src="Nubia_Flip_2.webp" alt="ZTE Nubia Flip 2" loading="lazy"
+                            style="width: 100%; height: 350px; object-fit: cover;">
+                    </div>
+                    <figcaption>[ FIG::REF ] Corporate Camouflage. The AI+ Nova Flip (left) compared to its source
+                        hardware, the ZTE Nubia Flip 2 (right). The hardware is identical down to the component level,
+                        highlighting the structural invisibility that allows rebranding to masquerade as original
+                        innovation.</figcaption>
+                </figure>
+
+
+                <p>
+                    The ODM model isn't inherently dishonest. Most of the industry runs on it and nobody pretends
+                    otherwise. The problem is when the supply chain's invisibility gets used as cover for a claim that
+                    couldn't survive five minutes of scrutiny. And that invisibility is structural, not accidental. When
+                    the same reference design is available to dozens of buyers, when the same parts ship to dozens of
+                    factories, when nothing about the physical object in your hand requires the brand on the back to
+                    have touched it at all, the gap between "we made this" and "we ordered this" becomes trivially easy
+                    to paper over. The AI+ story isn't an anomaly. It's what the system looks like when someone decides
+                    honesty is optional.
+                </p>
+
+                <h3>The "Why" of the Whole System</h3>
+
+                <p>
+                    The why of the whole system is specialization. A phone brand is the architect. They create the
+                    vision, the software, and the user experience. For brands like Xiaomi, OnePlus, and Realme, the
+                    actual value they add is software integration, UI optimization, and camera tuning, not the hardware
+                    itself, because they don't make any of it. The suppliers are the masons, the electricians, and the
+                    plumbers.
+                </p>
+                <p>
+                    Apple is the exception that proves how deep this goes. They don't escape the supply chain; they
+                    colonize it. Sony still makes their camera sensors, but Apple co-specifies the silicon so the part
+                    inside an iPhone is functionally a custom chip. TSMC still fabricates their processors, but Apple
+                    designs every transistor. Corning still provides the glass, but Apple co-funded the R&D through
+                    their Advanced Manufacturing Fund and gets exclusive Ceramic Shield formulations before the general
+                    market. Foxconn still assembles the phone, but Apple designs the tooling, writes the test software,
+                    and owns the jigs; Foxconn cannot sell that design to anyone else. Apple even bakes the storage
+                    controller directly into the A-series SoC rather than buying one off the shelf. No other phone brand
+                    operates at that depth across every layer of the stack. The difference between Apple and everyone
+                    else is not independence; it's influence.
+                </p>
+
+                <p>
+                    And this is why software matters more than the spec sheet implies. A Sony Lytia 901 sensor sitting
+                    inside an OPPO and the exact same sensor inside a Vivo will produce visibly different photos,
+                    because OPPO and Vivo wrote entirely different computational photography pipelines on top of it. The
+                    hardware is a platform. The software is the opinion. Two architects working from the same bricks
+                    will build very different houses.
+                </p>
+
+                <p>
+                    The next time you pick up your phone, consider what you're actually holding. A BOE display. A Sony
+                    sensor. A MediaTek or Snapdragon chip that crossed three countries before it arrived. Murata
+                    capacitors by the thousand. An AAC haptic motor. Goodix reading your fingerprint. Corning protecting
+                    the front, Lens Technology the back, Everwin holding it all together. Assembled by Foxconn or
+                    Luxshare or BYD.
+                </p>
+
+                <figure class="content-image">
+                    <img src="Find_X9_Pro_Labled.webp" alt="Fully labeled internal layout of the OPPO Find X9 Pro showing components from Samsung, Sony, Qualcomm, ATL, and Murata" loading="lazy">
+                    <figcaption>[ FIG::REF ] The deconstructed flagship. A final map of the OPPO Find X9 Pro, revealing the hyper-fragmented reality of the modern smartphone: a product sold by one brand, but physically manifest through the specialized engineering of a dozen others.</figcaption>
+                </figure>
+
+                <blockquote>
+                    The brand on the back is real. The product is theirs. But the company that made it and the company
+                    whose name is on it have never been the same thing.
+                </blockquote>
+
+            </div>
+
+            <footer class="post__footer">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span class="label-mono">[ END_OF_LOG ]</span>
+                    <div class="social-row" style="gap: 0.5rem;">
+                        <span class="label-mono" style="align-self: center;">SHARE :</span>
+                        <a href="#" id="share-twitter" class="social-btn"
+                            style="padding: 0.5rem; font-size: 0.9rem;"><svg width="14" height="14"
+                                viewBox="0 0 512 512" fill="currentColor">
+                                <path
+                                    d="M459.4 151.7c.3 4.5 .3 9.1 .3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53 51.7 63.7 129.3 105.3 216.4 109.8-1.6-7.8-2.6-15.9-2.6-24 0-57.8 46.8-104.9 104.9-104.9 30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3z" />
+                            </svg></a>
+                        <a href="#" id="share-link" class="social-btn" style="padding: 0.5rem; font-size: 0.9rem;"><svg
+                                width="14" height="14" viewBox="0 0 640 512" fill="currentColor">
+                                <path
+                                    d="M579.8 267.7c56.5-56.5 56.5-148 0-204.5c-50-50-128.8-56.5-186.3-15.4l-1.6 1.1c-14.4 10.3-17.7 30.3-7.4 44.6s30.3 17.7 44.6 7.4l1.6-1.1c32.1-22.9 76-19.3 103.8 8.6c31.5 31.5 31.5 82.5 0 114L422.3 334.8c-31.5 31.5-82.5 31.5-114 0c-27.9-27.9-31.5-71.8-8.6-103.8l1.1-1.6c10.3-14.4 6.9-34.4-7.4-44.6s-34.4-6.9-44.6 7.4l-1.1 1.6C206.5 251.2 213 330 263 380c56.5 56.5 148 56.5 204.5 0L579.8 267.7zM60.2 244.3c-56.5 56.5-56.5 148 0 204.5c50 50 128.8 56.5 186.3 15.4l1.6-1.1c14.4-10.3 17.7-30.3 7.4-44.6s-30.3-17.7-44.6-7.4l-1.6 1.1c-32.1 22.9-76 19.3-103.8-8.6C74 372.1 74 321.1 105.5 289.5L217.7 177.2c31.5-31.5 82.5-31.5 114 0c27.9 27.9 31.5 71.8 8.6 103.9l-1.1 1.6c-10.3 14.4-6.9 34.4 7.4 44.6s34.4 6.9 44.6-7.4l1.1-1.6C433.5 260.8 427 182 377 132c-56.5-56.5-148-56.5-204.5 0L60.2 244.3z" />
+                            </svg></a>
+                    </div>
+                </div>
+            </footer>
+        </article>
+    </section>
+
+    <footer class="footer">
+        <div class="footer__inner">
+            <span class="label-mono">[ REPTALICA // LOG_SYSTEM ]</span>
+            <span class="footer__sep" aria-hidden="true">&mdash;</span>
+            <span class="footer__disclaimer">Information provided as-is. All rights reserved.</span>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+</body>
+
+</html>
