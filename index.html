@@ -160,6 +160,9 @@
                         <option value="allwinner">Allwinner</option>
                         <option value="apple">Apple</option>
                         <option value="loongson">Loongson</option>
+                        <option value="moorethreads">Moore Threads</option>
+                        <option value="phytium">Phytium</option>
+                        <option value="spacemit">SpacemiT</option>
                         <option value="tesla">Tesla</option>
                     </select>
                     <svg class="select-arrow" width="10" height="10" viewBox="0 0 512 512" fill="currentColor">
@@ -183,6 +186,16 @@
         <!-- Gallery Grid -->
         <div class="gallery__grid">
             <!-- Mediatek -->
+            <article class="card" data-category="mediatek">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Helio_G99.webp" alt="Helio G99" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">MEDIATEK</span>
+                    <h4 class="card__title">Helio G99</h4>
+                    <p class="card__desc">Upper mid-range AP released in 2022, TSMC N6. Popular in budget-to-mid gaming phones, widely adopted by Xiaomi, Redmi, and Realme.</p>
+                </div>
+            </article>
             <article class="card" data-category="mediatek">
                 <div class="card__image">
                     <img src="assets/thumbnails/Dimensity_7300.webp" alt="Dimensity 7300" loading="lazy">
@@ -320,6 +333,16 @@
             </article>
 
             <!-- Nvidia -->
+            <article class="card" data-category="nvidia">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Nvida_Orin.webp" alt="Nvidia Orin" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">NVIDIA</span>
+                    <h4 class="card__title">Jetson AGX Orin</h4>
+                    <p class="card__desc">High-performance edge AI SoC released in 2022, Samsung 8nm. 12-core Arm Cortex-A78AE + 2048-core Ampere GPU, delivering up to 275 TOPS.</p>
+                </div>
+            </article>
             <article class="card" data-category="nvidia">
                 <div class="card__image">
                     <img src="assets/thumbnails/Nvidia_Drive_AGX_Thor.webp" alt="Nvidia Drive AGX Thor" loading="lazy">
@@ -548,6 +571,16 @@
                     <h4 class="card__title">DG2-128 (Arc A380)</h4>
                     <p class="card__desc">Entry-level discrete GPU, 2022, TSMC N6. 128 EU Xe-HPG architecture, Intel's
                         return to discrete graphics.</p>
+                </div>
+            </article>
+            <article class="card" data-category="intel">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Intel_Arrow_Lake_S.webp" alt="Intel Arrow Lake S" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">INTEL</span>
+                    <h4 class="card__title">Arrow Lake S (Core Ultra 200S)</h4>
+                    <p class="card__desc">Desktop CPU released in 2024, Intel 20A + TSMC N5/N6 tiles. Hybrid P/E/LP-E core design, first Intel desktop chip built on a multi-tile package.</p>
                 </div>
             </article>
 
@@ -950,6 +983,42 @@
                     <h4 class="card__title">Apple M2 Pro</h4>
                     <p class="card__desc">Pro-tier Apple Silicon, 2023, TSMC N5P. Up to 12-core CPU + 19-core GPU,
                         powered MacBook Pro 14"/16" and Mac mini.</p>
+                </div>
+            </article>
+
+            <!-- Moore Threads -->
+            <article class="card" data-category="moorethreads">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Moore_Thread_SD102.webp" alt="Moore Threads SD102" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">MOORE THREADS</span>
+                    <h4 class="card__title">Moore Threads SD102</h4>
+                    <p class="card__desc">Chinese domestic GPU released in 2024. Musa architecture targeting desktop and workstation markets — part of China's push for GPU independence.</p>
+                </div>
+            </article>
+
+            <!-- Phytium -->
+            <article class="card" data-category="phytium">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Phytium_Tengrui_D3000.webp" alt="Phytium Tengrui D3000" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">PHYTIUM</span>
+                    <h4 class="card__title">Tengrui D3000</h4>
+                    <p class="card__desc">Chinese server-grade processor based on ARM architecture. Designed for domestic cloud and HPC workloads, exempt from US export controls at time of release.</p>
+                </div>
+            </article>
+
+            <!-- SpacemiT -->
+            <article class="card" data-category="spacemit">
+                <div class="card__image">
+                    <img src="assets/thumbnails/Spacemit_K1.webp" alt="SpacemiT K1" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <span class="label-mono card__brand">SPACEMIT</span>
+                    <h4 class="card__title">SpacemiT K1</h4>
+                    <p class="card__desc">RISC-V SoC released in 2024, 12nm. 8-core X60 (RV64GCVB), the first mass-market chip with RVV 1.0 vector extension. Powers the Banana Pi BPI-F3 and Bianbu Pad.</p>
                 </div>
             </article>
 

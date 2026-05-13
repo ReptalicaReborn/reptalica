@@ -937,8 +937,16 @@ body {
     .modal__image-container {
         border-right: none;
         border-bottom: 2px solid var(--border);
-        height: 35vh;
+        max-height: 45vh;
         padding: 1rem;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        align-items: flex-start;
+    }
+
+    #modal-image {
+        max-height: none;
+        width: 100%;
     }
 
     .modal__info {
