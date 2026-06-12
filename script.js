@@ -156,9 +156,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // ═══════════════════════════════════════
     const hero = document.getElementById('hero');
     let isAccelerating = false;
-    let accelerationProgress = 0; // 0 to 1
+    let accelerationProgress = 0;
     let animationFrameId = null;
-    let transitioning = false;
     let lastVibrateTime = 0;
     let isTouchInput = false;
 
@@ -172,12 +171,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let cachedAnims = [];
 
     function updateAcceleration(timestamp) {
-        if (transitioning) return;
-
         if (isAccelerating) {
             // Cut desktop long press time by ~0.5 (make increment larger if not touch)
             const increment = isTouchInput ? 0.004 : 0.008;
-            accelerationProgress = Math.min(1, accelerationProgress + increment);
+            accelerationProgress = accelerationProgress + increment;
 
             // Cross-browser vibration support
             const vibrateFunc = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
@@ -186,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // that get faster and harder as RPM climbs
             if (vibrateFunc) {
                 const now = timestamp || performance.now();
-                const p = accelerationProgress; // 0 → 1
+                const p = Math.min(accelerationProgress, 1); // Cap for haptic timing only
 
                 // Gap between pulses: 250ms at idle → 30ms at redline
                 const gap = 250 - (p * 220);
@@ -229,30 +226,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (noiseOverlay) {
             noiseOverlay.style.opacity = 0.03 + (easeIn * 0.15);
-        }
-
-        if (accelerationProgress >= 0.99 && !transitioning) {
-            transitioning = true;
-
-            const vibrateFunc = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
-            // Final haptic: engine redline burst then heavy sustained crush
-            if (vibrateFunc) {
-                vibrateFunc.call(navigator, [
-                    60, 10, 60, 10, 60, 10, 60, 10, // aggressive rapid fire
-                    30,                               // brief gap
-                    600                               // heavy sustained crush buzz
-                ]);
-            }
-
-            // Reset after haptic finishes
-            setTimeout(() => {
-                transitioning = false;
-                accelerationProgress = 0;
-                hero.style.setProperty('--accel', 0);
-                if (noiseOverlay) noiseOverlay.style.opacity = 0.03;
-                cachedAnims.forEach(anim => { anim.playbackRate = 1; });
-            }, 700);
-            return;
         }
 
         if (accelerationProgress > 0 || isAccelerating) {
@@ -324,7 +297,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Cleanup on Back-Forward Cache (bfcache) restore
         window.addEventListener('pageshow', (e) => {
-            transitioning = false;
             isAccelerating = false;
             accelerationProgress = 0;
 
