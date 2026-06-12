@@ -962,6 +962,7 @@
         function modalStopDraw(e) {
             if (modalTool === 'line' && modalDrawing) {
                 const pos = modalGetPos(e);
+                if (modalLinePreviewData) modalCtx.putImageData(modalLinePreviewData, 0, 0);
                 modalCtx.globalCompositeOperation = 'source-over';
                 modalCtx.strokeStyle = modalColorPicker.value;
                 modalCtx.lineWidth = modalSizeSlider.value;
@@ -969,9 +970,11 @@
                 modalCtx.moveTo(modalLineStartX, modalLineStartY);
                 modalCtx.lineTo(pos.x, pos.y);
                 modalCtx.stroke();
+                modalLinePreviewData = null;
             }
             modalDrawing = false;
             modalCtx.globalCompositeOperation = 'source-over';
+            syncModalToSmall();
         }
 
         modalCanvas.addEventListener('mousedown', modalStartDraw);
@@ -982,7 +985,7 @@
         modalCanvas.addEventListener('touchmove', modalDraw, { passive: false });
         modalCanvas.addEventListener('touchend', modalStopDraw);
 
-        modalClearBtn.addEventListener('click', () => { modalSaveState(); modalCtx.clearRect(0, 0, modalCanvas.width, modalCanvas.height); });
+        modalClearBtn.addEventListener('click', () => { modalSaveState(); modalCtx.clearRect(0, 0, modalCanvas.width, modalCanvas.height); syncModalToSmall(); });
         modalUndoBtn.addEventListener('click', () => {
             if (modalHistory.length === 0) return;
             const img = new Image();
@@ -1007,9 +1010,13 @@
         });
 
         // Save from modal back to small canvas
-        modalSaveBtn.addEventListener('click', () => {
+        function syncModalToSmall() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.drawImage(modalCanvas, 0, 0, canvas.width, canvas.height);
+        }
+
+        modalSaveBtn.addEventListener('click', () => {
+            syncModalToSmall();
             canvasModal.style.display = 'none';
         });
 
