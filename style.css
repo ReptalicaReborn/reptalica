@@ -43,6 +43,7 @@
 
     /* Fonts */
     --font-family-base: 'Google Sans', 'Outfit', sans-serif;
+    --font-family-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
     /* Shapes */
     --shape-corner-xs: 4px;
