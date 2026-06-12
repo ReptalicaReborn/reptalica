@@ -390,13 +390,12 @@
             const size = sizeSlider.value;
             const displaySize = size * (rect.width / canvas.width) * 2;
             
-            cursorCtx.beginPath();
-            cursorCtx.arc(x, y, displaySize / 2, 0, Math.PI * 2);
             cursorCtx.strokeStyle = currentTool === 'eraser' ? '#ff4444' : colorPicker.value;
             cursorCtx.lineWidth = 2;
+            cursorCtx.beginPath();
+            cursorCtx.arc(x, y, displaySize / 2, 0, Math.PI * 2);
             cursorCtx.stroke();
             
-            // Crosshair
             cursorCtx.beginPath();
             cursorCtx.moveTo(x - displaySize / 2 - 5, y);
             cursorCtx.lineTo(x + displaySize / 2 + 5, y);
@@ -419,15 +418,13 @@
             tempCanvas.getContext('2d').drawImage(canvas, 0, 0);
             canvas.width = rect.width * 2;
             canvas.height = rect.height * 2;
-            ctx.scale(2, 2);
             ctx.lineCap = 'round';
             ctx.lineJoin = 'round';
-            ctx.drawImage(tempCanvas, 0, 0, rect.width, rect.height);
+            ctx.drawImage(tempCanvas, 0, 0, canvas.width, canvas.height);
             
             // Initialize cursor canvas
             cursorCanvas.width = rect.width * 2;
             cursorCanvas.height = rect.height * 2;
-            cursorCtx.scale(2, 2);
         }
 
         function saveState() {
@@ -439,10 +436,12 @@
             const rect = canvas.getBoundingClientRect();
             const clientX = e.touches ? e.touches[0].clientX : e.clientX;
             const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-            // Return CSS pixel coordinates (canvas is scaled 2x internally)
+            // Scale CSS coordinates to canvas internal coordinates
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
             return { 
-                x: clientX - rect.left, 
-                y: clientY - rect.top 
+                x: (clientX - rect.left) * scaleX,
+                y: (clientY - rect.top) * scaleY
             };
         }
 
