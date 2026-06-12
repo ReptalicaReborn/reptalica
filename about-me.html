@@ -370,10 +370,24 @@
             sendBtn.disabled = true;
 
             try {
-                const dataUrl = canvas.toDataURL('image/png');
+                const blob = await new Promise(r => canvas.toBlob(r, 'image/png'));
+
+                const imgForm = new FormData();
+                imgForm.append('reqtype', 'fileupload');
+                imgForm.append('time', '72h');
+                imgForm.append('fileToUpload', blob, 'drawing.png');
+
+                const imgRes = await fetch('https://litterbox.catbox.moe/resources/internals/api.php', {
+                    method: 'POST',
+                    body: imgForm
+                });
+
+                const imgUrl = await imgRes.text();
+
+                if (!imgUrl.startsWith('http')) throw new Error('Upload failed');
+
                 const formData = new FormData();
-                formData.append('message', '[Drawing]');
-                formData.append('drawing', dataUrl);
+                formData.append('message', '[Drawing] ' + imgUrl);
 
                 const response = await fetch('https://formspree.io/f/xwvjrrbk', {
                     method: 'POST',
