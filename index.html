@@ -377,34 +377,7 @@
         let lineStartX = 0;
         let lineStartY = 0;
 
-        function updateCursor(e) {
-            if (isExpanded || drawing) { clearCursor(); return; }
-            const rect = canvas.getBoundingClientRect();
-            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-            const x = clientX - rect.left;
-            const y = clientY - rect.top;
-            
-            cursorCtx.clearRect(0, 0, cursorCanvas.width, cursorCanvas.height);
-            
-            const size = sizeSlider.value;
-            const displaySize = size * (rect.width / canvas.width) * 2;
-            
-            cursorCtx.strokeStyle = currentTool === 'eraser' ? '#ff4444' : colorPicker.value;
-            cursorCtx.lineWidth = 2;
-            cursorCtx.beginPath();
-            cursorCtx.arc(x, y, displaySize / 2, 0, Math.PI * 2);
-            cursorCtx.stroke();
-            
-            cursorCtx.beginPath();
-            cursorCtx.moveTo(x - displaySize / 2 - 5, y);
-            cursorCtx.lineTo(x + displaySize / 2 + 5, y);
-            cursorCtx.moveTo(x, y - displaySize / 2 - 5);
-            cursorCtx.lineTo(x, y + displaySize / 2 + 5);
-            cursorCtx.strokeStyle = currentTool === 'eraser' ? 'rgba(255,68,68,0.5)' : 'rgba(0,0,0,0.3)';
-            cursorCtx.lineWidth = 1;
-            cursorCtx.stroke();
-        }
+        function updateCursor(e) {}
 
         function clearCursor() {
             cursorCtx.clearRect(0, 0, cursorCanvas.width, cursorCanvas.height);
