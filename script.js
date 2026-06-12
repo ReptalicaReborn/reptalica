@@ -244,88 +244,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 ]);
             }
 
-            // ── ELEMENT SCATTER — fling everything off screen ──
-            const flingSpeed = 'transform 0.35s cubic-bezier(0.5, 0, 1, 0.3), opacity 0.3s ease-in';
-
-            // Title — shoots up
-            const heroContent = hero.querySelector('.hero__content');
-            if (heroContent) {
-                heroContent.style.transition = flingSpeed;
-                heroContent.style.transform = 'translateY(-120vh) rotate(-8deg)';
-                heroContent.style.opacity = '0';
-            }
-
-            // Nav — flies down
-            const heroNav = hero.querySelector('.hero__nav');
-            if (heroNav) {
-                heroNav.style.transition = flingSpeed;
-                heroNav.style.transform = 'translateY(120vh) rotate(5deg)';
-                heroNav.style.opacity = '0';
-            }
-
-            // Scroll hint — drops off bottom-right
-            const scrollHint = hero.querySelector('.hero__scroll-hint');
-            if (scrollHint) {
-                scrollHint.style.transition = flingSpeed;
-                scrollHint.style.transform = 'translate(80vw, 120vh)';
-                scrollHint.style.opacity = '0';
-            }
-
-            // Ring 1 — flings top-left
-            if (orbitalRing1) {
-                orbitalRing1.style.transition = flingSpeed;
-                orbitalRing1.style.transform = 'translate(calc(-50% - 120vw), calc(-50% - 120vh)) rotate(45deg) scale(0.3)';
-                orbitalRing1.style.opacity = '0';
-            }
-
-            // Ring 2 — flings bottom-right
-            const orbitalRing2 = document.querySelector('.orbital-ring--2');
-            if (orbitalRing2) {
-                orbitalRing2.style.transition = flingSpeed;
-                orbitalRing2.style.transform = 'translate(calc(-50% + 120vw), calc(-50% + 120vh)) rotate(-30deg) scale(0.3)';
-                orbitalRing2.style.opacity = '0';
-            }
-
-            // Dot — rockets off to the right
-            const orbDot = hero.querySelector('.orbital-dot');
-            if (orbDot) {
-                orbDot.style.transition = flingSpeed;
-                orbDot.style.transform = 'translate(calc(-50% + 150vw), -50%) scale(3)';
-                orbDot.style.opacity = '0';
-            }
-
-            // Fade the whole hero to ensure clean exit
-            hero.style.transition = 'opacity 0.4s 0.1s ease-in';
-            hero.style.opacity = '0';
-
-            // Navigate after scatter finishes - scroll to about section
+            // Reset after haptic finishes
             setTimeout(() => {
-                document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
-                // Reset hero after scroll
-                hero.style.transition = '';
-                hero.style.opacity = '';
-                heroContent.style.transition = '';
-                heroContent.style.transform = '';
-                heroContent.style.opacity = '';
-                heroNav.style.transition = '';
-                heroNav.style.transform = '';
-                heroNav.style.opacity = '';
-                scrollHint.style.transition = '';
-                scrollHint.style.transform = '';
-                scrollHint.style.opacity = '';
-                orbitalRing1.style.transition = '';
-                orbitalRing1.style.transform = '';
-                orbitalRing1.style.opacity = '';
-                orbitalRing2.style.transition = '';
-                orbitalRing2.style.transform = '';
-                orbitalRing2.style.opacity = '';
-                orbDot.style.transition = '';
-                orbDot.style.transform = '';
-                orbDot.style.opacity = '';
                 transitioning = false;
                 accelerationProgress = 0;
                 hero.style.setProperty('--accel', 0);
-            }, 450);
+                if (noiseOverlay) noiseOverlay.style.opacity = 0.03;
+                cachedAnims.forEach(anim => { anim.playbackRate = 1; });
+            }, 700);
             return;
         }
 
