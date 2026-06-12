@@ -218,7 +218,7 @@
                     <div style="display: flex; gap: 0.4rem; margin-bottom: 0.75rem; flex-wrap: wrap;">
                         <button id="draw-eraser" type="button" title="Eraser" style="background: transparent; border: 1px solid var(--md-sys-color-outline-variant); color: var(--md-sys-color-on-surface-variant); width: 32px; height: 32px; border-radius: var(--shape-corner-full); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1rem;"><span class="material-icons-round" style="font-size: 16px;">ink_eraser</span></button>
                         <button id="draw-fill" type="button" title="Fill" style="background: transparent; border: 1px solid var(--md-sys-color-outline-variant); color: var(--md-sys-color-on-surface-variant); width: 32px; height: 32px; border-radius: var(--shape-corner-full); cursor: pointer; display: flex; align-items: center; justify-content: center;"><span class="material-icons-round" style="font-size: 16px;">format_color_fill</span></button>
-                        <button id="draw-spray" type="button" title="Spray" style="background: transparent; border: 1px solid var(--md-sys-color-outline-variant); color: var(--md-sys-color-on-surface-variant); width: 32px; height: 32px; border-radius: var(--shape-corner-full); cursor: pointer; display: flex; align-items: center; justify-content: center;"><span class="material-icons-round" style="font-size: 16px;">colorize</span></button>
+                        <button id="draw-spray" type="button" title="Color Picker" style="background: transparent; border: 1px solid var(--md-sys-color-outline-variant); color: var(--md-sys-color-on-surface-variant); width: 32px; height: 32px; border-radius: var(--shape-corner-full); cursor: pointer; display: flex; align-items: center; justify-content: center;"><span class="material-icons-round" style="font-size: 16px;">colorize</span></button>
                         <button id="draw-line" type="button" title="Line" style="background: transparent; border: 1px solid var(--md-sys-color-outline-variant); color: var(--md-sys-color-on-surface-variant); width: 32px; height: 32px; border-radius: var(--shape-corner-full); cursor: pointer; display: flex; align-items: center; justify-content: center;"><span class="material-icons-round" style="font-size: 16px;">straighten</span></button>
                         <button id="draw-clear" type="button" title="Clear" style="background: transparent; border: 1px solid var(--md-sys-color-outline-variant); color: var(--md-sys-color-on-surface-variant); width: 32px; height: 32px; border-radius: var(--shape-corner-full); cursor: pointer; display: flex; align-items: center; justify-content: center;"><span class="material-icons-round" style="font-size: 16px;">delete</span></button>
                         <button id="draw-undo" type="button" title="Undo" style="background: transparent; border: 1px solid var(--md-sys-color-outline-variant); color: var(--md-sys-color-on-surface-variant); width: 32px; height: 32px; border-radius: var(--shape-corner-full); cursor: pointer; display: flex; align-items: center; justify-content: center;"><span class="material-icons-round" style="font-size: 16px;">undo</span></button>
@@ -262,7 +262,7 @@
                 <button id="modal-draw-brush" type="button" class="modal-tool-btn active" title="Brush"><span class="material-icons-round" style="font-size: 16px;">draw</span></button>
                 <button id="modal-draw-eraser" type="button" class="modal-tool-btn" title="Eraser"><span class="material-icons-round" style="font-size: 16px;">ink_eraser</span></button>
                 <button id="modal-draw-fill" type="button" class="modal-tool-btn" title="Fill"><span class="material-icons-round" style="font-size: 16px;">format_color_fill</span></button>
-                <button id="modal-draw-spray" type="button" class="modal-tool-btn" title="Spray"><span class="material-icons-round" style="font-size: 16px;">colorize</span></button>
+                <button id="modal-draw-spray" type="button" class="modal-tool-btn" title="Color Picker"><span class="material-icons-round" style="font-size: 16px;">colorize</span></button>
                 <button id="modal-draw-line" type="button" class="modal-tool-btn" title="Line"><span class="material-icons-round" style="font-size: 16px;">straighten</span></button>
                 <button id="modal-draw-clear" type="button" class="modal-tool-btn" title="Clear"><span class="material-icons-round" style="font-size: 16px;">delete</span></button>
                 <button id="modal-draw-undo" type="button" class="modal-tool-btn" title="Undo"><span class="material-icons-round" style="font-size: 16px;">undo</span></button>
@@ -452,7 +452,7 @@
                 btn.style.borderColor = 'var(--md-sys-color-outline-variant)';
             });
             // Highlight active tool
-            const activeBtn = { eraser: eraserBtn, fill: fillBtn, spray: sprayBtn, line: lineBtn }[tool];
+            const activeBtn = { eraser: eraserBtn, fill: fillBtn, colorpicker: sprayBtn, line: lineBtn }[tool];
             if (activeBtn && tool !== 'brush') {
                 activeBtn.style.background = 'var(--md-sys-color-primary)';
                 activeBtn.style.color = 'var(--md-sys-color-on-primary)';
@@ -475,7 +475,7 @@
 
         eraserBtn.addEventListener('click', () => setActiveTool('eraser'));
         fillBtn.addEventListener('click', () => setActiveTool('fill'));
-        sprayBtn.addEventListener('click', () => setActiveTool('spray'));
+        sprayBtn.addEventListener('click', () => setActiveTool('colorpicker'));
         lineBtn.addEventListener('click', () => setActiveTool('line'));
 
         // Flood fill algorithm
@@ -559,11 +559,22 @@
                 return;
             }
             
+            if (currentTool === 'colorpicker') {
+                // Pick color from canvas
+                const pixel = ctx.getImageData(pos.x * (canvas.width / canvas.getBoundingClientRect().width), pos.y * (canvas.height / canvas.getBoundingClientRect().height), 1, 1).data;
+                const hex = '#' + [pixel[0], pixel[1], pixel[2]].map(x => x.toString(16).padStart(2, '0')).join('');
+                colorPicker.value = hex;
+                setActiveTool('brush');
+                return;
+            }
+            
             if (currentTool === 'line') {
                 saveState();
                 lineStartX = pos.x;
                 lineStartY = pos.y;
                 drawing = true;
+                // Save current canvas state for preview
+                linePreviewData = ctx.getImageData(0, 0, canvas.width, canvas.height);
                 return;
             }
             
@@ -575,20 +586,42 @@
             ctx.moveTo(lastX, lastY);
         }
 
+        let linePreviewData = null;
+
         function draw(e) {
             if (!drawing) return;
             e.preventDefault();
             const pos = getPos(e);
             
-            if (currentTool === 'line') {
-                // Preview line
-                ctx.clearRect(0, 0, canvas.width / 2, canvas.height / 2);
-                ctx.putImageData(ctx.getImageData(0, 0, canvas.width, canvas.height), 0, 0);
+            if (currentTool === 'line' && linePreviewData) {
+                // Restore canvas and draw preview line
+                ctx.putImageData(linePreviewData, 0, 0);
+                ctx.globalCompositeOperation = 'source-over';
+                ctx.strokeStyle = colorPicker.value;
+                ctx.lineWidth = sizeSlider.value;
+                ctx.setLineDash([5, 5]);
+                ctx.beginPath();
+                ctx.moveTo(lineStartX, lineStartY);
+                ctx.lineTo(pos.x, pos.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
                 return;
             }
             
-            if (currentTool === 'spray') {
-                sprayPaint(pos.x, pos.y);
+            if (currentTool === 'colorpicker') {
+                // Show color preview at cursor
+                const pixel = ctx.getImageData(pos.x * (canvas.width / canvas.getBoundingClientRect().width), pos.y * (canvas.height / canvas.getBoundingClientRect().height), 1, 1).data;
+                cursorCtx.clearRect(0, 0, cursorCanvas.width, cursorCanvas.height);
+                const rect = canvas.getBoundingClientRect();
+                const x = pos.x / (canvas.width / rect.width);
+                const y = pos.y / (canvas.height / rect.height);
+                cursorCtx.fillStyle = `rgb(${pixel[0]},${pixel[1]},${pixel[2]})`;
+                cursorCtx.strokeStyle = '#fff';
+                cursorCtx.lineWidth = 2;
+                cursorCtx.beginPath();
+                cursorCtx.arc(x, y, 12, 0, Math.PI * 2);
+                cursorCtx.fill();
+                cursorCtx.stroke();
                 return;
             }
             
@@ -609,6 +642,8 @@
         function stopDraw(e) {
             if (currentTool === 'line' && drawing) {
                 const pos = getPos(e);
+                // Restore and draw final line
+                if (linePreviewData) ctx.putImageData(linePreviewData, 0, 0);
                 ctx.globalCompositeOperation = 'source-over';
                 ctx.strokeStyle = colorPicker.value;
                 ctx.lineWidth = sizeSlider.value;
@@ -616,6 +651,7 @@
                 ctx.moveTo(lineStartX, lineStartY);
                 ctx.lineTo(pos.x, pos.y);
                 ctx.stroke();
+                linePreviewData = null;
             }
             drawing = false;
             ctx.globalCompositeOperation = 'source-over';
@@ -742,14 +778,14 @@
         function modalSetTool(tool) {
             modalTool = tool;
             [modalBrushBtn, modalEraserBtn, modalFillBtn, modalSprayBtn, modalLineBtn].forEach(b => b.classList.remove('active'));
-            const map = { brush: modalBrushBtn, eraser: modalEraserBtn, fill: modalFillBtn, spray: modalSprayBtn, line: modalLineBtn };
+            const map = { brush: modalBrushBtn, eraser: modalEraserBtn, fill: modalFillBtn, colorpicker: modalSprayBtn, line: modalLineBtn };
             if (map[tool]) map[tool].classList.add('active');
         }
 
         modalBrushBtn.addEventListener('click', () => modalSetTool('brush'));
         modalEraserBtn.addEventListener('click', () => modalSetTool('eraser'));
         modalFillBtn.addEventListener('click', () => modalSetTool('fill'));
-        modalSprayBtn.addEventListener('click', () => modalSetTool('spray'));
+        modalSprayBtn.addEventListener('click', () => modalSetTool('colorpicker'));
         modalLineBtn.addEventListener('click', () => modalSetTool('line'));
 
         modalColorPicker.addEventListener('input', () => modalSetTool('brush'));
@@ -839,7 +875,14 @@
             if (!modalDrawing) return;
             e.preventDefault();
             const pos = modalGetPos(e);
-            if (modalTool === 'spray') { modalSprayPaint(pos.x, pos.y); return; }
+            if (modalTool === 'colorpicker') {
+                // Pick color from canvas
+                const pixel = modalCtx.getImageData(pos.x * (modalCanvas.width / modalCanvas.getBoundingClientRect().width), pos.y * (modalCanvas.height / modalCanvas.getBoundingClientRect().height), 1, 1).data;
+                const hex = '#' + [pixel[0], pixel[1], pixel[2]].map(x => x.toString(16).padStart(2, '0')).join('');
+                modalColorPicker.value = hex;
+                modalSetTool('brush');
+                return;
+            }
             if (modalTool === 'eraser') {
                 modalCtx.globalCompositeOperation = 'destination-out';
                 modalCtx.lineWidth = modalSizeSlider.value * 3;
