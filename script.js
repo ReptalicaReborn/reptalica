@@ -298,9 +298,33 @@ document.addEventListener('DOMContentLoaded', () => {
             hero.style.transition = 'opacity 0.4s 0.1s ease-in';
             hero.style.opacity = '0';
 
-            // Navigate after scatter finishes
+            // Navigate after scatter finishes - scroll to about section
             setTimeout(() => {
-                window.location.href = 'about-me.html';
+                document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
+                // Reset hero after scroll
+                hero.style.transition = '';
+                hero.style.opacity = '';
+                heroContent.style.transition = '';
+                heroContent.style.transform = '';
+                heroContent.style.opacity = '';
+                heroNav.style.transition = '';
+                heroNav.style.transform = '';
+                heroNav.style.opacity = '';
+                scrollHint.style.transition = '';
+                scrollHint.style.transform = '';
+                scrollHint.style.opacity = '';
+                orbitalRing1.style.transition = '';
+                orbitalRing1.style.transform = '';
+                orbitalRing1.style.opacity = '';
+                orbitalRing2.style.transition = '';
+                orbitalRing2.style.transform = '';
+                orbitalRing2.style.opacity = '';
+                orbDot.style.transition = '';
+                orbDot.style.transform = '';
+                orbDot.style.opacity = '';
+                transitioning = false;
+                accelerationProgress = 0;
+                hero.style.setProperty('--accel', 0);
             }, 450);
             return;
         }
