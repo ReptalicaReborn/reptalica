@@ -370,10 +370,10 @@
             sendBtn.disabled = true;
 
             try {
-                const blob = await new Promise(r => canvas.toBlob(r, 'image/png'));
+                const dataUrl = canvas.toDataURL('image/png');
                 const formData = new FormData();
                 formData.append('message', '[Drawing]');
-                formData.append('drawing', blob, 'drawing.png');
+                formData.append('drawing', dataUrl);
 
                 const response = await fetch('https://formspree.io/f/xwvjrrbk', {
                     method: 'POST',
