@@ -216,6 +216,7 @@
                         <span id="draw-size-label" style="font-size: 0.75rem; color: var(--md-sys-color-on-surface-variant); min-width: 20px;">3</span>
                     </div>
                     <div style="display: flex; gap: 0.4rem; margin-bottom: 0.75rem; flex-wrap: wrap;">
+                        <button id="draw-brush" type="button" title="Brush" style="background: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); border: 1px solid var(--md-sys-color-primary); width: 32px; height: 32px; border-radius: var(--shape-corner-full); cursor: pointer; display: flex; align-items: center; justify-content: center;"><span class="material-icons-round" style="font-size: 16px;">draw</span></button>
                         <button id="draw-eraser" type="button" title="Eraser" style="background: transparent; border: 1px solid var(--md-sys-color-outline-variant); color: var(--md-sys-color-on-surface-variant); width: 32px; height: 32px; border-radius: var(--shape-corner-full); cursor: pointer; display: flex; align-items: center; justify-content: center;"><span class="material-icons-round" style="font-size: 16px;">backspace</span></button>
                         <button id="draw-fill" type="button" title="Fill" style="background: transparent; border: 1px solid var(--md-sys-color-outline-variant); color: var(--md-sys-color-on-surface-variant); width: 32px; height: 32px; border-radius: var(--shape-corner-full); cursor: pointer; display: flex; align-items: center; justify-content: center;"><span class="material-icons-round" style="font-size: 16px;">format_color_fill</span></button>
                         <button id="draw-spray" type="button" title="Color Picker" style="background: transparent; border: 1px solid var(--md-sys-color-outline-variant); color: var(--md-sys-color-on-surface-variant); width: 32px; height: 32px; border-radius: var(--shape-corner-full); cursor: pointer; display: flex; align-items: center; justify-content: center;"><span class="material-icons-round" style="font-size: 16px;">colorize</span></button>
@@ -365,6 +366,7 @@
         const clearBtn = document.getElementById('draw-clear');
         const undoBtn = document.getElementById('draw-undo');
         const sendBtn = document.getElementById('draw-send');
+        const brushBtn = document.getElementById('draw-brush');
         const eraserBtn = document.getElementById('draw-eraser');
         const fillBtn = document.getElementById('draw-fill');
         const sprayBtn = document.getElementById('draw-spray');
@@ -450,18 +452,20 @@
         function setActiveTool(tool) {
             currentTool = tool;
             // Reset all tool buttons
-            [eraserBtn, fillBtn, sprayBtn, lineBtn].forEach(btn => {
+            [brushBtn, eraserBtn, fillBtn, sprayBtn, lineBtn].forEach(btn => {
                 btn.style.background = 'transparent';
                 btn.style.color = 'var(--md-sys-color-on-surface-variant)';
                 btn.style.borderColor = 'var(--md-sys-color-outline-variant)';
             });
             // Highlight active tool
-            const activeBtn = { eraser: eraserBtn, fill: fillBtn, colorpicker: sprayBtn, line: lineBtn }[tool];
-            if (activeBtn && tool !== 'brush') {
+            const activeBtn = { brush: brushBtn, eraser: eraserBtn, fill: fillBtn, colorpicker: sprayBtn, line: lineBtn }[tool];
+            if (activeBtn) {
                 activeBtn.style.background = 'var(--md-sys-color-primary)';
                 activeBtn.style.color = 'var(--md-sys-color-on-primary)';
                 activeBtn.style.borderColor = 'var(--md-sys-color-primary)';
             }
+            canvas.style.cursor = 'crosshair';
+        }
             canvas.style.cursor = tool === 'fill' ? 'crosshair' : 'crosshair';
         }
 
@@ -478,6 +482,7 @@
         colorPicker.addEventListener('input', () => { setActiveTool('brush'); });
 
         eraserBtn.addEventListener('click', () => setActiveTool('eraser'));
+        brushBtn.addEventListener('click', () => setActiveTool('brush'));
         fillBtn.addEventListener('click', () => setActiveTool('fill'));
         sprayBtn.addEventListener('click', () => setActiveTool('colorpicker'));
         lineBtn.addEventListener('click', () => setActiveTool('line'));
