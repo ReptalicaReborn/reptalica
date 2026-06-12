@@ -224,7 +224,10 @@
                         <button id="draw-undo" type="button" style="background: transparent; border: 1px solid var(--md-sys-color-outline-variant); color: var(--md-sys-color-on-surface-variant); padding: 0.35rem 0.7rem; border-radius: var(--shape-corner-full); cursor: pointer; font-size: 0.7rem; font-family: var(--font-family-base);">UNDO</button>
                     </div>
                     <canvas id="draw-canvas" width="400" height="300" style="width: 100%; height: 200px; background: #FFFFFF; border: 1px solid var(--md-sys-color-outline-variant); border-radius: var(--shape-corner-m); cursor: crosshair; touch-action: none;"></canvas>
-                    <button id="draw-send" type="button" style="margin-top: 0.75rem; background: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); border: none; padding: 0.75rem 1.5rem; border-radius: var(--shape-corner-full); font-family: var(--font-family-base); font-weight: 600; font-size: 0.85rem; cursor: pointer; letter-spacing: 0.05em;">SEND DRAWING</button>
+                    <div style="display: flex; gap: 0.5rem; margin-top: 0.75rem;">
+                        <button id="draw-expand" type="button" style="flex: 1; background: var(--md-sys-color-surface-container-high); color: var(--md-sys-color-on-surface); border: 1px solid var(--md-sys-color-outline-variant); padding: 0.5rem; border-radius: var(--shape-corner-full); cursor: pointer; font-size: 0.75rem; font-family: var(--font-family-base);">EXPAND</button>
+                        <button id="draw-send" type="button" style="flex: 1; background: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); border: none; padding: 0.5rem; border-radius: var(--shape-corner-full); font-family: var(--font-family-base); font-weight: 600; font-size: 0.75rem; cursor: pointer; letter-spacing: 0.05em;">SEND DRAWING</button>
+                    </div>
                     <p id="draw-success" style="display: none; color: #4ade80; font-size: 0.85rem; margin-top: 0.5rem;">Drawing sent!</p>
                 </div>
             </div>
@@ -240,6 +243,55 @@
                 notice.</span>
         </div>
     </footer>
+
+    <!-- Canvas Modal -->
+    <div id="canvas-modal" style="display: none; position: fixed; inset: 0; z-index: 10000; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); justify-content: center; align-items: center;">
+        <div style="background: var(--md-sys-color-surface-container); border: 1px solid var(--md-sys-color-outline-variant); border-radius: var(--shape-corner-xl); width: 95%; max-width: 900px; max-height: 90vh; display: flex; flex-direction: column; overflow: hidden;">
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; border-bottom: 1px solid var(--md-sys-color-outline-variant);">
+                <span class="label-mono" style="font-size: 0.8rem;">DRAWING BOARD</span>
+                <button id="canvas-modal-close" style="background: transparent; border: none; color: var(--md-sys-color-on-surface-variant); cursor: pointer; font-size: 1.2rem;">&times;</button>
+            </div>
+            <div style="padding: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; border-bottom: 1px solid var(--md-sys-color-outline-variant);">
+                <div id="modal-color-palette" style="display: flex; gap: 4px; flex-wrap: wrap;"></div>
+                <input type="color" id="modal-draw-color" value="#E6C275" style="width: 28px; height: 28px; border: 1px solid var(--md-sys-color-outline-variant); border-radius: var(--shape-corner-s); cursor: pointer; background: transparent; padding: 0;">
+                <input type="range" id="modal-draw-size" min="1" max="50" value="3" style="flex: 1; min-width: 80px; accent-color: var(--md-sys-color-primary);">
+                <span id="modal-draw-size-label" style="font-size: 0.75rem; color: var(--md-sys-color-on-surface-variant); min-width: 20px;">3</span>
+                <button id="modal-draw-brush" type="button" class="modal-tool-btn active">BRUSH</button>
+                <button id="modal-draw-eraser" type="button" class="modal-tool-btn">ERASER</button>
+                <button id="modal-draw-fill" type="button" class="modal-tool-btn">FILL</button>
+                <button id="modal-draw-spray" type="button" class="modal-tool-btn">SPRAY</button>
+                <button id="modal-draw-line" type="button" class="modal-tool-btn">LINE</button>
+                <button id="modal-draw-clear" type="button" class="modal-tool-btn">CLEAR</button>
+                <button id="modal-draw-undo" type="button" class="modal-tool-btn">UNDO</button>
+            </div>
+            <div style="flex: 1; padding: 1rem; display: flex; justify-content: center; align-items: center; overflow: auto;">
+                <canvas id="modal-draw-canvas" style="background: #FFFFFF; border: 1px solid var(--md-sys-color-outline-variant); border-radius: var(--shape-corner-m); cursor: crosshair; touch-action: none; max-width: 100%; max-height: 60vh;"></canvas>
+            </div>
+            <div style="padding: 1rem 1.5rem; border-top: 1px solid var(--md-sys-color-outline-variant); display: flex; justify-content: flex-end; gap: 0.5rem;">
+                <button id="modal-draw-cancel" style="background: transparent; border: 1px solid var(--md-sys-color-outline-variant); color: var(--md-sys-color-on-surface-variant); padding: 0.5rem 1.5rem; border-radius: var(--shape-corner-full); cursor: pointer; font-size: 0.8rem; font-family: var(--font-family-base);">CANCEL</button>
+                <button id="modal-draw-save" style="background: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); border: none; padding: 0.5rem 1.5rem; border-radius: var(--shape-corner-full); cursor: pointer; font-size: 0.8rem; font-family: var(--font-family-base); font-weight: 600;">SAVE</button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .modal-tool-btn {
+            background: transparent;
+            border: 1px solid var(--md-sys-color-outline-variant);
+            color: var(--md-sys-color-on-surface-variant);
+            padding: 0.3rem 0.6rem;
+            border-radius: var(--shape-corner-full);
+            cursor: pointer;
+            font-size: 0.65rem;
+            font-family: var(--font-family-base);
+            transition: all 0.15s;
+        }
+        .modal-tool-btn.active {
+            background: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+            border-color: var(--md-sys-color-primary);
+        }
+    </style>
 
     <!-- ═══════════════════════════════════════ MODAL ═══════════════════════════════════════ -->
     <div id="preview-modal" class="modal" role="dialog" aria-hidden="true">
@@ -599,6 +651,211 @@
 
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
+
+        // ═══════════════════════════════════════
+        // Canvas Modal (Expand)
+        // ═══════════════════════════════════════
+        const expandBtn = document.getElementById('draw-expand');
+        const canvasModal = document.getElementById('canvas-modal');
+        const modalCanvas = document.getElementById('modal-draw-canvas');
+        const modalCtx = modalCanvas.getContext('2d');
+        const modalColorPicker = document.getElementById('modal-draw-color');
+        const modalSizeSlider = document.getElementById('modal-draw-size');
+        const modalSizeLabel = document.getElementById('modal-draw-size-label');
+        const modalPalette = document.getElementById('modal-color-palette');
+        const modalBrushBtn = document.getElementById('modal-draw-brush');
+        const modalEraserBtn = document.getElementById('modal-draw-eraser');
+        const modalFillBtn = document.getElementById('modal-draw-fill');
+        const modalSprayBtn = document.getElementById('modal-draw-spray');
+        const modalLineBtn = document.getElementById('modal-draw-line');
+        const modalClearBtn = document.getElementById('modal-draw-clear');
+        const modalUndoBtn = document.getElementById('modal-draw-undo');
+        const modalSaveBtn = document.getElementById('modal-draw-save');
+        const modalCancelBtn = document.getElementById('modal-draw-cancel');
+        const modalCloseBtn = document.getElementById('canvas-modal-close');
+
+        let modalDrawing = false;
+        let modalLastX = 0;
+        let modalLastY = 0;
+        let modalHistory = [];
+        let modalTool = 'brush';
+        let modalLineStartX = 0;
+        let modalLineStartY = 0;
+
+        // Clone palette
+        palette.querySelectorAll('[data-color]').forEach(btn => {
+            const clone = btn.cloneNode(true);
+            clone.addEventListener('click', () => {
+                modalColorPicker.value = clone.dataset.color;
+                modalSetTool('brush');
+            });
+            modalPalette.appendChild(clone);
+        });
+
+        function modalSetTool(tool) {
+            modalTool = tool;
+            [modalBrushBtn, modalEraserBtn, modalFillBtn, modalSprayBtn, modalLineBtn].forEach(b => b.classList.remove('active'));
+            const map = { brush: modalBrushBtn, eraser: modalEraserBtn, fill: modalFillBtn, spray: modalSprayBtn, line: modalLineBtn };
+            if (map[tool]) map[tool].classList.add('active');
+        }
+
+        modalBrushBtn.addEventListener('click', () => modalSetTool('brush'));
+        modalEraserBtn.addEventListener('click', () => modalSetTool('eraser'));
+        modalFillBtn.addEventListener('click', () => modalSetTool('fill'));
+        modalSprayBtn.addEventListener('click', () => modalSetTool('spray'));
+        modalLineBtn.addEventListener('click', () => modalSetTool('line'));
+
+        modalColorPicker.addEventListener('input', () => modalSetTool('brush'));
+        modalSizeSlider.addEventListener('input', () => { modalSizeLabel.textContent = modalSizeSlider.value; });
+
+        function modalSaveState() {
+            modalHistory.push(modalCanvas.toDataURL());
+            if (modalHistory.length > 50) modalHistory.shift();
+        }
+
+        function modalGetPos(e) {
+            const rect = modalCanvas.getBoundingClientRect();
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            return { x: clientX - rect.left, y: clientY - rect.top };
+        }
+
+        function modalFloodFill(startX, startY, fillColor) {
+            const imageData = modalCtx.getImageData(0, 0, modalCanvas.width, modalCanvas.height);
+            const data = imageData.data;
+            const width = modalCanvas.width;
+            const height = modalCanvas.height;
+            const sx = Math.floor(startX * (modalCanvas.width / modalCanvas.getBoundingClientRect().width));
+            const sy = Math.floor(startY * (modalCanvas.height / modalCanvas.getBoundingClientRect().height));
+            const startIdx = (sy * width + sx) * 4;
+            const startR = data[startIdx], startG = data[startIdx+1], startB = data[startIdx+2];
+            const tempCanvas = document.createElement('canvas');
+            tempCanvas.width = 1; tempCanvas.height = 1;
+            const tempCtx = tempCanvas.getContext('2d');
+            tempCtx.fillStyle = fillColor;
+            tempCtx.fillRect(0, 0, 1, 1);
+            const fd = tempCtx.getImageData(0, 0, 1, 1).data;
+            if (startR === fd[0] && startG === fd[1] && startB === fd[2]) return;
+            const stack = [[sx, sy]];
+            const visited = new Set();
+            while (stack.length > 0) {
+                const [x, y] = stack.pop();
+                const key = `${x},${y}`;
+                if (visited.has(key) || x < 0 || x >= width || y < 0 || y >= height) continue;
+                const idx = (y * width + x) * 4;
+                if (Math.abs(data[idx]-startR)>10 || Math.abs(data[idx+1]-startG)>10 || Math.abs(data[idx+2]-startB)>10) continue;
+                visited.add(key);
+                data[idx] = fd[0]; data[idx+1] = fd[1]; data[idx+2] = fd[2]; data[idx+3] = 255;
+                stack.push([x+1,y],[x-1,y],[x,y+1],[x,y-1]);
+            }
+            modalCtx.putImageData(imageData, 0, 0);
+        }
+
+        function modalSprayPaint(x, y) {
+            const density = modalSizeSlider.value * 3;
+            const radius = modalSizeSlider.value * 3;
+            modalCtx.fillStyle = modalColorPicker.value;
+            for (let i = 0; i < density; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const r = Math.random() * radius;
+                modalCtx.fillRect(x + r * Math.cos(angle), y + r * Math.sin(angle), 1, 1);
+            }
+        }
+
+        function modalStartDraw(e) {
+            const pos = modalGetPos(e);
+            if (modalTool === 'fill') {
+                modalSaveState();
+                modalFloodFill(pos.x, pos.y, modalColorPicker.value);
+                return;
+            }
+            if (modalTool === 'line') {
+                modalSaveState();
+                modalLineStartX = pos.x; modalLineStartY = pos.y;
+                modalDrawing = true;
+                return;
+            }
+            modalDrawing = true;
+            modalSaveState();
+            modalLastX = pos.x; modalLastY = pos.y;
+            modalCtx.beginPath();
+            modalCtx.moveTo(modalLastX, modalLastY);
+        }
+
+        function modalDraw(e) {
+            if (!modalDrawing) return;
+            e.preventDefault();
+            const pos = modalGetPos(e);
+            if (modalTool === 'spray') { modalSprayPaint(pos.x, pos.y); return; }
+            if (modalTool === 'eraser') {
+                modalCtx.globalCompositeOperation = 'destination-out';
+                modalCtx.lineWidth = modalSizeSlider.value * 3;
+            } else {
+                modalCtx.globalCompositeOperation = 'source-over';
+                modalCtx.strokeStyle = modalColorPicker.value;
+                modalCtx.lineWidth = modalSizeSlider.value;
+            }
+            modalCtx.lineTo(pos.x, pos.y);
+            modalCtx.stroke();
+            modalLastX = pos.x; modalLastY = pos.y;
+        }
+
+        function modalStopDraw(e) {
+            if (modalTool === 'line' && modalDrawing) {
+                const pos = modalGetPos(e);
+                modalCtx.globalCompositeOperation = 'source-over';
+                modalCtx.strokeStyle = modalColorPicker.value;
+                modalCtx.lineWidth = modalSizeSlider.value;
+                modalCtx.beginPath();
+                modalCtx.moveTo(modalLineStartX, modalLineStartY);
+                modalCtx.lineTo(pos.x, pos.y);
+                modalCtx.stroke();
+            }
+            modalDrawing = false;
+            modalCtx.globalCompositeOperation = 'source-over';
+        }
+
+        modalCanvas.addEventListener('mousedown', modalStartDraw);
+        modalCanvas.addEventListener('mousemove', modalDraw);
+        modalCanvas.addEventListener('mouseup', modalStopDraw);
+        modalCanvas.addEventListener('mouseleave', modalStopDraw);
+        modalCanvas.addEventListener('touchstart', modalStartDraw, { passive: false });
+        modalCanvas.addEventListener('touchmove', modalDraw, { passive: false });
+        modalCanvas.addEventListener('touchend', modalStopDraw);
+
+        modalClearBtn.addEventListener('click', () => { modalSaveState(); modalCtx.clearRect(0, 0, modalCanvas.width, modalCanvas.height); });
+        modalUndoBtn.addEventListener('click', () => {
+            if (modalHistory.length === 0) return;
+            const img = new Image();
+            img.src = modalHistory.pop();
+            img.onload = () => {
+                modalCtx.clearRect(0, 0, modalCanvas.width, modalCanvas.height);
+                modalCtx.drawImage(img, 0, 0, modalCanvas.width, modalCanvas.height);
+            };
+        });
+
+        // Open modal
+        expandBtn.addEventListener('click', () => {
+            canvasModal.style.display = 'flex';
+            // Copy small canvas to modal
+            modalCanvas.width = 800;
+            modalCanvas.height = 600;
+            modalCtx.lineCap = 'round';
+            modalCtx.lineJoin = 'round';
+            modalCtx.drawImage(canvas, 0, 0, 800, 600);
+            modalHistory = [];
+        });
+
+        // Save from modal back to small canvas
+        modalSaveBtn.addEventListener('click', () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(modalCanvas, 0, 0, canvas.width, canvas.height);
+            canvasModal.style.display = 'none';
+        });
+
+        modalCancelBtn.addEventListener('click', () => { canvasModal.style.display = 'none'; });
+        modalCloseBtn.addEventListener('click', () => { canvasModal.style.display = 'none'; });
+        canvasModal.addEventListener('click', (e) => { if (e.target === canvasModal) canvasModal.style.display = 'none'; });
     </script>
 </body>
 
