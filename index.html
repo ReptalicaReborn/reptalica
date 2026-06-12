@@ -255,12 +255,43 @@
                 <span class="label-mono" style="font-size: 0.8rem;">DRAWING BOARD</span>
                 <button id="canvas-modal-close" style="background: transparent; border: none; color: var(--md-sys-color-on-surface-variant); cursor: pointer; font-size: 1.2rem;">&times;</button>
             </div>
+            <div style="padding: 0.75rem 1rem; display: flex; gap: 0.4rem; flex-wrap: wrap; align-items: center; border-bottom: 1px solid var(--md-sys-color-outline-variant);">
+                <div id="modal-color-palette" style="display: flex; gap: 4px; flex-wrap: wrap;"></div>
+                <input type="color" id="modal-draw-color" value="#E6C275" style="width: 28px; height: 28px; border: 1px solid var(--md-sys-color-outline-variant); border-radius: var(--shape-corner-s); cursor: pointer; background: transparent; padding: 0;">
+                <input type="range" id="modal-draw-size" min="1" max="50" value="3" style="flex: 1; min-width: 60px; accent-color: var(--md-sys-color-primary);">
+                <span id="modal-draw-size-label" style="font-size: 0.75rem; color: var(--md-sys-color-on-surface-variant); min-width: 20px;">3</span>
+                <button id="modal-draw-brush" type="button" class="modal-tool-btn active" title="Brush"><span class="material-icons-round" style="font-size: 16px;">draw</span></button>
+                <button id="modal-draw-eraser" type="button" class="modal-tool-btn" title="Eraser"><span class="material-icons-round" style="font-size: 16px;">backspace</span></button>
+                <button id="modal-draw-fill" type="button" class="modal-tool-btn" title="Fill"><span class="material-icons-round" style="font-size: 16px;">format_color_fill</span></button>
+                <button id="modal-draw-colorpick" type="button" class="modal-tool-btn" title="Color Picker"><span class="material-icons-round" style="font-size: 16px;">colorize</span></button>
+                <button id="modal-draw-line" type="button" class="modal-tool-btn" title="Line"><span class="material-icons-round" style="font-size: 16px;">straighten</span></button>
+                <button id="modal-draw-clear" type="button" class="modal-tool-btn" title="Clear"><span class="material-icons-round" style="font-size: 16px;">delete</span></button>
+                <button id="modal-draw-undo" type="button" class="modal-tool-btn" title="Undo"><span class="material-icons-round" style="font-size: 16px;">undo</span></button>
+            </div>
             <div id="modal-canvas-container" style="flex: 1; padding: 1rem; display: flex; justify-content: center; align-items: center; overflow: auto;"></div>
-            <div style="padding: 1rem 1.5rem; border-top: 1px solid var(--md-sys-color-outline-variant); display: flex; justify-content: flex-end; gap: 0.5rem;">
+            <div style="padding: 0.75rem 1.5rem; border-top: 1px solid var(--md-sys-color-outline-variant); display: flex; justify-content: flex-end;">
                 <button id="modal-draw-cancel" style="background: transparent; border: 1px solid var(--md-sys-color-outline-variant); color: var(--md-sys-color-on-surface-variant); padding: 0.5rem 1.5rem; border-radius: var(--shape-corner-full); cursor: pointer; font-size: 0.8rem; font-family: var(--font-family-base);">CLOSE</button>
             </div>
         </div>
     </div>
+
+    <style>
+        .modal-tool-btn {
+            background: transparent;
+            border: 1px solid var(--md-sys-color-outline-variant);
+            color: var(--md-sys-color-on-surface-variant);
+            width: 32px; height: 32px;
+            border-radius: var(--shape-corner-full);
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.15s;
+        }
+        .modal-tool-btn.active {
+            background: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+            border-color: var(--md-sys-color-primary);
+        }
+    </style>
 
     <!-- ═══════════════════════════════════════ MODAL ═══════════════════════════════════════ -->
     <div id="preview-modal" class="modal" role="dialog" aria-hidden="true">
@@ -347,6 +378,7 @@
         let lineStartY = 0;
 
         function updateCursor(e) {
+            if (isExpanded) { clearCursor(); return; }
             const rect = canvas.getBoundingClientRect();
             const clientX = e.touches ? e.touches[0].clientX : e.clientX;
             const clientY = e.touches ? e.touches[0].clientY : e.clientY;
@@ -745,30 +777,112 @@
         window.addEventListener('resize', resizeCanvas);
 
         // ═══════════════════════════════════════
-        // Canvas Modal (Expand) — moves the same canvas into modal, no duplicate
+        // Canvas Modal (Expand) — moves the same canvas into modal
         // ═══════════════════════════════════════
         const expandBtn = document.getElementById('draw-expand');
         const canvasModal = document.getElementById('canvas-modal');
         const modalContainer = document.getElementById('modal-canvas-container');
         const modalCloseBtn = document.getElementById('canvas-modal-close');
         const modalCancelBtn = document.getElementById('modal-draw-cancel');
+        const modalBrushBtn = document.getElementById('modal-draw-brush');
+        const modalEraserBtn = document.getElementById('modal-draw-eraser');
+        const modalFillBtn = document.getElementById('modal-draw-fill');
+        const modalColorpickBtn = document.getElementById('modal-draw-colorpick');
+        const modalLineBtn = document.getElementById('modal-draw-line');
+        const modalClearBtn = document.getElementById('modal-draw-clear');
+        const modalUndoBtn = document.getElementById('modal-draw-undo');
+        const modalColorPicker = document.getElementById('modal-draw-color');
+        const modalSizeSlider = document.getElementById('modal-draw-size');
+        const modalSizeLabel = document.getElementById('modal-draw-size-label');
+        const modalPalette = document.getElementById('modal-color-palette');
         const canvasParent = canvas.parentNode;
         let savedCanvasStyle = '';
+        let isExpanded = false;
+
+        // Sync modal controls to small canvas controls
+        function syncModalControls() {
+            modalColorPicker.value = colorPicker.value;
+            modalSizeSlider.value = sizeSlider.value;
+            modalSizeLabel.textContent = sizeSlider.value;
+        }
+
+        // Sync small canvas controls to modal
+        function syncToSmallControls() {
+            colorPicker.value = modalColorPicker.value;
+            sizeSlider.value = modalSizeSlider.value;
+            sizeLabel.textContent = modalSizeSlider.value;
+        }
+
+        // Clone palette to modal
+        palette.querySelectorAll('[data-color]').forEach(btn => {
+            const clone = btn.cloneNode(true);
+            clone.addEventListener('click', () => {
+                modalColorPicker.value = clone.dataset.color;
+                colorPicker.value = clone.dataset.color;
+                setActiveTool('brush');
+                modalSetActiveTool('brush');
+            });
+            modalPalette.appendChild(clone);
+        });
+
+        modalColorPicker.addEventListener('input', () => {
+            colorPicker.value = modalColorPicker.value;
+            setActiveTool('brush');
+            modalSetActiveTool('brush');
+        });
+
+        modalSizeSlider.addEventListener('input', () => {
+            modalSizeLabel.textContent = modalSizeSlider.value;
+            sizeSlider.value = modalSizeSlider.value;
+            sizeLabel.textContent = modalSizeSlider.value;
+        });
+
+        function modalSetActiveTool(tool) {
+            setActiveTool(tool);
+            [modalBrushBtn, modalEraserBtn, modalFillBtn, modalColorpickBtn, modalLineBtn].forEach(b => b.classList.remove('active'));
+            const map = { brush: modalBrushBtn, eraser: modalEraserBtn, fill: modalFillBtn, colorpicker: modalColorpickBtn, line: modalLineBtn };
+            if (map[tool]) map[tool].classList.add('active');
+        }
+
+        modalBrushBtn.addEventListener('click', () => modalSetActiveTool('brush'));
+        modalEraserBtn.addEventListener('click', () => modalSetActiveTool('eraser'));
+        modalFillBtn.addEventListener('click', () => modalSetActiveTool('fill'));
+        modalColorpickBtn.addEventListener('click', () => modalSetActiveTool('colorpicker'));
+        modalLineBtn.addEventListener('click', () => modalSetActiveTool('line'));
+
+        modalClearBtn.addEventListener('click', () => {
+            saveState();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        });
+
+        modalUndoBtn.addEventListener('click', () => {
+            if (history.length === 0) return;
+            const img = new Image();
+            img.src = history.pop();
+            img.onload = () => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            };
+        });
 
         expandBtn.addEventListener('click', () => {
             savedCanvasStyle = canvas.style.cssText;
             canvas.style.width = '100%';
             canvas.style.height = 'auto';
-            canvas.style.maxHeight = '70vh';
+            canvas.style.maxHeight = '65vh';
             canvas.style.cursor = 'crosshair';
             modalContainer.appendChild(canvas);
             canvasModal.style.display = 'flex';
+            isExpanded = true;
+            syncModalControls();
+            modalSetActiveTool(currentTool);
         });
 
         function closeModal() {
             canvas.style.cssText = savedCanvasStyle;
             canvasParent.appendChild(canvas);
             canvasModal.style.display = 'none';
+            isExpanded = false;
             resizeCanvas();
         }
 
