@@ -440,12 +440,10 @@
             const rect = canvas.getBoundingClientRect();
             const clientX = e.touches ? e.touches[0].clientX : e.clientX;
             const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-            // Scale to match canvas internal resolution (2x)
-            const scaleX = canvas.width / rect.width;
-            const scaleY = canvas.height / rect.height;
+            // Return CSS pixel coordinates (canvas is scaled 2x internally)
             return { 
-                x: (clientX - rect.left) * scaleX / 2, 
-                y: (clientY - rect.top) * scaleY / 2 
+                x: clientX - rect.left, 
+                y: clientY - rect.top 
             };
         }
 
@@ -899,8 +897,6 @@
                     x++;
                 }
             }
-            modalCtx.putImageData(imageData, 0, 0);
-        }
             modalCtx.putImageData(imageData, 0, 0);
         }
 
