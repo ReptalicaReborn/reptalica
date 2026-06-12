@@ -703,8 +703,7 @@
             img.src = history.pop();
             img.onload = () => {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
-                const rect = canvas.getBoundingClientRect();
-                ctx.drawImage(img, 0, 0, rect.width, rect.height);
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
             };
         });
 
