@@ -145,7 +145,7 @@ body {
     position: absolute;
     inset: -1px;
     border-radius: 50%;
-    box-shadow: 0 0 20px var(--md-sys-color-primary);
+    box-shadow: 0 0 10px rgba(230, 194, 117, 0.15);
     opacity: var(--accel, 0);
     will-change: opacity;
     pointer-events: none;
@@ -153,7 +153,7 @@ body {
 
 .orbital-ring--1::after {
     inset: -4px;
-    border: 3px solid var(--md-sys-color-primary);
+    border: 2px solid var(--md-sys-color-primary);
 }
 
 .orbital-ring--2 {
@@ -172,7 +172,7 @@ body {
     border-radius: 50%;
     top: 50%; left: 50%;
     transform: translate(-50%, -50%) translate(250px, 0);
-    box-shadow: 0 0 12px var(--md-sys-color-primary);
+    box-shadow: 0 0 6px rgba(230, 194, 117, 0.3);
     animation: orbit-rotate 8s linear infinite;
 }
 
@@ -209,7 +209,7 @@ body {
     color: var(--md-sys-color-primary);
     line-height: 0.9;
     margin-bottom: 1.5rem;
-    text-shadow: 0 0 80px rgba(230, 194, 117, 0.2);
+    text-shadow: 0 0 40px rgba(230, 194, 117, 0.1);
     position: relative;
 }
 
@@ -218,7 +218,7 @@ body {
     position: absolute;
     left: 0; top: 0;
     color: transparent;
-    text-shadow: 0 0 40px var(--md-sys-color-primary);
+    text-shadow: 0 0 20px rgba(230, 194, 117, 0.3);
     opacity: var(--accel, 0);
     pointer-events: none;
     will-change: opacity;
@@ -273,7 +273,7 @@ body {
     background: var(--md-sys-color-primary);
     border-color: var(--md-sys-color-primary);
     transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(230, 194, 117, 0.35);
+    box-shadow: 0 4px 12px rgba(230, 194, 117, 0.2);
 }
 
 .nav-link:hover .nav-link__index { color: var(--md-sys-color-on-primary); opacity: 1; }
@@ -411,7 +411,7 @@ body {
     color: var(--md-sys-color-on-primary);
     border-color: var(--md-sys-color-primary);
     transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(230, 194, 117, 0.35);
+    box-shadow: 0 4px 12px rgba(230, 194, 117, 0.2);
 }
 
 .social-btn:hover .label-mono { color: var(--md-sys-color-on-primary); }
@@ -523,7 +523,7 @@ body {
 .card:hover {
     border-color: var(--md-sys-color-primary);
     transform: translateY(-6px);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px var(--md-sys-color-primary);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
 }
 
 .card__image {
@@ -701,7 +701,7 @@ body {
 .btn:hover {
     background: var(--md-sys-color-primary);
     color: var(--md-sys-color-on-primary);
-    box-shadow: 0 4px 16px rgba(230, 194, 117, 0.35);
+    box-shadow: 0 4px 12px rgba(230, 194, 117, 0.2);
 }
 
 @keyframes modal-fade-in { from { opacity: 0; } to { opacity: 1; } }
