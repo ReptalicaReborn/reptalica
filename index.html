@@ -150,7 +150,7 @@
                 </div>
             </div>
 
-            <div style="display: flex; flex-direction: column; gap: 2rem;">
+            <div style="display: flex; flex-direction: column; gap: 2rem; flex: 1;">
                 <div class="card" style="padding: 2rem; cursor: default;">
                     <h3 class="about__heading" style="margin-bottom: 1.5rem;">WOKE SHIT</h3>
                     <div style="display: flex; flex-direction: column; gap: 1rem;">
@@ -185,17 +185,17 @@
                     </div>
                 </div>
 
-                <div class="card" style="padding: 2rem; cursor: default;">
+                <div class="card" style="padding: 2rem; cursor: default; flex: 1; display: flex; flex-direction: column;">
                     <h3 class="about__heading" style="margin-bottom: 1rem;">SEND A MESSAGE</h3>
                     <p style="color: var(--md-sys-color-on-surface-variant); font-size: 0.85rem; margin-bottom: 1rem;">Got something to say? Drop an anonymous message.</p>
-                    <form id="message-form" action="https://formspree.io/f/xwvjrrbk" method="POST" style="display: flex; flex-direction: column; gap: 1rem;">
-                        <textarea name="message" placeholder="Type your message..." rows="4" required style="background: var(--md-sys-color-surface-container-high); border: 1px solid var(--md-sys-color-outline-variant); color: var(--md-sys-color-on-surface); padding: 1rem; border-radius: var(--shape-corner-m); resize: vertical; font-family: var(--font-family-base); font-size: 0.9rem; outline: none; transition: border-color 0.2s;" onfocus="this.style.borderColor='var(--md-sys-color-primary)'" onblur="this.style.borderColor='var(--md-sys-color-outline-variant)'"></textarea>
+                    <form id="message-form" action="https://formspree.io/f/xwvjrrbk" method="POST" style="display: flex; flex-direction: column; gap: 1rem; flex: 1;">
+                        <textarea name="message" placeholder="Type your message..." rows="4" required style="background: var(--md-sys-color-surface-container-high); border: 1px solid var(--md-sys-color-outline-variant); color: var(--md-sys-color-on-surface); padding: 1rem; border-radius: var(--shape-corner-m); resize: vertical; font-family: var(--font-family-base); font-size: 0.9rem; outline: none; transition: border-color 0.2s; flex: 1;" onfocus="this.style.borderColor='var(--md-sys-color-primary)'" onblur="this.style.borderColor='var(--md-sys-color-outline-variant)'"></textarea>
                         <button type="submit" style="background: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); border: none; padding: 0.75rem 1.5rem; border-radius: var(--shape-corner-full); font-family: var(--font-family-base); font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; align-self: flex-start; letter-spacing: 0.05em;">SEND MESSAGE</button>
                     </form>
                     <p id="form-success" style="display: none; color: #4ade80; font-size: 0.85rem; margin-top: 0.5rem;">Message sent!</p>
                 </div>
 
-                <div class="card" style="padding: 2rem; cursor: default;">
+                <div class="card" style="padding: 2rem; cursor: default; flex: 1; display: flex; flex-direction: column;">
                     <h3 class="about__heading" style="margin-bottom: 1rem;">DRAWING BOARD</h3>
                     <p style="color: var(--md-sys-color-on-surface-variant); font-size: 0.85rem; margin-bottom: 1rem;">Draw something and send it to me.</p>
                     <div style="display: flex; gap: 0.5rem; margin-bottom: 0.75rem; align-items: center; flex-wrap: wrap;">
