@@ -217,6 +217,9 @@
                     </div>
                     <div style="display: flex; gap: 0.4rem; margin-bottom: 0.75rem; flex-wrap: wrap;">
                         <button id="draw-eraser" type="button" style="background: transparent; border: 1px solid var(--md-sys-color-outline-variant); color: var(--md-sys-color-on-surface-variant); padding: 0.35rem 0.7rem; border-radius: var(--shape-corner-full); cursor: pointer; font-size: 0.7rem; font-family: var(--font-family-base);">ERASER</button>
+                        <button id="draw-fill" type="button" style="background: transparent; border: 1px solid var(--md-sys-color-outline-variant); color: var(--md-sys-color-on-surface-variant); padding: 0.35rem 0.7rem; border-radius: var(--shape-corner-full); cursor: pointer; font-size: 0.7rem; font-family: var(--font-family-base);">FILL</button>
+                        <button id="draw-spray" type="button" style="background: transparent; border: 1px solid var(--md-sys-color-outline-variant); color: var(--md-sys-color-on-surface-variant); padding: 0.35rem 0.7rem; border-radius: var(--shape-corner-full); cursor: pointer; font-size: 0.7rem; font-family: var(--font-family-base);">SPRAY</button>
+                        <button id="draw-line" type="button" style="background: transparent; border: 1px solid var(--md-sys-color-outline-variant); color: var(--md-sys-color-on-surface-variant); padding: 0.35rem 0.7rem; border-radius: var(--shape-corner-full); cursor: pointer; font-size: 0.7rem; font-family: var(--font-family-base);">LINE</button>
                         <button id="draw-clear" type="button" style="background: transparent; border: 1px solid var(--md-sys-color-outline-variant); color: var(--md-sys-color-on-surface-variant); padding: 0.35rem 0.7rem; border-radius: var(--shape-corner-full); cursor: pointer; font-size: 0.7rem; font-family: var(--font-family-base);">CLEAR</button>
                         <button id="draw-undo" type="button" style="background: transparent; border: 1px solid var(--md-sys-color-outline-variant); color: var(--md-sys-color-on-surface-variant); padding: 0.35rem 0.7rem; border-radius: var(--shape-corner-full); cursor: pointer; font-size: 0.7rem; font-family: var(--font-family-base);">UNDO</button>
                     </div>
@@ -306,13 +309,18 @@
         const undoBtn = document.getElementById('draw-undo');
         const sendBtn = document.getElementById('draw-send');
         const eraserBtn = document.getElementById('draw-eraser');
+        const fillBtn = document.getElementById('draw-fill');
+        const sprayBtn = document.getElementById('draw-spray');
+        const lineBtn = document.getElementById('draw-line');
         const palette = document.getElementById('color-palette');
 
         let drawing = false;
         let lastX = 0;
         let lastY = 0;
         let history = [];
-        let isEraser = false;
+        let currentTool = 'brush'; // brush, eraser, fill, spray, line
+        let lineStartX = 0;
+        let lineStartY = 0;
 
         function resizeCanvas() {
             const rect = canvas.getBoundingClientRect();
@@ -340,12 +348,27 @@
             return { x: clientX - rect.left, y: clientY - rect.top };
         }
 
+        function setActiveTool(tool) {
+            currentTool = tool;
+            // Reset all tool buttons
+            [eraserBtn, fillBtn, sprayBtn, lineBtn].forEach(btn => {
+                btn.style.background = 'transparent';
+                btn.style.color = 'var(--md-sys-color-on-surface-variant)';
+                btn.style.borderColor = 'var(--md-sys-color-outline-variant)';
+            });
+            // Highlight active tool
+            const activeBtn = { eraser: eraserBtn, fill: fillBtn, spray: sprayBtn, line: lineBtn }[tool];
+            if (activeBtn && tool !== 'brush') {
+                activeBtn.style.background = 'var(--md-sys-color-primary)';
+                activeBtn.style.color = 'var(--md-sys-color-on-primary)';
+                activeBtn.style.borderColor = 'var(--md-sys-color-primary)';
+            }
+            canvas.style.cursor = tool === 'fill' ? 'crosshair' : 'crosshair';
+        }
+
         function setActiveColor(color) {
             colorPicker.value = color;
-            isEraser = false;
-            eraserBtn.style.background = 'transparent';
-            eraserBtn.style.color = 'var(--md-sys-color-on-surface-variant)';
-            eraserBtn.style.borderColor = 'var(--md-sys-color-outline-variant)';
+            setActiveTool('brush');
         }
 
         palette.addEventListener('click', (e) => {
@@ -353,29 +376,104 @@
             if (btn) setActiveColor(btn.dataset.color);
         });
 
-        colorPicker.addEventListener('input', () => {
-            isEraser = false;
-            eraserBtn.style.background = 'transparent';
-            eraserBtn.style.color = 'var(--md-sys-color-on-surface-variant)';
-        });
+        colorPicker.addEventListener('input', () => { setActiveTool('brush'); });
 
-        eraserBtn.addEventListener('click', () => {
-            isEraser = !isEraser;
-            if (isEraser) {
-                eraserBtn.style.background = 'var(--md-sys-color-primary)';
-                eraserBtn.style.color = 'var(--md-sys-color-on-primary)';
-                eraserBtn.style.borderColor = 'var(--md-sys-color-primary)';
-            } else {
-                eraserBtn.style.background = 'transparent';
-                eraserBtn.style.color = 'var(--md-sys-color-on-surface-variant)';
-                eraserBtn.style.borderColor = 'var(--md-sys-color-outline-variant)';
+        eraserBtn.addEventListener('click', () => setActiveTool('eraser'));
+        fillBtn.addEventListener('click', () => setActiveTool('fill'));
+        sprayBtn.addEventListener('click', () => setActiveTool('spray'));
+        lineBtn.addEventListener('click', () => setActiveTool('line'));
+
+        // Flood fill algorithm
+        function floodFill(startX, startY, fillColor) {
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const data = imageData.data;
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Get color at start position (accounting for 2x scale)
+            const sx = Math.floor(startX * 2);
+            const sy = Math.floor(startY * 2);
+            const startIdx = (sy * width + sx) * 4;
+            const startR = data[startIdx];
+            const startG = data[startIdx + 1];
+            const startB = data[startIdx + 2];
+            const startA = data[startIdx + 3];
+            
+            // Parse fill color
+            const tempCanvas = document.createElement('canvas');
+            tempCanvas.width = 1;
+            tempCanvas.height = 1;
+            const tempCtx = tempCanvas.getContext('2d');
+            tempCtx.fillStyle = fillColor;
+            tempCtx.fillRect(0, 0, 1, 1);
+            const fillData = tempCtx.getImageData(0, 0, 1, 1).data;
+            const fillR = fillData[0];
+            const fillG = fillData[1];
+            const fillB = fillData[2];
+            
+            // Don't fill if same color
+            if (startR === fillR && startG === fillG && startB === fillB && startA === 255) return;
+            
+            const stack = [[sx, sy]];
+            const visited = new Set();
+            
+            while (stack.length > 0) {
+                const [x, y] = stack.pop();
+                const key = `${x},${y}`;
+                if (visited.has(key)) continue;
+                if (x < 0 || x >= width || y < 0 || y >= height) continue;
+                
+                const idx = (y * width + x) * 4;
+                if (Math.abs(data[idx] - startR) > 10 || 
+                    Math.abs(data[idx + 1] - startG) > 10 || 
+                    Math.abs(data[idx + 2] - startB) > 10) continue;
+                
+                visited.add(key);
+                data[idx] = fillR;
+                data[idx + 1] = fillG;
+                data[idx + 2] = fillB;
+                data[idx + 3] = 255;
+                
+                stack.push([x + 1, y], [x - 1, y], [x, y + 1], [x, y - 1]);
             }
-        });
+            
+            ctx.putImageData(imageData, 0, 0);
+        }
+
+        // Spray paint effect
+        function sprayPaint(x, y) {
+            const density = sizeSlider.value * 2;
+            const radius = sizeSlider.value * 2;
+            ctx.fillStyle = colorPicker.value;
+            
+            for (let i = 0; i < density; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const r = Math.random() * radius;
+                const sx = x + r * Math.cos(angle);
+                const sy = y + r * Math.sin(angle);
+                ctx.fillRect(sx, sy, 1, 1);
+            }
+        }
 
         function startDraw(e) {
+            const pos = getPos(e);
+            
+            if (currentTool === 'fill') {
+                saveState();
+                floodFill(pos.x, pos.y, colorPicker.value);
+                return;
+            }
+            
+            if (currentTool === 'line') {
+                saveState();
+                lineStartX = pos.x;
+                lineStartY = pos.y;
+                drawing = true;
+                return;
+            }
+            
             drawing = true;
             saveState();
-            const pos = getPos(e);
             lastX = pos.x;
             lastY = pos.y;
             ctx.beginPath();
@@ -386,7 +484,20 @@
             if (!drawing) return;
             e.preventDefault();
             const pos = getPos(e);
-            if (isEraser) {
+            
+            if (currentTool === 'line') {
+                // Preview line
+                ctx.clearRect(0, 0, canvas.width / 2, canvas.height / 2);
+                ctx.putImageData(ctx.getImageData(0, 0, canvas.width, canvas.height), 0, 0);
+                return;
+            }
+            
+            if (currentTool === 'spray') {
+                sprayPaint(pos.x, pos.y);
+                return;
+            }
+            
+            if (currentTool === 'eraser') {
                 ctx.globalCompositeOperation = 'destination-out';
                 ctx.lineWidth = sizeSlider.value * 3;
             } else {
@@ -400,7 +511,17 @@
             lastY = pos.y;
         }
 
-        function stopDraw() {
+        function stopDraw(e) {
+            if (currentTool === 'line' && drawing) {
+                const pos = getPos(e);
+                ctx.globalCompositeOperation = 'source-over';
+                ctx.strokeStyle = colorPicker.value;
+                ctx.lineWidth = sizeSlider.value;
+                ctx.beginPath();
+                ctx.moveTo(lineStartX, lineStartY);
+                ctx.lineTo(pos.x, pos.y);
+                ctx.stroke();
+            }
             drawing = false;
             ctx.globalCompositeOperation = 'source-over';
         }
