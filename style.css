@@ -519,25 +519,11 @@ body {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
-.card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    background: var(--md-sys-color-primary);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform var(--motion-duration-medium) var(--motion-easing-standard);
-    z-index: 2;
-}
-
 .card:hover {
     border-color: var(--md-sys-color-primary);
     transform: translateY(-6px);
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px var(--md-sys-color-primary);
 }
-
-.card:hover::before { transform: scaleX(1); }
 
 .card__image {
     width: 100%;
