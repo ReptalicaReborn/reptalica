@@ -27,10 +27,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" as="style"
-        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+        href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap">
     <link
-        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap"
         rel="stylesheet" media="print" onload="this.media='all'">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
 
     <link rel="stylesheet" href="../style.css">
 
@@ -38,9 +39,10 @@
         .post {
             max-width: 800px;
             margin: 0 auto;
-            background: var(--surface);
-            border: 2px solid var(--border);
-            clip-path: var(--clip-corner);
+            background: var(--md-sys-color-surface-container);
+            border: 1px solid var(--md-sys-color-outline-variant);
+            border-radius: var(--shape-corner-xl);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
             padding: 4rem;
             position: relative;
         }
@@ -50,23 +52,23 @@
             position: absolute;
             top: 1.5rem;
             right: 1.5rem;
-            font-family: var(--font-mono);
+            font-family: var(--font-family-mono);
             font-size: 0.7rem;
-            color: var(--accent);
+            color: var(--md-sys-color-primary);
             opacity: 0.4;
         }
 
         .post__header {
             margin-bottom: 3rem;
-            border-bottom: 2px solid var(--border);
+            border-bottom: 2px solid var(--md-sys-color-outline-variant);
             padding-bottom: 2rem;
         }
 
         .post__title {
-            font-family: var(--font-display);
+            font-family: var(--font-family-base);
             font-size: clamp(2.5rem, 6vw, 3.5rem);
             font-weight: 700;
-            color: var(--accent);
+            color: var(--md-sys-color-primary);
             letter-spacing: 0.03em;
             line-height: 1.1;
             margin-bottom: 1.5rem;
@@ -83,8 +85,8 @@
             width: 100%;
             height: 400px;
             margin-bottom: 3rem;
-            clip-path: var(--clip-corner-sm);
-            border: 1px solid var(--border);
+            clip-path: var(--shape-corner-m);
+            border: 1px solid var(--md-sys-color-outline-variant);
             overflow: hidden;
         }
 
@@ -95,10 +97,10 @@
         }
 
         .post__content {
-            font-family: var(--font-display);
+            font-family: var(--font-family-base);
             font-size: 1.1rem;
             line-height: 1.8;
-            color: var(--text);
+            color: var(--md-sys-color-on-surface);
         }
 
         .post__content p {
@@ -106,8 +108,8 @@
         }
 
         .post__content h3 {
-            font-family: var(--font-mono);
-            color: var(--accent);
+            font-family: var(--font-family-mono);
+            color: var(--md-sys-color-primary);
             font-size: 1.3rem;
             margin: 2.5rem 0 1rem 0;
             text-transform: uppercase;
@@ -115,18 +117,18 @@
         }
 
         .post__content blockquote {
-            border-left: 3px solid var(--accent);
+            border-left: 3px solid var(--md-sys-color-primary);
             padding: 1rem 2rem;
-            background: var(--accent-dim);
+            background: rgba(230, 194, 117, 0.1);
             font-style: italic;
             margin: 2rem 0;
-            clip-path: var(--clip-corner-sm);
+            clip-path: var(--shape-corner-m);
         }
 
         .post__footer {
             margin-top: 4rem;
             padding-top: 2rem;
-            border-top: 2px solid var(--border);
+            border-top: 2px solid var(--md-sys-color-outline-variant);
         }
 
         @media (max-width: 768px) {
@@ -165,11 +167,11 @@
                 <div class="post__meta">
                     <div class="meta-item">
                         <span class="label-mono">TIMESTAMP :</span>
-                        <span class="label-mono" style="color: var(--text);">2026.03.03</span>
+                        <span class="label-mono" style="color: var(--md-sys-color-on-surface);">2026.03.03</span>
                     </div>
                     <div class="meta-item">
                         <span class="label-mono">AUTHOR :</span>
-                        <span class="label-mono" style="color: var(--text);">REPTALICA</span>
+                        <span class="label-mono" style="color: var(--md-sys-color-on-surface);">REPTALICA</span>
                     </div>
                 </div>
             </header>
