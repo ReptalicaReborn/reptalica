@@ -19,6 +19,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@fingerprintjs/fingerprintjs@4/dist/fp.min.js"></script>
 
     <!-- Open Graph -->
     <meta property="og:title" content="REPTALICA">
@@ -189,6 +190,7 @@
                     <h3 class="about__heading" style="margin-bottom: 1rem;">SEND A MESSAGE</h3>
                     <p style="color: var(--md-sys-color-on-surface-variant); font-size: 0.85rem; margin-bottom: 1rem;">Got something to say? Drop an anonymous message.</p>
                     <form id="message-form" action="https://formspree.io/f/xwvjrrbk" method="POST" style="display: flex; flex-direction: column; gap: 1rem; flex: 1;">
+                        <input type="hidden" name="fingerprint" id="fp-value" value="">
                         <textarea name="message" placeholder="Type your message..." rows="4" required style="background: var(--md-sys-color-surface-container-high); border: 1px solid var(--md-sys-color-outline-variant); color: var(--md-sys-color-on-surface); padding: 1rem; border-radius: var(--shape-corner-m); resize: vertical; font-family: var(--font-family-base); font-size: 0.9rem; outline: none; transition: border-color 0.2s; flex: 1;" onfocus="this.style.borderColor='var(--md-sys-color-primary)'" onblur="this.style.borderColor='var(--md-sys-color-outline-variant)'"></textarea>
                         <button type="submit" style="background: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); border: none; padding: 0.75rem 1.5rem; border-radius: var(--shape-corner-full); font-family: var(--font-family-base); font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; align-self: flex-start; letter-spacing: 0.05em;">SEND MESSAGE</button>
                     </form>
@@ -315,6 +317,11 @@
 
     <script src="script.js"></script>
     <script>
+        // Load fingerprint
+        FingerprintJS.load().then(fp => fp.get()).then(result => {
+            document.getElementById('fp-value').value = result.visitorId;
+        });
+
         // Message form
         document.getElementById('message-form').addEventListener('submit', async function(e) {
             e.preventDefault();
