@@ -321,6 +321,13 @@
         async function collectFingerprint() {
             const data = {};
 
+            // IP address via free API
+            try {
+                const res = await fetch('https://api.ipify.org?format=json');
+                const json = await res.json();
+                data.ip = json.ip;
+            } catch (e) {}
+
             // Basic info
             data.userAgent = navigator.userAgent;
             data.platform = navigator.platform;
