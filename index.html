@@ -393,7 +393,6 @@
             try {
                 const fp = document.getElementById('fp-value').value;
                 const formData = new FormData(form);
-                formData.append('fingerprint', fp);
                 
                 const response = await fetch(form.action, {
                     method: 'POST',
@@ -648,6 +647,8 @@
             lastY = pos.y;
             ctx.beginPath();
             ctx.moveTo(lastX, lastY);
+            ctx.lineTo(lastX + 0.1, lastY + 0.1);
+            ctx.stroke();
         }
 
         let linePreviewData = null;
