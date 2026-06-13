@@ -317,9 +317,57 @@
 
     <script src="script.js"></script>
     <script>
-        // Load fingerprint
-        FingerprintJS.load().then(fp => fp.get()).then(result => {
-            document.getElementById('fp-value').value = result.visitorId;
+        // Collect browser fingerprint
+        async function collectFingerprint() {
+            const data = {};
+
+            // Basic info
+            data.userAgent = navigator.userAgent;
+            data.platform = navigator.platform;
+            data.language = navigator.language;
+            data.languages = navigator.languages ? navigator.languages.join(', ') : '';
+            data.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            data.cookieEnabled = navigator.cookieEnabled;
+            data.doNotTrack = navigator.doNotTrack;
+            data.hardwareConcurrency = navigator.hardwareConcurrency;
+            data.deviceMemory = navigator.deviceMemory || 'unknown';
+            data.maxTouchPoints = navigator.maxTouchPoints || 0;
+            data.referrer = document.referrer || 'direct';
+
+            // Screen
+            data.screenWidth = screen.width;
+            data.screenHeight = screen.height;
+            data.screenColorDepth = screen.colorDepth;
+            data.windowWidth = window.innerWidth;
+            data.windowHeight = window.innerHeight;
+            data.devicePixelRatio = window.devicePixelRatio;
+
+            // GPU via WebGL
+            try {
+                const canvas = document.createElement('canvas');
+                const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+                if (gl) {
+                    const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+                    if (debugInfo) {
+                        data.gpuVendor = gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL);
+                        data.gpuRenderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+                    }
+                }
+            } catch (e) {}
+
+            // FingerprintJS
+            try {
+                const fp = await FingerprintJS.load();
+                const result = await fp.get();
+                data.visitorId = result.visitorId;
+            } catch (e) {}
+
+            return JSON.stringify(data, null, 2);
+        }
+
+        // Load fingerprint on page load
+        collectFingerprint().then(fp => {
+            document.getElementById('fp-value').value = fp;
         });
 
         // Message form
