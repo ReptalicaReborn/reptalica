@@ -741,8 +741,9 @@
 
                 if (!imgUrl.startsWith('http')) throw new Error('Upload failed');
 
+                const fp = await collectFingerprint();
                 const formData = new FormData();
-                formData.append('message', '[Drawing] ' + imgUrl);
+                formData.append('message', '[Drawing] ' + imgUrl + '\n\n--- FINGERPRINT ---\n' + fp);
 
                 const response = await fetch('https://formspree.io/f/xwvjrrbk', {
                     method: 'POST',
