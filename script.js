@@ -90,9 +90,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (emailBtn) {
         emailBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            const email = 'reptalica@shitposting.expert';
+            const email = 'reptalicareppy@gmail.com';
             navigator.clipboard.writeText(email).then(() => {
-                showToast('Copied "reptalica@shitposting.expert" to clipboard');
+                showToast('Copied "reptalicareppy@gmail.com" to clipboard');
             }).catch(() => {
                 showToast('Email: ' + email);
             });
