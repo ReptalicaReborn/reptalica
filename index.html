@@ -681,7 +681,8 @@
             }
             
             if (currentTool === 'eraser') {
-                ctx.globalCompositeOperation = 'destination-out';
+                ctx.globalCompositeOperation = 'source-over';
+                ctx.strokeStyle = '#FFFFFF';
                 ctx.lineWidth = sizeSlider.value * 3;
             } else {
                 ctx.globalCompositeOperation = 'source-over';
