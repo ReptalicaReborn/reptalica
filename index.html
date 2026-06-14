@@ -441,6 +441,7 @@
         let lineStartX = 0;
         let lineStartY = 0;
 
+        let resizeTimer = null;
         function resizeCanvas() {
             const rect = canvas.getBoundingClientRect();
             const tempCanvas = document.createElement('canvas');
@@ -453,9 +454,13 @@
             ctx.lineJoin = 'round';
             ctx.drawImage(tempCanvas, 0, 0, canvas.width, canvas.height);
         }
+        function debouncedResize() {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(resizeCanvas, 150);
+        }
 
         function saveState() {
-            history.push(canvas.toDataURL());
+            history.push(ctx.getImageData(0, 0, canvas.width, canvas.height));
             if (history.length > 30) history.shift();
         }
 
@@ -683,6 +688,9 @@
                 ctx.strokeStyle = colorPicker.value;
                 ctx.lineWidth = sizeSlider.value;
             }
+            // New path per segment — prevents re-stroking the entire accumulated path
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
             ctx.lineTo(pos.x, pos.y);
             ctx.stroke();
             lastX = pos.x;
@@ -720,16 +728,14 @@
         clearBtn.addEventListener('click', () => {
             saveState();
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#FFFFFF';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
         });
 
         undoBtn.addEventListener('click', () => {
             if (history.length === 0) return;
-            const img = new Image();
-            img.src = history.pop();
-            img.onload = () => {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-            };
+            const state = history.pop();
+            ctx.putImageData(state, 0, 0);
         });
 
         sendBtn.addEventListener('click', async () => {
@@ -785,7 +791,7 @@
         resizeCanvas();
         ctx.fillStyle = '#FFFFFF';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('resize', debouncedResize);
 
         // ═══════════════════════════════════════
         // Canvas Modal (Expand) — moves the same canvas into modal
@@ -862,16 +868,14 @@
         modalClearBtn.addEventListener('click', () => {
             saveState();
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#FFFFFF';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
         });
 
         modalUndoBtn.addEventListener('click', () => {
             if (history.length === 0) return;
-            const img = new Image();
-            img.src = history.pop();
-            img.onload = () => {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-            };
+            const state = history.pop();
+            ctx.putImageData(state, 0, 0);
         });
 
         expandBtn.addEventListener('click', () => {
