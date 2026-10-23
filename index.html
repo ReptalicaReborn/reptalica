@@ -4,8 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[SYS::REPTALICA]</title>
+    <title>Reptalica — Annotated Dieshots &amp; Silicon Photography</title>
     <meta name="description" content="Reptalica — annotated dieshots and silicon photography">
+    <link rel="canonical" href="https://reptalica.netlify.app/">
+    <link rel="alternate" type="application/rss+xml" title="Reptalica Blog" href="feed.xml">
     <link rel="icon" type="image/png" href="assets/favicon.png">
 
     <!-- Fonts (non-render-blocking) -->
@@ -19,7 +21,6 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/@fingerprintjs/fingerprintjs@4/dist/fp.min.js"></script>
 
     <!-- Open Graph -->
     <meta property="og:title" content="REPTALICA">
@@ -199,6 +200,7 @@
                         <textarea name="message" placeholder="Type your message..." rows="4" required style="background: var(--md-sys-color-surface-container-high); border: 1px solid var(--md-sys-color-outline-variant); color: var(--md-sys-color-on-surface); padding: 1rem; border-radius: var(--shape-corner-m); resize: vertical; font-family: var(--font-family-base); font-size: 0.9rem; outline: none; transition: border-color 0.2s; flex: 1;" onfocus="this.style.borderColor='var(--md-sys-color-primary)'" onblur="this.style.borderColor='var(--md-sys-color-outline-variant)'"></textarea>
                         <button type="submit" style="background: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); border: none; padding: 0.75rem 1.5rem; border-radius: var(--shape-corner-full); font-family: var(--font-family-base); font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; align-self: flex-start; letter-spacing: 0.05em;">SEND MESSAGE</button>
                     </form>
+                    <p style="color: var(--md-sys-color-on-surface-variant); font-size: 0.75rem; opacity: 0.8; margin-top: 0.5rem;">Sending attaches an anonymous browser ID so I can filter spam. Your IP address, name and device details are not attached.</p>
                     <p id="form-success" style="display: none; color: #4ade80; font-size: 0.85rem; margin-top: 0.5rem;">Message sent!</p>
                 </div>
 
@@ -237,6 +239,7 @@
                         <button id="draw-expand" type="button" style="flex: 1; background: var(--md-sys-color-surface-container-high); color: var(--md-sys-color-on-surface); border: 1px solid var(--md-sys-color-outline-variant); padding: 0.5rem; border-radius: var(--shape-corner-full); cursor: pointer; font-size: 0.75rem; font-family: var(--font-family-base);">EXPAND</button>
                         <button id="draw-send" type="button" style="flex: 1; background: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); border: none; padding: 0.5rem; border-radius: var(--shape-corner-full); font-family: var(--font-family-base); font-weight: 600; font-size: 0.75rem; cursor: pointer; letter-spacing: 0.05em;">SEND DRAWING</button>
                     </div>
+                    <p style="color: var(--md-sys-color-on-surface-variant); font-size: 0.75rem; opacity: 0.8; margin-top: 0.5rem;">Drawings are uploaded to litterbox.catbox.moe (deleted after 72h) and sent with an anonymous browser ID for spam filtering.</p>
                     <p id="draw-success" style="display: none; color: #4ade80; font-size: 0.85rem; margin-top: 0.5rem;">Drawing sent!</p>
                 </div>
             </div>
@@ -322,65 +325,19 @@
 
     <script src="script.js"></script>
     <script>
-        // Collect browser fingerprint
-        async function collectFingerprint() {
-            const data = {};
-
-            // IP address via free API
-            try {
-                const res = await fetch('https://api.ipify.org?format=json');
-                const json = await res.json();
-                data.ip = json.ip;
-            } catch (e) {}
-
-            // Basic info
-            data.userAgent = navigator.userAgent;
-            data.platform = navigator.platform;
-            data.language = navigator.language;
-            data.languages = navigator.languages ? navigator.languages.join(', ') : '';
-            data.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-            data.cookieEnabled = navigator.cookieEnabled;
-            data.doNotTrack = navigator.doNotTrack;
-            data.hardwareConcurrency = navigator.hardwareConcurrency;
-            data.deviceMemory = navigator.deviceMemory || 'unknown';
-            data.maxTouchPoints = navigator.maxTouchPoints || 0;
-            data.referrer = document.referrer || 'direct';
-
-            // Screen
-            data.screenWidth = screen.width;
-            data.screenHeight = screen.height;
-            data.screenColorDepth = screen.colorDepth;
-            data.windowWidth = window.innerWidth;
-            data.windowHeight = window.innerHeight;
-            data.devicePixelRatio = window.devicePixelRatio;
-
-            // GPU via WebGL
-            try {
-                const canvas = document.createElement('canvas');
-                const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-                if (gl) {
-                    const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
-                    if (debugInfo) {
-                        data.gpuVendor = gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL);
-                        data.gpuRenderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
-                    }
-                }
-            } catch (e) {}
-
-            // FingerprintJS
-            try {
-                const fp = await FingerprintJS.load();
-                const result = await fp.get();
-                data.visitorId = result.visitorId;
-            } catch (e) {}
-
-            return JSON.stringify(data, null, 2);
+        // Anonymous visitor ID for spam/abuse filtering. Loaded only when the
+        // visitor actually sends something, never on page load.
+        let fpPromise = null;
+        function collectFingerprint() {
+            if (!fpPromise) {
+                fpPromise = import('https://cdn.jsdelivr.net/npm/@fingerprintjs/fingerprintjs@4.5.1/+esm')
+                    .then(FingerprintJS => FingerprintJS.load())
+                    .then(fp => fp.get())
+                    .then(result => result.visitorId)
+                    .catch(() => { fpPromise = null; return 'unavailable'; });
+            }
+            return fpPromise;
         }
-
-        // Load fingerprint on page load
-        collectFingerprint().then(fp => {
-            document.getElementById('fp-value').value = fp;
-        });
 
         // Message form
         document.getElementById('message-form').addEventListener('submit', async function(e) {
@@ -393,7 +350,7 @@
             btn.disabled = true;
             
             try {
-                const fp = document.getElementById('fp-value').value;
+                document.getElementById('fp-value').value = await collectFingerprint();
                 const formData = new FormData(form);
                 
                 const response = await fetch(form.action, {
@@ -405,7 +362,6 @@
                 
                 if (result.success) {
                     form.reset();
-                    document.getElementById('fp-value').value = fp;
                     successMsg.style.display = 'block';
                     btn.textContent = 'SEND MESSAGE';
                     btn.disabled = false;
@@ -767,7 +723,7 @@
                 formData.append('access_key', 'e42bf0cb-ff5f-4bf2-bf77-6dca3dfa1bde');
                 formData.append('subject', 'New drawing from Reptalica');
                 formData.append('from_name', 'Reptalica Drawing Board');
-                formData.append('message', '[Drawing] ' + imgUrl + '\n\n--- FINGERPRINT ---\n' + fp);
+                formData.append('message', '[Drawing] ' + imgUrl + '\n\n--- VISITOR ID ---\n' + fp);
 
                 const response = await fetch('https://api.web3forms.com/submit', {
                     method: 'POST',

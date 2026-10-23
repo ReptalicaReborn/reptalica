@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <title>Reptalica Blog</title>
+  <link>https://reptalica.netlify.app/blog.html</link>
+  <description>Semiconductors, phones and silicon rabbit holes</description>
+  <language>en</language>
+  <atom:link href="https://reptalica.netlify.app/feed.xml" rel="self" type="application/rss+xml"/>
+  <item>
+    <title>You&#x27;ve Never Heard of the Company That Made Your Phone</title>
+    <link>https://reptalica.netlify.app/blog/phone-supply-chain.html</link>
+    <guid>https://reptalica.netlify.app/blog/phone-supply-chain.html</guid>
+    <pubDate>Mon, 20 Apr 2026 00:00:00 +0000</pubDate>
+    <description>The company on the box and the companies that built what&#x27;s inside are rarely the same. A deep-dive into the hidden supply chain behind every smartphone.</description>
+  </item>
+  <item>
+    <title>The Package is the Product</title>
+    <link>https://reptalica.netlify.app/blog/samsung-vietnam-packaging.html</link>
+    <guid>https://reptalica.netlify.app/blog/samsung-vietnam-packaging.html</guid>
+    <pubDate>Sun, 19 Apr 2026 00:00:00 +0000</pubDate>
+    <description>Two rumors pointing at the same province at the same time, both aimed at AI hardware. What Samsung&#x27;s rumored $4 billion chip packaging plant in Vietnam actually means for the industry.</description>
+  </item>
+  <item>
+    <title>The Benchmark War and the Consequences</title>
+    <link>https://reptalica.netlify.app/blog/snapdragon-8-elite-gen6.html</link>
+    <guid>https://reptalica.netlify.app/blog/snapdragon-8-elite-gen6.html</guid>
+    <pubDate>Mon, 09 Mar 2026 00:00:00 +0000</pubDate>
+    <description>Some talks about why Qualcomm decided to use Heat Pass Block in their next flagship chipset</description>
+  </item>
+  <item>
+    <title>The Illusion of Innovation: A Deep Dive into the Oyron 3 Architecture</title>
+    <link>https://reptalica.netlify.app/blog/oyron-3-architecture.html</link>
+    <guid>https://reptalica.netlify.app/blog/oyron-3-architecture.html</guid>
+    <pubDate>Sat, 07 Mar 2026 00:00:00 +0000</pubDate>
+    <description>A deep dive into the Oyron 3 architecture and why it is essentially a clone of Apple&#x27;s 2020 Firestorm architecture.</description>
+  </item>
+  <item>
+    <title>Apple M4: Maturity Over Experimentation</title>
+    <link>https://reptalica.netlify.app/blog/apple-m4.html</link>
+    <guid>https://reptalica.netlify.app/blog/apple-m4.html</guid>
+    <pubDate>Sat, 07 Mar 2026 00:00:00 +0000</pubDate>
+    <description>An analysis of how Apple escaped the manufacturing nightmare of the M3 to build the silicon monster that is the M4.</description>
+  </item>
+  <item>
+    <title>The Goldmine on the Floor</title>
+    <link>https://reptalica.netlify.app/blog/vip-smartphone-gray-market.html</link>
+    <guid>https://reptalica.netlify.app/blog/vip-smartphone-gray-market.html</guid>
+    <pubDate>Fri, 06 Mar 2026 00:00:00 +0000</pubDate>
+    <description>How stripped smartphone motherboards are graded, traded, and recycled through a global gray market pipeline from Hanoi to Shenzhen.</description>
+  </item>
+  <item>
+    <title>The Cheap RAM Myth</title>
+    <link>https://reptalica.netlify.app/blog/cheap_chinese_ram_myth.html</link>
+    <guid>https://reptalica.netlify.app/blog/cheap_chinese_ram_myth.html</guid>
+    <pubDate>Thu, 05 Mar 2026 00:00:00 +0000</pubDate>
+    <description>Why the &#x27;cheap Chinese RAM revolution&#x27; is vastly overstated, physics, sanctions, and wafer economics tell a different story.</description>
+  </item>
+  <item>
+    <title>Toilet and MSGs</title>
+    <link>https://reptalica.netlify.app/blog/toilet-and-msgs.html</link>
+    <guid>https://reptalica.netlify.app/blog/toilet-and-msgs.html</guid>
+    <pubDate>Tue, 03 Mar 2026 00:00:00 +0000</pubDate>
+    <description>How a soup seasoning company and a toilet manufacturer secretly hold the semiconductor industry together.</description>
+  </item>
+  <item>
+    <title>Cyber Cricket Fighting</title>
+    <link>https://reptalica.netlify.app/blog/cyber-cricket-fighting.html</link>
+    <guid>https://reptalica.netlify.app/blog/cyber-cricket-fighting.html</guid>
+    <pubDate>Mon, 02 Mar 2026 00:00:00 +0000</pubDate>
+    <description>Technical entry regarding the smartphone performance bubble and benchmarking culture.</description>
+  </item>
+</channel>
+</rss>
